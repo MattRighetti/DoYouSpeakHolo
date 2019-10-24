@@ -1,14 +1,3 @@
-%YAML 1.1
-%TAG !u! tag:unity3d.com,2011:
---- !u!1045 &1
-EditorBuildSettings:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/SampleScene.unity
-    guid: 879562787750a422da1dc89bed4fbbb5
-  - enabled: 1
-    path: Assets/Scenes/DoYouSpeakHolo.unity
-    guid: 60cb05aff4bfddb49957c7844355bdf1
-  m_configObjects: {}
+version https://git-lfs.github.com/spec/v1
+oid sha256:793b3e8edc5ef157838d634ed7b33c2081bf03c4ba02c2d1bd08f3bde576901e
+size 360

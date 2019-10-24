@@ -1,18 +1,3 @@
-fileFormatVersion: 2
-guid: 69c7e3c117890dc4eaf92659b4fa5348
-ScriptedImporter:
-  fileIDToRecycleName:
-    100000: main/glTF Scene Avocado
-    100002: main/glTF Scene Avocado/Avocado
-    400000: main/glTF Scene Avocado/Transform
-    400002: main/glTF Scene Avocado/Avocado/Transform
-    2300000: main/glTF Scene Avocado/Avocado/MeshRenderer
-    3300000: main/glTF Scene Avocado/Avocado/MeshFilter
-    4300000: Avocado
-    11400000: glTF data
-    100100000: main
-  externalObjects: {}
-  userData: 
-  assetBundleName: 
-  assetBundleVariant: 
-  script: {fileID: 11500000, guid: 8f83316e73954ae4fa56b79705605b45, type: 3}
+version https://git-lfs.github.com/spec/v1
+oid sha256:24e50683fb6074f07a6b9fad94c73dbda34a6199ce9b63b52b5ea2e888478b53
+size 616

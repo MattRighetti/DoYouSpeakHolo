@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 879562787750a422da1dc89bed4fbbb5
+  - enabled: 1
+    path: Assets/Scenes/DoYouSpeakHolo.unity
+    guid: 60cb05aff4bfddb49957c7844355bdf1
   m_configObjects: {}

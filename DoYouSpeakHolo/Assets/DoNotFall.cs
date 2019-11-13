@@ -18,10 +18,9 @@ public class DoNotFall : MonoBehaviour
     {
         if (gameObject.transform.position.y < 0)
         {
-            Debug.Log("ciao");
             Vector3 temp = new Vector3(0, - gameObject.transform.position.y, 0);
             gameObject.transform.position += temp;
-            Debug.Log(gameObject.transform.position.y);
+            Debug.Log("y coordinate " + gameObject.transform.position.y);
             
         }
     }

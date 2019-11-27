@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.MixedReality.Toolkit.UI;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,14 +14,28 @@ public class CheckingPhaseManager : MonoBehaviour
 
     private List<GameObject> GameObjects;
 
+    private bool checking = false;
+
     void Start()
     {
-        GameObjects = new List<GameObject>();
-        GameObjects.Add(House);
-        GameObjects.Add(Tree);
-        GameObjects.Add(Key);
-        GameObjects.Add(Apple);
         EventManager.StartListening("CheckingPhase", HandleStartCheckingPhase);
+    }
+
+    private void Update()
+    {
+        
+        GameObjects = new List<GameObject>
+        {
+            House,
+            Tree,
+            Key,
+            Apple
+        };
+        foreach (GameObject o in GameObjects)
+        {
+            Debug.Log(o.ToString());
+        }
+        
     }
 
     private void HandleStartCheckingPhase()
@@ -56,7 +71,12 @@ public class CheckingPhaseManager : MonoBehaviour
         }
 
         //TODO: the virtual assistant tells the user the object to find
-
+        var test = House.AddComponent<Interactable>();
+        Debug.Log(test);
+        var h = test.AddReceiver<InteractableOnFocusReceiver>();
+        Debug.Log(h);
+        h.OnFocusOn.AddListener(() => Debug.Log("I'm getting focused"));
+        h.OnFocusOff.AddListener(() => Debug.Log("I'm getting !focused"));
         //End of CheckingPhase
         End();
     }
@@ -67,7 +87,7 @@ public class CheckingPhaseManager : MonoBehaviour
         EventManager.StopListening("CheckingPhase", HandleStartCheckingPhase);
         //start the checking phase
         //TODO: find a better way to call the method
-        
+
         //Trigger the new phase
 
     }

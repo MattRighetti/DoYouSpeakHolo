@@ -14,16 +14,16 @@ public class CandSManager : MonoBehaviour
     private Vector3 HousePosition;
     private Vector3 TreePosition;
     private Vector3 ApplePosition;
-    
+
     public GameObject Key;
     public GameObject House;
     public GameObject Tree;
     public GameObject Apple;
 
-    private bool learning = false;
+    private bool Learning = false;
 
     private List<GameObject> GameObjects;
-    
+
     private IMixedRealitySpatialAwarenessMeshObserver SpatialObjectMeshObserver;
     private static int _meshPhysicsLayer = 0;
 
@@ -43,8 +43,9 @@ public class CandSManager : MonoBehaviour
     {
         //Enable spatial mapping
         ToggleSpatialMap();
-        GenerateAndPlaceObjects();
 
+        //TODO: add Spatial Mapping
+        GenerateAndPlaceObjects();
     }
 
     //  Enable/Disable Spatial Mapping
@@ -108,11 +109,12 @@ public class CandSManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Start the activity only at the first frame
-        if (!learning)
+
+        //TODO: find another way to start the flow of the activity
+        if (!Learning)
         {
-            learning = true;
-            LearningPhase();
+            EventManager.TriggerEvent("LearningPhaseStart");
+            Learning = true;
         }
     }
 
@@ -129,48 +131,8 @@ public class CandSManager : MonoBehaviour
 
     private void initiateScene()
     {
-
         //Disable spatial mapping
         ToggleSpatialMap();
-
-
     }
-
-    //First phase of the activity, the virtual assistant shows to the user some objects and tells their name
-    private void LearningPhase()
-    {
-        //Let the virtual assistant speak
-
-        
-        Vector3 centralPosition = new Vector3(0, 0, 2);
-
-        StartCoroutine(ShowObjects(centralPosition));
-        
-
-
-    }
-
-    IEnumerator ShowObjects(Vector3 centralPosition)
-    {
-        foreach (GameObject Obj in GameObjects)
-        {
-            StartCoroutine(ShowObject(Obj, centralPosition));
-            yield return new WaitForSeconds(3);
-        }
-    }
-
-    //Spawn the objects in front of the user and destroy them after a timeout
-    IEnumerator ShowObject(GameObject Obj, Vector3 centralPosition)
-    {
-        GameObject Object = Instantiate(Obj) as GameObject;
-        Object.transform.position = centralPosition;
-        yield return new WaitForSeconds(2);
-        Destroy(Object);
-    }
-
-
 }
-
-
-
 

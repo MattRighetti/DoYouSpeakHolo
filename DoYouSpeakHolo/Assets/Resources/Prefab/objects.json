@@ -1,0 +1,8 @@
+{
+    "ObjectsEnumeration": {
+        "medium_house": "Prefab/MediumHouse",
+        "medium_key": "Prefab/MediumKey",
+        "tree": "Prefab/Objects/Tree",
+        "apple": "Prefab/Fruits/Apple"
+    }
+}

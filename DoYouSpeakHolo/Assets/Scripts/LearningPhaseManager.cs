@@ -14,18 +14,26 @@ public class LearningPhaseManager : MonoBehaviour
 
     private ObjectPooler Pooler;
 
+    public enum ScenesEnum { Scene1, Scene2, Scene3 };
+    public ScenesEnum Scene;
     Vector3 CentralPosition;
 
     void Start()
     {
-        Pooler = new ObjectPooler();
-        Key = Pooler.GetPooledObject("Key");
-        House = Pooler.GetPooledObject("House");
-        Tree = Pooler.GetPooledObject("Tree");
-        Apple = Pooler.GetPooledObject("Apple");
+        
+    }
+
+    void setup() {
+
+        Pooler = gameObject.AddComponent<ObjectPooler>();
+        Key = Pooler.GetPooledObject("medium_key");
+        House = Pooler.GetPooledObject("medium_house");
+        Tree = Pooler.GetPooledObject("tree");
+        Apple = Pooler.GetPooledObject("apple");
         CentralPosition = new Vector3(0, 0, 2);
         EventManager.StartListening("LearningPhaseStart", HandleStartOfLearningPhase);
-        EventManager.StartListening("LearningPhaseSpawn", HandleSpawn);
+        EventManager.StartListening("LearningPhaseSingleSpawn", HandleSpawn);
+        EventManager.StartListening("LearningPhasePairSpawn", HandleSpawnPairs);
     }
 
     //First phase of the activity, the virtual assistant shows to the user some objects and tells their name
@@ -34,6 +42,11 @@ public class LearningPhaseManager : MonoBehaviour
         Debug.Log("Start Learning Phase");
         //Trigger the spawn procedure
         EventManager.TriggerEvent("LearningPhaseSpawn");
+    }
+
+    internal void SetScene(ScenesEnum scene)
+    {
+        Scene = scene;
     }
 
     //Handler fot the spawn procedure
@@ -50,7 +63,6 @@ public class LearningPhaseManager : MonoBehaviour
 
         //start the checking phase
         //TODO: find a better way to call the method
-        Debug.Log("Triggering CheckingPhase");
         EventManager.TriggerEvent("CheckingPhase");
     }
 
@@ -63,8 +75,9 @@ public class LearningPhaseManager : MonoBehaviour
             yield return new WaitForSeconds(3);
         }
 
-        //End the activity
-        End();
+
+        //Trigger the spawning of the object pairs
+        EventManager.TriggerEvent("LearningPhasePairSpawn");
     }
 
     //Spawn the objects in front of the user and destroy them after a timeout
@@ -76,4 +89,10 @@ public class LearningPhaseManager : MonoBehaviour
         Destroy(objectToCreate);
     }
 
+    void HandleSpawnPairs()
+    { 
+
+        //End the activity
+        End();
+    }
 }

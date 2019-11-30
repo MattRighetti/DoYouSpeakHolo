@@ -23,6 +23,7 @@ public class CandSManager : MonoBehaviour
 
     private bool Learning = false;
 
+
     private List<GameObject> GameObjects;
 
     private IMixedRealitySpatialAwarenessMeshObserver SpatialObjectMeshObserver;
@@ -42,6 +43,7 @@ public class CandSManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gameObject.GetComponent<LearningPhaseManager>().SetScene(LearningPhaseManager.ScenesEnum.Scene1);
         //Enable spatial mapping
         ToggleSpatialMap();
 

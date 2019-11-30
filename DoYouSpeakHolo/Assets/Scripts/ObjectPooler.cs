@@ -11,10 +11,16 @@ public class ObjectPooler : MonoBehaviour {
 
     void Awake() {
         SharedInstance = this;
+        setup();
+
     }
 
     // Start is called before the first frame update
     void Start() {
+       
+    }
+
+    void setup() {
         pooledObjectsDictionary = new Dictionary<string, GameObject>();
         CreateObjects();
         Debug.Log("Testing");
@@ -62,6 +68,7 @@ public class ObjectPooler : MonoBehaviour {
             Console.WriteLine("Dictionary doesn't have Key={0}", key);
             return null;
         }
+      
     }
 
     //Read and parse the JSON file

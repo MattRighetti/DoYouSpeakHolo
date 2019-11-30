@@ -15,28 +15,18 @@ public class CheckingPhaseManager : MonoBehaviour
     public GameObject HerChest;
 
     private List<GameObject> GameObjects;
-
+    private ObjectPooler objectPooler;
     private bool checking = false;
 
     void Start()
     {
+        objectPooler = new ObjectPooler();
         EventManager.StartListening("CheckingPhase", HandleStartCheckingPhase);
     }
 
     private void Update()
     {
-        
-        GameObjects = new List<GameObject>
-        {
-            House,
-            Tree,
-            Key,
-            Apple
-        };
-        foreach (GameObject o in GameObjects)
-        {
-            Debug.Log(o.ToString());
-        }
+       
         
     }
 
@@ -71,6 +61,10 @@ public class CheckingPhaseManager : MonoBehaviour
             objectToCreate.transform.position = startPosition;
             startPosition += new Vector3(0.5f, 0, 0);
         }
+
+        var interactable = Key.GetComponent<Interactable>();
+        var onp = interactable.AddReceiver<InteractableOnPressReceiver>();
+        onp.OnPress.AddListener(() => Debug.Log("Set Listener"));
 
         //TODO: the virtual assistant tells the user the object to find
         var test = House.AddComponent<Interactable>();

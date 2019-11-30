@@ -9,16 +9,17 @@ using UnityEngine;
 
 public class CandSManager : MonoBehaviour
 {
+
     //Object init
     private Vector3 KeyPosition;
     private Vector3 HousePosition;
     private Vector3 TreePosition;
     private Vector3 ApplePosition;
 
-    public GameObject Key;
-    public GameObject House;
-    public GameObject Tree;
-    public GameObject Apple;
+    private GameObject Key;
+    private GameObject House;
+    private GameObject Tree;
+    private GameObject Apple;
 
     private bool Learning = false;
 

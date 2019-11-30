@@ -5,22 +5,24 @@ using UnityEngine;
 
 public class LearningPhaseManager : MonoBehaviour
 {
-    public GameObject Key;
-    public GameObject House;
-    public GameObject Tree;
-    public GameObject Apple;
+    private GameObject Key;
+    private GameObject House;
+    private GameObject Tree;
+    private GameObject Apple;
 
     private List<GameObject> GameObjects;
+
+    private ObjectPooler Pooler;
 
     Vector3 CentralPosition;
 
     void Start()
     {
-        GameObjects = new List<GameObject>();
-        GameObjects.Add(House);
-        GameObjects.Add(Tree);
-        GameObjects.Add(Key);
-        GameObjects.Add(Apple);
+        Pooler = new ObjectPooler();
+        Key = Pooler.GetPooledObject("Key");
+        House = Pooler.GetPooledObject("House");
+        Tree = Pooler.GetPooledObject("Tree");
+        Apple = Pooler.GetPooledObject("Apple");
         CentralPosition = new Vector3(0, 0, 2);
         EventManager.StartListening("LearningPhaseStart", HandleStartOfLearningPhase);
         EventManager.StartListening("LearningPhaseSpawn", HandleSpawn);

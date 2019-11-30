@@ -4,15 +4,22 @@ using UnityEngine;
 
 public class HarvestingLogic : MonoBehaviour
 {
+    
+    private int FruitCounter = 0;
+    private string ExpectedFruit;
+    private Collider Chest;
 
-    private int fruitCounter = 0;
-    private string expectedFruit;
+    public HarvestingLogic(string Fruit)
+    {
+        this.ExpectedFruit = Fruit;
+    }
 
 
     // Start is called before the first frame update
     void Start()
     {
-        expectedFruit = "apple";
+        //ExpectedFruit = "Apple";
+        ExpectedFruit = Chest.gameObject.tag;
     }
 
     // Update is called once per frame
@@ -21,20 +28,20 @@ public class HarvestingLogic : MonoBehaviour
         
     }
 
-    void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider Chest)
     {
         //Check whether the gameObject is the one that needs to be put in the basket
-        if (other.gameObject.tag == this.expectedFruit )
+        if (Chest.gameObject.tag == this.ExpectedFruit )
         {
-            fruitCounter++;
-            Debug.Log("Counting " + fruitCounter);
+            EventManager.TriggerEvent("PickedFruitEvent");
         }
+        
 
     }
 
-    void SetExpectedFruit(string expectedFruit)
+    void SetExpectedFruit(string ExpectedFruit)
     {
-        this.expectedFruit = expectedFruit;
+        this.ExpectedFruit = ExpectedFruit;
     }
 
 }

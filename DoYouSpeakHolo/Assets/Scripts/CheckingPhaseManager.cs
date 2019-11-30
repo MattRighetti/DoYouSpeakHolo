@@ -11,6 +11,8 @@ public class CheckingPhaseManager : MonoBehaviour
     public GameObject House;
     public GameObject Tree;
     public GameObject Apple;
+    public GameObject HisChest;
+    public GameObject HerChest;
 
     private List<GameObject> GameObjects;
 

@@ -6,12 +6,10 @@ using UnityEngine;
 using UnityEngine.Events;
 
 public class CheckingPhaseManager : MonoBehaviour {
-    public GameObject Key;
-    public GameObject House;
-    public GameObject Tree;
-    public GameObject Apple;
-    public GameObject HisChest;
-    public GameObject HerChest;
+    private GameObject Key;
+    private GameObject House;
+    private GameObject Tree;
+    private GameObject Apple;
 
     private List<GameObject> GameObjects;
     private ObjectPooler objectPooler;
@@ -72,8 +70,6 @@ public class CheckingPhaseManager : MonoBehaviour {
     //Stop listening to events and trigger the new phase
     private void End() {
         EventManager.StopListening("CheckingPhase", HandleStartCheckingPhase);
-        //start the checking phase
-        //TODO: find a better way to call the method
 
         //Trigger the new phase
 

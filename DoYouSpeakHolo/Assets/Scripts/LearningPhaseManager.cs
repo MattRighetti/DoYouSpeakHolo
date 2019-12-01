@@ -55,13 +55,19 @@ public class LearningPhaseManager : MonoBehaviour {
 
     //Spawn the objects in front of the user and destroy them after a timeout
     IEnumerator ShowObject(string objKey) {
+        //TODO: Add VA voice
         GameObject objectToCreate = Pooler.ActivateObject(objKey, CentralPosition);
         yield return new WaitForSeconds(2);
         Pooler.DeactivateObject(objKey);
     }
 
     void HandleSpawnPairs() {
-        //End the activity
+        
+        //Spawn the male character
+
+        //Spawn the female character
+        
+        //End of the learning phase
         End();
     }
 

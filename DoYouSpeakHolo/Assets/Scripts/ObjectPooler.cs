@@ -5,8 +5,14 @@ using System.IO;
 using UnityEngine;
 
 public class ObjectPooler : MonoBehaviour {
+
+    public const string Objects = "objects";
+    public const string Animals = "animals";
+    public const string Fruits = "fruits";
+    public const string People = "people";
+
     public static ObjectPooler SharedInstance;
-    public Dictionary<string, GameObject> pooledObjectsDictionary;
+    public Dictionary<string, Dictionary<string, GameObject>> pooledObjectsDictionary;
     private Vector3 hiddenPosition;
 
     void Awake() {
@@ -16,53 +22,49 @@ public class ObjectPooler : MonoBehaviour {
     }
 
     void Setup() {
-        pooledObjectsDictionary = new Dictionary<string, GameObject>();
+        pooledObjectsDictionary = new Dictionary<string, Dictionary<string, GameObject>>();
         CreateObjects();
-        Debug.Log("Testing");
-        foreach (string key in GetAllKeyInObjectDictionary()) {
-            Debug.Log(string.Format("Key={0}", key));
-        }
-
-        foreach (GameObject obj in GetAllValuesInObjectDictionary()) {
-            Debug.Log(string.Format("Object={0}", obj.name));
-        }
-
-        if (GetPooledObject("medium_house") != null) {
-            Debug.Log("Retrieved!");
-        }
     }
 
+    //Create the objects, deactivate and store them into the data structure
     private void CreateObjects() {
         ObjectsEnum objects = ReadJSONFromFile();
-        Dictionary<string, string> dict = objects.GetDictionary();
+        Dictionary<string, Dictionary<string, string>> dict = objects.GetDictionary();
 
-        foreach (KeyValuePair<string, string> entry in dict) {
-            GameObject obj = Instantiate(Resources.Load(entry.Value, typeof(GameObject))) as GameObject;
-            obj.SetActive(false);
-            pooledObjectsDictionary.Add(entry.Key, obj);
+        foreach (KeyValuePair<string, Dictionary<string, string>> outer_entry in dict) {
+            Dictionary<string, GameObject> internal_dict = new Dictionary<string, GameObject>();
+            foreach (KeyValuePair<string, string> inner_entry in outer_entry.Value) {
+                GameObject obj = Instantiate(Resources.Load(inner_entry.Value, typeof(GameObject))) as GameObject;
+                obj.SetActive(false);
+                internal_dict.Add(inner_entry.Key, obj);
+            }
+            pooledObjectsDictionary.Add(outer_entry.Key, internal_dict);
         }
     }
 
-    public List<string> GetAllKeyInObjectDictionary() {
+    public List<string> GetObjectsByCategory(string category) {
+        Dictionary<string, GameObject> dict = new Dictionary<string, GameObject>();
+        if (pooledObjectsDictionary.TryGetValue(category, out dict)) {
+            return new List<string>(dict.Keys);
+        }
+        return null;
+    }
+
+
+    public List<string> GetObjectCategories() {
         List<string> keyValues = new List<string>(pooledObjectsDictionary.Keys);
         return keyValues;
     }
 
-    public List<GameObject> GetAllValuesInObjectDictionary() {
-        List<GameObject> values = new List<GameObject>(pooledObjectsDictionary.Values);
-        return values;
-    }
-
     public GameObject GetPooledObject(string key) {
-        try {
-            GameObject obj = pooledObjectsDictionary[key];
-            return obj;
-        }
-        catch (KeyNotFoundException) {
-            Console.WriteLine("Dictionary doesn't have Key={0}", key);
-            return null;
-        }
+        GameObject obj;
+        foreach (KeyValuePair<string, Dictionary<string, GameObject>> outer_entry in pooledObjectsDictionary) {
+            if (outer_entry.Value.TryGetValue(key, out obj)) {
+                return obj;
 
+            }
+        }
+        return null;
     }
 
     //Read and parse the JSON file

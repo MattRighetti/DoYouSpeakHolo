@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class LearningPhaseManager : MonoBehaviour {
 
-    private List<string> ObjectsKey;
+    private List<string> SceneObjects;
     private ObjectPooler Pooler;
 
     public enum ScenesEnum { Scene1, Scene2, Scene3 };
@@ -17,8 +17,23 @@ public class LearningPhaseManager : MonoBehaviour {
     }
 
     void Setup() {
+        //Get the ObjectPooler instance
         Pooler = ObjectPooler.SharedInstance;
-        ObjectsKey = Pooler.GetAllKeyInObjectDictionary();
+
+        //Get the objects from the pooler depending on the scene
+        switch (Scene) {
+            case ScenesEnum.Scene1:
+                SceneObjects = Pooler.GetObjectsByCategory(ObjectPooler.Animals);
+                break;
+            case ScenesEnum.Scene2:
+                SceneObjects = Pooler.GetObjectsByCategory(ObjectPooler.Animals);
+                break;
+            case ScenesEnum.Scene3:
+                SceneObjects = Pooler.GetObjectsByCategory(ObjectPooler.Fruits);
+                break;
+        }
+
+
         CentralPosition = new Vector3(0, 0, 2);
         EventManager.StartListening("LearningPhaseStart", HandleStartOfLearningPhase);
         EventManager.StartListening("LearningPhaseSingleSpawn", HandleSpawn);
@@ -43,7 +58,7 @@ public class LearningPhaseManager : MonoBehaviour {
 
     //Spawn the objects
     IEnumerator ShowObjects() {
-        foreach (string objectKey in ObjectsKey) {
+        foreach (string objectKey in SceneObjects) {
             Debug.Log("Spawning " + objectKey);
             StartCoroutine(ShowObject(objectKey));
             yield return new WaitForSeconds(3);

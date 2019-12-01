@@ -7,20 +7,15 @@ using UnityEngine;
 public class ObjectPooler : MonoBehaviour {
     public static ObjectPooler SharedInstance;
     public Dictionary<string, GameObject> pooledObjectsDictionary;
-    public int amountToPool;
+    private Vector3 hiddenPosition;
 
     void Awake() {
         SharedInstance = this;
-        setup();
-
+        hiddenPosition = new Vector3(0, 0, -3);
+        Setup();
     }
 
-    // Start is called before the first frame update
-    void Start() {
-       
-    }
-
-    void setup() {
+    void Setup() {
         pooledObjectsDictionary = new Dictionary<string, GameObject>();
         CreateObjects();
         Debug.Log("Testing");
@@ -45,7 +40,6 @@ public class ObjectPooler : MonoBehaviour {
             GameObject obj = Instantiate(Resources.Load(entry.Value, typeof(GameObject))) as GameObject;
             obj.SetActive(false);
             pooledObjectsDictionary.Add(entry.Key, obj);
-            amountToPool++;
         }
     }
 
@@ -68,7 +62,7 @@ public class ObjectPooler : MonoBehaviour {
             Console.WriteLine("Dictionary doesn't have Key={0}", key);
             return null;
         }
-      
+
     }
 
     //Read and parse the JSON file
@@ -81,4 +75,16 @@ public class ObjectPooler : MonoBehaviour {
         return JsonConvert.DeserializeObject<ObjectsEnum>(jsonToParse);
     }
 
+    internal GameObject ActivateObject(string objKey, Vector3 centralPosition) {
+        GameObject objectToCreate = GetPooledObject(objKey);
+        objectToCreate.transform.position = centralPosition;
+        objectToCreate.SetActive(true);
+        return objectToCreate;
+    }
+
+    internal void DeactivateObject(string objKey) {
+        GameObject objectToCreate = GetPooledObject(objKey);
+        objectToCreate.transform.position = hiddenPosition;
+        objectToCreate.SetActive(false);
+    }
 }

@@ -7,32 +7,16 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class CandSManager : MonoBehaviour
-{
-
-    //Object init
-    private Vector3 KeyPosition;
-    private Vector3 HousePosition;
-    private Vector3 TreePosition;
-    private Vector3 ApplePosition;
-
-    private GameObject Key;
-    private GameObject House;
-    private GameObject Tree;
-    private GameObject Apple;
-
+public class CandSManager : MonoBehaviour {
+    //Maybe not needed anymore
     private bool Learning = false;
 
-
-    private List<GameObject> GameObjects;
-
+    //TODO: add MRTK V1 to do spatial mapping
     private IMixedRealitySpatialAwarenessMeshObserver SpatialObjectMeshObserver;
     private static int _meshPhysicsLayer = 0;
 
-    private bool IsObserverRunning
-    {
-        get
-        {
+    private bool IsObserverRunning {
+        get {
             var providers =
               ((IMixedRealityDataProviderAccess)CoreServices.SpatialAwarenessSystem)
                 .GetDataProviders<IMixedRealitySpatialAwarenessObserver>();
@@ -41,29 +25,24 @@ public class CandSManager : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         gameObject.GetComponent<LearningPhaseManager>().SetScene(LearningPhaseManager.ScenesEnum.Scene1);
         //Enable spatial mapping
-        ToggleSpatialMap();
+        //ToggleSpatialMap();
 
         //TODO: add Spatial Mapping
-        GenerateAndPlaceObjects();
+        //GenerateAndPlaceObjects();
     }
 
     //  Enable/Disable Spatial Mapping
-    public void ToggleSpatialMap()
-    {
-        if (CoreServices.SpatialAwarenessSystem != null)
-        {
-            if (IsObserverRunning)
-            {
+    public void ToggleSpatialMap() {
+        if (CoreServices.SpatialAwarenessSystem != null) {
+            if (IsObserverRunning) {
                 Debug.Log("Disabling spatial mapping");
                 CoreServices.SpatialAwarenessSystem.SuspendObservers();
                 CoreServices.SpatialAwarenessSystem.ClearObservations();
             }
-            else
-            {
+            else {
                 Debug.Log("Enabling spatial mapping");
                 CoreServices.SpatialAwarenessSystem.ResumeObservers();
             }
@@ -71,13 +50,11 @@ public class CandSManager : MonoBehaviour
     }
 
     // Get the position on the spatial map using a Raycast that hits the mesh
-    public static Vector3? GetPositionOnSpatialMap(float maxDistance = 2)
-    {
+    public static Vector3? GetPositionOnSpatialMap(float maxDistance = 2) {
         RaycastHit hitInfo;
         var transform = CameraCache.Main.transform;
         var headRay = new Ray(transform.position, transform.forward);
-        if (Physics.Raycast(headRay, out hitInfo, maxDistance, GetSpatialMeshMask()))
-        {
+        if (Physics.Raycast(headRay, out hitInfo, maxDistance, GetSpatialMeshMask())) {
             Debug.Log("Point found");
             Debug.Log(hitInfo.point);
             return hitInfo.point;
@@ -86,21 +63,16 @@ public class CandSManager : MonoBehaviour
     }
 
     // Retrieve the mesh mask needed by the Raycast
-    private static int GetSpatialMeshMask()
-    {
-        if (_meshPhysicsLayer == 0)
-        {
+    private static int GetSpatialMeshMask() {
+        if (_meshPhysicsLayer == 0) {
             var spatialMappingConfig =
               CoreServices.SpatialAwarenessSystem.ConfigurationProfile as
                 MixedRealitySpatialAwarenessSystemProfile;
-            if (spatialMappingConfig != null)
-            {
-                foreach (var config in spatialMappingConfig.ObserverConfigurations)
-                {
+            if (spatialMappingConfig != null) {
+                foreach (var config in spatialMappingConfig.ObserverConfigurations) {
                     var observerProfile = config.ObserverProfile
                         as MixedRealitySpatialAwarenessMeshObserverProfile;
-                    if (observerProfile != null)
-                    {
+                    if (observerProfile != null) {
                         _meshPhysicsLayer |= (1 << observerProfile.MeshPhysicsLayer);
                     }
                 }
@@ -121,19 +93,7 @@ public class CandSManager : MonoBehaviour
         }
     }
 
-    //Read the data from spatial mapping in order to understand where to place objects
-    void GenerateAndPlaceObjects()
-    {
-        GameObjects = new List<GameObject>();
-        GameObjects.Add(House);
-        GameObjects.Add(Tree);
-        GameObjects.Add(Key);
-        GameObjects.Add(Apple);
-        initiateScene();
-    }
-
-    private void initiateScene()
-    {
+    private void initiateScene() {
         //Disable spatial mapping
         ToggleSpatialMap();
     }

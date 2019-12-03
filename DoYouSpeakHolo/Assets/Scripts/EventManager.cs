@@ -4,8 +4,15 @@ using System.Collections.Generic;
 
 public class EventManager : MonoBehaviour
 {
+    public enum Triggers {
+        VAIntroduce,
+        LearningPhaseStart,
+        LearningPhaseSingleSpawn,
+        LearningPhasePairSpawn,
+        CheckingPhase
+    };
 
-    Dictionary<string, UnityEvent> eventDictionary;
+    Dictionary<Triggers, UnityEvent> eventDictionary;
 
     static EventManager eventManager;
 
@@ -35,11 +42,11 @@ public class EventManager : MonoBehaviour
     {
         if (eventDictionary == null)
         {
-            eventDictionary = new Dictionary<string, UnityEvent>();
+            eventDictionary = new Dictionary<Triggers, UnityEvent>();
         }
     }
 
-    public static void StartListening(string eventName, UnityAction listener)
+    public static void StartListening(Triggers eventName, UnityAction listener)
     {
         UnityEvent thisEvent = null;
         if (instance.eventDictionary.TryGetValue(eventName, out thisEvent))
@@ -54,7 +61,7 @@ public class EventManager : MonoBehaviour
         }
     }
 
-    public static void StopListening(string eventName, UnityAction listener)
+    public static void StopListening(Triggers eventName, UnityAction listener)
     {
         if (eventManager == null) return;
         UnityEvent thisEvent = null;
@@ -64,7 +71,7 @@ public class EventManager : MonoBehaviour
         }
     }
 
-    public static void TriggerEvent(string eventName)
+    public static void TriggerEvent(Triggers eventName)
     {
         UnityEvent thisEvent = null;
         if (instance.eventDictionary.TryGetValue(eventName, out thisEvent))

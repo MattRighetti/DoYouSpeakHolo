@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
+using static EventManager;
 
 public class CandSManager : MonoBehaviour {
-
 
     // Start is called before the first frame update
     void Start() {
@@ -10,7 +10,8 @@ public class CandSManager : MonoBehaviour {
     }
 
     public void StartLearningPhase() {
-        EventManager.TriggerEvent("LearningPhaseStart");
+        ObjectPooler.SharedInstance.ActivateObject("Male_VA", Positions.AsideLeft);
+        EventManager.TriggerEvent(Triggers.VAIntroduce);
     }
 
     // Update is called once per frame

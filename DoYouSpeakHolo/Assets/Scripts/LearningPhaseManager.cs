@@ -34,7 +34,8 @@ public class LearningPhaseManager : MonoBehaviour {
         }
 
 
-        CentralPosition = new Vector3(0, 0, 2);
+        CentralPosition = new Vector3(0, 0, 1);
+
         EventManager.StartListening("LearningPhaseStart", HandleStartOfLearningPhase);
         EventManager.StartListening("LearningPhaseSingleSpawn", HandleSpawn);
         EventManager.StartListening("LearningPhasePairSpawn", HandleSpawnPairs);
@@ -54,18 +55,17 @@ public class LearningPhaseManager : MonoBehaviour {
     //Handler fot the spawn procedure
     private void HandleSpawn() {
         StartCoroutine(ShowObjects());
+
+        //Trigger the spawning of the object pairs
+        EventManager.TriggerEvent("LearningPhasePairSpawn");
     }
 
     //Spawn the objects
     IEnumerator ShowObjects() {
         foreach (string objectKey in SceneObjects) {
-            Debug.Log("Spawning " + objectKey);
             StartCoroutine(ShowObject(objectKey));
             yield return new WaitForSeconds(3);
         }
-
-        //Trigger the spawning of the object pairs
-        EventManager.TriggerEvent("LearningPhasePairSpawn");
     }
 
     //Spawn the objects in front of the user and destroy them after a timeout
@@ -77,11 +77,14 @@ public class LearningPhaseManager : MonoBehaviour {
     }
 
     void HandleSpawnPairs() {
-        
-        //Spawn the male character
+        if (Scene == ScenesEnum.Scene3) {
+            //Spawn the male character
 
-        //Spawn the female character
-        
+            //Spawn the female character 
+        }
+
+
+
         //End of the learning phase
         End();
     }

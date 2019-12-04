@@ -9,7 +9,7 @@ public class GravityEnabler : MonoBehaviour
 
     void Start()
     {
-        coll = GetComponent<Collider>();
+        coll = gameObject.GetComponent<Collider>();
     }
 
     public void EnableGravity()

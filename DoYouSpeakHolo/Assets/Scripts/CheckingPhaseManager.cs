@@ -87,11 +87,15 @@ public class CheckingPhaseManager : MonoBehaviour {
     public List<string> Shuffle(List<string> list) {
         List<string> randomList = new List<string>();
 
-        for (int i = 0; i < SceneObjects.Count; i++) {
-            System.Random rnd = new System.Random();
-            int index = rnd.Next(SceneObjects.Count);
-            randomList.Add(SceneObjects[i]);
+        System.Random random = new System.Random();
+        int randomIndex = 0;
+
+        while (list.Count > 0) {
+            randomIndex = random.Next(0, list.Count);
+            randomList.Add(list[randomIndex]);
+            list.RemoveAt(randomIndex);
         }
+
         return randomList;
     }
 }

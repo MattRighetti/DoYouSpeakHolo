@@ -6,11 +6,12 @@ using static EventManager;
 
 public class LearningPhaseManager : MonoBehaviour {
 
-    private List<string> SceneObjects;
+    public List<string> SceneObjects;
     private ObjectPooler Pooler;
 
     public enum ScenesEnum { Scene1, Scene2, Scene3 };
     public ScenesEnum Scene;
+
 
     void Start() {
         Setup();
@@ -36,15 +37,15 @@ public class LearningPhaseManager : MonoBehaviour {
                 break;
         }
 
-        EventManager.StartListening(Triggers.LearningPhaseStart, HandleStartOfLearningPhase);
-        EventManager.StartListening(Triggers.LearningPhaseSingleSpawn, HandleSpawn);
-        EventManager.StartListening(Triggers.LearningPhasePairSpawn, HandleSpawnPairs);
+        StartListening(Triggers.LearningPhaseStart, HandleStartOfLearningPhase);
+        StartListening(Triggers.LearningPhaseSingleSpawn, HandleSpawn);
+        StartListening(Triggers.LearningPhasePairSpawn, HandleSpawnPairs);
     }
 
     //First phase of the activity, the virtual assistant shows to the user some objects and tells their name
     private void HandleStartOfLearningPhase() {
         //Trigger the spawn procedure
-        EventManager.TriggerEvent(Triggers.LearningPhaseSingleSpawn);
+        TriggerEvent(Triggers.LearningPhaseSingleSpawn);
     }
 
     internal void SetScene(ScenesEnum scene) {
@@ -89,12 +90,12 @@ public class LearningPhaseManager : MonoBehaviour {
 
     //Stop listening to events and trigger the checking phase
     private void End() {
-        EventManager.StopListening(Triggers.LearningPhaseStart, HandleStartOfLearningPhase);
-        EventManager.StopListening(Triggers.LearningPhaseSingleSpawn, HandleSpawn);
-        EventManager.StopListening(Triggers.LearningPhasePairSpawn, HandleSpawn);
+        StopListening(Triggers.LearningPhaseStart, HandleStartOfLearningPhase);
+        StopListening(Triggers.LearningPhaseSingleSpawn, HandleSpawn);
+        StopListening(Triggers.LearningPhasePairSpawn, HandleSpawn);
 
         //start the checking phase
         //TODO: find a better way to call the method
-        EventManager.TriggerEvent(Triggers.CheckingPhase);
+        TriggerEvent(Triggers.CheckingPhase);
     }
 }

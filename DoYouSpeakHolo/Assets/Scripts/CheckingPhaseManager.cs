@@ -7,19 +7,19 @@ using UnityEngine.Events;
 using static EventManager;
 
 public class CheckingPhaseManager : MonoBehaviour {
-    private GameObject Key;
-    private GameObject House;
-    private GameObject Tree;
-    private GameObject Apple;
 
-    private List<GameObject> GameObjects;
+    private List<string> gameObjects;
     private ObjectPooler objectPooler;
-    private bool checking = false;
+    private int findObjectCounter = -1;
 
     void Start() {
         objectPooler = gameObject.GetComponent<ObjectPooler>();
-        EventManager.StartListening(Triggers.CheckingPhase, HandleStartCheckingPhase);
+        gameObjects = gameObject.GetComponent<LearningPhaseManager>().SceneObjects;
+        StartListening(Triggers.CheckingPhase, HandleStartCheckingPhase);
+        StartListening(Triggers.FoundObject, FoundObject);
     }
+
+
 
     private void Update() {
 
@@ -32,46 +32,60 @@ public class CheckingPhaseManager : MonoBehaviour {
 
     //Spawn the objects in random order and ask the user to pick a specific one
     private void CheckingPhase() {
-        CreateAllObjectsAndDisplayInRandomOrder(GameObjects);
+        CreateAllObjectsAndDisplayInRandomOrder(gameObjects);
+        SetTargetObject();
     }
 
-    private void CreateAllObjectsAndDisplayInRandomOrder(List<GameObject> gameObjects) {
-        List<GameObject> randomList = new List<GameObject>();
+   
+    private void FoundObject() {
+        throw new NotImplementedException();
+    }
 
-        for (int i = 0; i < GameObjects.Count; i++) {
-            System.Random rnd = new System.Random();
-            int index = rnd.Next(GameObjects.Count);
-            randomList.Add(GameObjects[i]);
-        }
+    //Set the object that the user has to find
+    private void SetTargetObject() {
+        //increase the counter
+        findObjectCounter++;
 
-        Vector3 startPosition = new Vector3(-0.75f, 0, 1);
+        //shuffle the collection again
+        gameObjects = Shuffle(gameObjects);
 
-        foreach (GameObject obj in GameObjects) {
-            GameObject objectToCreate = Instantiate(obj) as GameObject;
-            objectToCreate.transform.position = startPosition;
+        //set the current target
+        objectPooler.GetPooledObject(gameObjects[findObjectCounter]).GetComponent<FindObjectTask>().IsTarget = true;
+    }
+
+    private void CreateAllObjectsAndDisplayInRandomOrder(List<string> gameObjects) {
+
+        //Shuffle the collection
+        gameObjects = Shuffle(gameObjects);
+        GameObject gameObj;
+        //Define initial spawning position
+        Vector3 startPosition = Positions.startPositionInlineFour;
+        foreach (string obj in gameObjects) {
+            //Activate the object and attach to it the script for the task
+            gameObj = objectPooler.ActivateObject(obj, startPosition);
+            FindObjectTask task = gameObj.AddComponent<FindObjectTask>();
+            gameObj.AddComponent<Interactable>().AddReceiver<InteractableOnPressReceiver>().OnPress.AddListener(() => task.Check() );
             startPosition += new Vector3(0.5f, 0, 0);
         }
-
-        var interactable = Key.GetComponent<Interactable>();
-        var onp = interactable.AddReceiver<InteractableOnPressReceiver>();
-        onp.OnPress.AddListener(() => Debug.Log("Set Listener"));
-
-        //TODO: the virtual assistant tells the user the object to find
-        var test = House.AddComponent<Interactable>();
-        Debug.Log(test);
-        var h = test.AddReceiver<InteractableOnFocusReceiver>();
-        Debug.Log(h);
-        h.OnFocusOn.AddListener(() => Debug.Log("I'm getting focused"));
-        h.OnFocusOff.AddListener(() => Debug.Log("I'm getting !focused"));
-        //End of CheckingPhase
-        End();
     }
 
     //Stop listening to events and trigger the new phase
     private void End() {
-        EventManager.StopListening(Triggers.CheckingPhase, HandleStartCheckingPhase);
+        StopListening(Triggers.CheckingPhase, HandleStartCheckingPhase);
 
         //Trigger the new phase
 
+    }
+
+    //Randomize a List
+    public List<string> Shuffle(List<string> list) {
+        List<string> randomList = new List<string>();
+
+        for (int i = 0; i < gameObjects.Count; i++) {
+            System.Random rnd = new System.Random();
+            int index = rnd.Next(gameObjects.Count);
+            randomList.Add(gameObjects[i]);
+        }
+        return randomList;
     }
 }

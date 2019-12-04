@@ -34,7 +34,7 @@ public class HarvestingLogic : MonoBehaviour
         //Check whether the gameObject is the one that needs to be put in the basket
         if (Chest.gameObject.tag == this.ExpectedFruit )
         {
-            EventManager.TriggerEvent(Triggers.PickedFruit);
+            TriggerEvent(Triggers.PickedFruit);
         }
         
 

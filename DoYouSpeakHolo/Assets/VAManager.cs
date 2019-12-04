@@ -7,7 +7,7 @@ public class VAManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        EventManager.StartListening(Triggers.VAIntroduce, Introduce);
+        StartListening(Triggers.VAIntroduce, Introduce);
     }
 
     //Introduction of VA to the activity
@@ -16,7 +16,7 @@ public class VAManager : MonoBehaviour
         Debug.Log("Hi! I’m xxx. Today we are going to play together.In this first game I’ll ask you to find some objects and to do some actions with them.First I’ll show you some objects.Let’s start!");
 
         //Trigger the Learning Phase execution
-        EventManager.TriggerEvent(Triggers.LearningPhaseStart);
+        TriggerEvent(Triggers.LearningPhaseStart);
     }
 
     // Update is called once per frame

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using static EventManager;
 
 public class PossessivesManager : MonoBehaviour
@@ -12,7 +10,7 @@ public class PossessivesManager : MonoBehaviour
     void Start()
     {
         gameObject.GetComponent<LearningPhaseManager>().SetScene(LearningPhaseManager.ScenesEnum.Scene3);
-        EventManager.StartListening(Triggers.PickedFruit, CountFruits);
+        StartListening(Triggers.PickedFruit, CountFruits);
     }
 
     // Update is called once per frame
@@ -22,7 +20,7 @@ public class PossessivesManager : MonoBehaviour
         //TODO: find another way to start the flow of the activity
         if (!Learning)
         {
-            EventManager.TriggerEvent(Triggers.LearningPhaseStart);
+            TriggerEvent(Triggers.LearningPhaseStart);
             Learning = true;
         }
     }

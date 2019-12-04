@@ -56,7 +56,7 @@ public class ObjectPooler : MonoBehaviour {
         return keyValues;
     }
 
-    private GameObject GetPooledObject(string key) {
+    public GameObject GetPooledObject(string key) {
         GameObject obj;
         foreach (KeyValuePair<string, Dictionary<string, GameObject>> outer_entry in pooledObjectsDictionary) {
             if (outer_entry.Value.TryGetValue(key, out obj)) {
@@ -80,6 +80,7 @@ public class ObjectPooler : MonoBehaviour {
     public GameObject ActivateObject(string objKey, Vector3 centralPosition) {
         GameObject objectToCreate = GetPooledObject(objKey);
         objectToCreate.transform.position = centralPosition;
+        objectToCreate.name = objKey;
         objectToCreate.SetActive(true);
         return objectToCreate;
     }

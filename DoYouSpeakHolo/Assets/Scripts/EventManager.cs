@@ -10,7 +10,10 @@ public class EventManager : MonoBehaviour
         LearningPhaseSingleSpawn,
         LearningPhasePairSpawn,
         CheckingPhase,
-        PickedFruit
+        PickedFruit,
+        VAOk,
+        VAKo,
+        FoundObject
     };
 
     Dictionary<Triggers, UnityEvent> eventDictionary;

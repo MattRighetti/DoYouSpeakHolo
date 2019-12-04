@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static EventManager;
 
 public class HarvestingLogic : MonoBehaviour
 {
@@ -33,7 +34,7 @@ public class HarvestingLogic : MonoBehaviour
         //Check whether the gameObject is the one that needs to be put in the basket
         if (Chest.gameObject.tag == this.ExpectedFruit )
         {
-            EventManager.TriggerEvent("PickedFruitEvent");
+            EventManager.TriggerEvent(Triggers.PickedFruit);
         }
         
 

@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using static EventManager;
 
 public class CheckingPhaseManager : MonoBehaviour {
     private GameObject Key;
@@ -17,7 +18,7 @@ public class CheckingPhaseManager : MonoBehaviour {
 
     void Start() {
         objectPooler = gameObject.GetComponent<ObjectPooler>();
-        EventManager.StartListening("CheckingPhase", HandleStartCheckingPhase);
+        EventManager.StartListening(Triggers.CheckingPhase, HandleStartCheckingPhase);
     }
 
     private void Update() {
@@ -26,7 +27,6 @@ public class CheckingPhaseManager : MonoBehaviour {
     }
 
     private void HandleStartCheckingPhase() {
-        Debug.Log("Trigger works");
         CheckingPhase();
     }
 
@@ -69,7 +69,7 @@ public class CheckingPhaseManager : MonoBehaviour {
 
     //Stop listening to events and trigger the new phase
     private void End() {
-        EventManager.StopListening("CheckingPhase", HandleStartCheckingPhase);
+        EventManager.StopListening(Triggers.CheckingPhase, HandleStartCheckingPhase);
 
         //Trigger the new phase
 

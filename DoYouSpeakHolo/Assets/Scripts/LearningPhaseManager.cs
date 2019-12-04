@@ -51,20 +51,20 @@ public class LearningPhaseManager : MonoBehaviour {
         Scene = scene;
     }
 
-    //Handler fot the spawn procedure
-    private void HandleSpawn() {
+    //Handler fot the single object spawn procedure
+    void HandleSpawn() {
         StartCoroutine(ShowObjects());
-
-        //Trigger the spawning of the object pairs
-        EventManager.TriggerEvent(Triggers.LearningPhasePairSpawn);
     }
 
-    //Spawn the objects
+    //Spawn the objects one at time
     IEnumerator ShowObjects() {
         foreach (string objectKey in SceneObjects) {
             StartCoroutine(ShowObject(objectKey));
             yield return new WaitForSeconds(3);
         }
+
+        //End of Learning Phase
+        End();
     }
 
     //Spawn the objects in front of the user and destroy them after a timeout
@@ -75,17 +75,15 @@ public class LearningPhaseManager : MonoBehaviour {
         Pooler.DeactivateObject(objKey);
     }
 
+    //Spawn objects
     void HandleSpawnPairs() {
         if (Scene == ScenesEnum.Scene3) {
             //Spawn the male character
+            Pooler.ActivateObject("Shark", Positions.AsideRight);
 
-            //Spawn the female character 
+            //Spawn the female character             
         }
 
-
-
-        //End of the learning phase
-        End();
     }
 
 

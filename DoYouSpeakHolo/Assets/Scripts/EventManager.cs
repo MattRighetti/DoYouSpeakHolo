@@ -9,7 +9,8 @@ public class EventManager : MonoBehaviour
         LearningPhaseStart,
         LearningPhaseSingleSpawn,
         LearningPhasePairSpawn,
-        CheckingPhase
+        CheckingPhase,
+        PickedFruit
     };
 
     Dictionary<Triggers, UnityEvent> eventDictionary;

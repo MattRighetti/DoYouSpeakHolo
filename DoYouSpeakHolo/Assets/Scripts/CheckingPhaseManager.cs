@@ -1,9 +1,6 @@
 ﻿using Microsoft.MixedReality.Toolkit.UI;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using static EventManager;
 
 public class CheckingPhaseManager : MonoBehaviour {
@@ -13,10 +10,8 @@ public class CheckingPhaseManager : MonoBehaviour {
     private int findObjectCounter = 0;
 
     void Start() {
-        objectPooler = gameObject.GetComponent<ObjectPooler>();
+        objectPooler = ObjectPooler.GetPooler();
         SceneObjects = objectPooler.GetObjects();
-        if(SceneObjects.Count == 0 )
-            Debug.Log("I AM EMPTY");
         StartListening(Triggers.CheckingPhase, HandleStartCheckingPhase);
         StartListening(Triggers.FoundObject, FoundObject);
     }

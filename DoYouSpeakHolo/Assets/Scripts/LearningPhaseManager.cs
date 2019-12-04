@@ -18,7 +18,7 @@ public class LearningPhaseManager : MonoBehaviour {
     // - Start listening to the events
     void Setup() {
         //Get the ObjectPooler instance
-        Pooler = ObjectPooler.SharedInstance;
+        Pooler = ObjectPooler.GetPooler();
 
         SceneObjects = Pooler.GetObjects();
         

@@ -22,10 +22,9 @@ public class ObjectPooler : MonoBehaviour {
     void Awake() {
         SharedInstance = this;
         hiddenPosition = new Vector3(0, 0, -3);
-        Setup();
     }
 
-    void Setup() {
+    public void Setup() {
         pooledObjectsDictionary = new  Dictionary<string, GameObject>();
         //Get the objects from the pooler depending on the scene
         switch (Scene) {
@@ -39,6 +38,14 @@ public class ObjectPooler : MonoBehaviour {
                 CreateObjects(Fruits);
                 break;
         }
+    }
+
+    public static ObjectPooler GetPooler() {
+        GameObject obj = GameObject.Find("Pooler");
+        ObjectPooler pooler = obj.GetComponent<ObjectPooler>();
+        Debug.Log("Pooler scene" + pooler.Scene);
+        pooler.Setup();
+        return obj.GetComponent<ObjectPooler>();
     }
 
     //Create the objects, deactivate and store them into the data structure

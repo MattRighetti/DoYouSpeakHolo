@@ -12,8 +12,12 @@ public class ObjectPooler : MonoBehaviour {
     public const string People = "people";
 
     public static ObjectPooler SharedInstance;
-    public Dictionary<string, Dictionary<string, GameObject>> pooledObjectsDictionary;
+    public Dictionary<string, GameObject> pooledObjectsDictionary;
     private Vector3 hiddenPosition;
+
+
+    public enum ScenesEnum { Scene1, Scene2, Scene3 };
+    public ScenesEnum Scene = ScenesEnum.Scene1;
 
     void Awake() {
         SharedInstance = this;
@@ -22,47 +26,47 @@ public class ObjectPooler : MonoBehaviour {
     }
 
     void Setup() {
-        pooledObjectsDictionary = new Dictionary<string, Dictionary<string, GameObject>>();
-        CreateObjects();
+        pooledObjectsDictionary = new  Dictionary<string, GameObject>();
+        //Get the objects from the pooler depending on the scene
+        switch (Scene) {
+            case ScenesEnum.Scene1:
+                CreateObjects(Animals);
+                break;
+            case ScenesEnum.Scene2:
+                CreateObjects(Animals);
+                break;
+            case ScenesEnum.Scene3:
+                CreateObjects(Fruits);
+                break;
+        }
     }
 
     //Create the objects, deactivate and store them into the data structure
-    private void CreateObjects() {
+    private void CreateObjects(string category) {
         ObjectsEnum objects = ReadJSONFromFile();
         Dictionary<string, Dictionary<string, string>> dict = objects.GetDictionary();
 
         foreach (KeyValuePair<string, Dictionary<string, string>> outer_entry in dict) {
-            Dictionary<string, GameObject> internal_dict = new Dictionary<string, GameObject>();
-            foreach (KeyValuePair<string, string> inner_entry in outer_entry.Value) {
-                GameObject obj = Instantiate(Resources.Load(inner_entry.Value, typeof(GameObject))) as GameObject;
-                obj.SetActive(false);
-                internal_dict.Add(inner_entry.Key, obj);
+            if(Equals(outer_entry.Key, category)){
+                foreach (KeyValuePair<string, string> inner_entry in outer_entry.Value) {
+                    Debug.Log("creating " + inner_entry.Key);
+                    GameObject obj = Instantiate(Resources.Load(inner_entry.Value, typeof(GameObject))) as GameObject;
+                    obj.SetActive(false);
+                    pooledObjectsDictionary.Add(inner_entry.Key, obj);
+                }
             }
-            pooledObjectsDictionary.Add(outer_entry.Key, internal_dict);
+            
         }
     }
 
-    public List<string> GetObjectsByCategory(string category) {
-        Dictionary<string, GameObject> dict = new Dictionary<string, GameObject>();
-        if (pooledObjectsDictionary.TryGetValue(category, out dict)) {
-            return new List<string>(dict.Keys);
-        }
-        return null;
-    }
-
-
-    public List<string> GetObjectCategories() {
-        List<string> keyValues = new List<string>(pooledObjectsDictionary.Keys);
-        return keyValues;
+    internal List<string> GetObjects() {
+        return new List<string>(pooledObjectsDictionary.Keys);
     }
 
     public GameObject GetPooledObject(string key) {
         GameObject obj;
-        foreach (KeyValuePair<string, Dictionary<string, GameObject>> outer_entry in pooledObjectsDictionary) {
-            if (outer_entry.Value.TryGetValue(key, out obj)) {
-                return obj;
-
-            }
+        if (pooledObjectsDictionary.TryGetValue(key, out obj)) {
+            return obj;
         }
         return null;
     }
@@ -77,9 +81,9 @@ public class ObjectPooler : MonoBehaviour {
         return JsonConvert.DeserializeObject<ObjectsEnum>(jsonToParse);
     }
 
-    public GameObject ActivateObject(string objKey, Vector3 centralPosition) {
+    public GameObject ActivateObject(string objKey, Vector3 position) {
         GameObject objectToCreate = GetPooledObject(objKey);
-        objectToCreate.transform.position = centralPosition;
+        objectToCreate.transform.position = position;
         objectToCreate.name = objKey;
         objectToCreate.SetActive(true);
         return objectToCreate;

@@ -9,10 +9,6 @@ public class LearningPhaseManager : MonoBehaviour {
     public List<string> SceneObjects;
     private ObjectPooler Pooler;
 
-    public enum ScenesEnum { Scene1, Scene2, Scene3 };
-    public ScenesEnum Scene;
-
-
     void Start() {
         Setup();
     }
@@ -24,18 +20,8 @@ public class LearningPhaseManager : MonoBehaviour {
         //Get the ObjectPooler instance
         Pooler = ObjectPooler.SharedInstance;
 
-        //Get the objects from the pooler depending on the scene
-        switch (Scene) {
-            case ScenesEnum.Scene1:
-                SceneObjects = Pooler.GetObjectsByCategory(ObjectPooler.Animals);
-                break;
-            case ScenesEnum.Scene2:
-                SceneObjects = Pooler.GetObjectsByCategory(ObjectPooler.Animals);
-                break;
-            case ScenesEnum.Scene3:
-                SceneObjects = Pooler.GetObjectsByCategory(ObjectPooler.Fruits);
-                break;
-        }
+        SceneObjects = Pooler.GetObjects();
+        
 
         StartListening(Triggers.LearningPhaseStart, HandleStartOfLearningPhase);
         StartListening(Triggers.LearningPhaseSingleSpawn, HandleSpawn);
@@ -47,11 +33,7 @@ public class LearningPhaseManager : MonoBehaviour {
         //Trigger the spawn procedure
         TriggerEvent(Triggers.LearningPhaseSingleSpawn);
     }
-
-    internal void SetScene(ScenesEnum scene) {
-        Scene = scene;
-    }
-
+    
     //Handler fot the single object spawn procedure
     void HandleSpawn() {
         StartCoroutine(ShowObjects());
@@ -78,13 +60,7 @@ public class LearningPhaseManager : MonoBehaviour {
 
     //Spawn objects
     void HandleSpawnPairs() {
-        if (Scene == ScenesEnum.Scene3) {
-            //Spawn the male character
-            Pooler.ActivateObject("Shark", Positions.AsideRight);
-
-            //Spawn the female character             
-        }
-
+        return;
     }
 
 

@@ -11,7 +11,7 @@
             "Pear" : "Prefab/fruits/Pear"
         },
         "people": {
-            "Male_VA": "Prefab/people/Male_VA"
+            "VA_Male": "Prefab/people/VA_Male"
         },
         "animals": {
             "Crocodile": "Prefab/animals/Crocodile",

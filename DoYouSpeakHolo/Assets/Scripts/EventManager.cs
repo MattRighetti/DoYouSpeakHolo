@@ -7,8 +7,7 @@ public class EventManager : MonoBehaviour
     public enum Triggers {
         VAIntroduce,
         LearningPhaseStart,
-        LearningPhaseSingleSpawn,
-        LearningPhasePairSpawn,
+        LearningPhaseSpawn,
         CheckingPhase,
         PickedFruit,
         VAOk,

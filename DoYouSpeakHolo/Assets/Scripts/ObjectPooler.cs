@@ -13,7 +13,6 @@ public class ObjectPooler : MonoBehaviour {
 
     public static ObjectPooler SharedInstance;
     public Dictionary<string, GameObject> pooledObjectsDictionary;
-    private Vector3 hiddenPosition;
 
 
     public enum ScenesEnum { Scene1, Scene2, Scene3 };
@@ -21,7 +20,7 @@ public class ObjectPooler : MonoBehaviour {
 
     void Awake() {
         SharedInstance = this;
-        hiddenPosition = new Vector3(0, 0, -3);
+        
     }
 
     public void Setup() {
@@ -58,6 +57,7 @@ public class ObjectPooler : MonoBehaviour {
                 foreach (KeyValuePair<string, string> inner_entry in outer_entry.Value) {
                     Debug.Log("creating " + inner_entry.Key);
                     GameObject obj = Instantiate(Resources.Load(inner_entry.Value, typeof(GameObject))) as GameObject;
+                    obj.transform.position = Positions.hiddenPosition;
                     obj.SetActive(false);
                     pooledObjectsDictionary.Add(inner_entry.Key, obj);
                 }
@@ -98,7 +98,7 @@ public class ObjectPooler : MonoBehaviour {
 
     public void DeactivateObject(string objKey) {
         GameObject objectToCreate = GetPooledObject(objKey);
-        objectToCreate.transform.position = hiddenPosition;
+        objectToCreate.transform.position = Positions.hiddenPosition;
         objectToCreate.SetActive(false);
     }
 }

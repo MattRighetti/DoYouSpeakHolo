@@ -5,22 +5,22 @@ using UnityEngine;
 public class GravityEnabler : MonoBehaviour
 {
 
-    public Collider coll;
+    public Collider Coll;
 
     void Start()
     {
-        coll = gameObject.GetComponent<Collider>();
+        Coll = gameObject.GetComponent<Collider>();
     }
 
     public void EnableGravity()
     {
-        coll.attachedRigidbody.useGravity = true;
-        coll.attachedRigidbody.isKinematic = false;
+        Coll.attachedRigidbody.useGravity = true;
+        Coll.attachedRigidbody.isKinematic = false;
     }
 
     public void DisableGravity()
     {
-        coll.attachedRigidbody.useGravity = false;
-        coll.attachedRigidbody.isKinematic = true;
+        Coll.attachedRigidbody.useGravity = false;
+        Coll.attachedRigidbody.isKinematic = true;
     }
 }

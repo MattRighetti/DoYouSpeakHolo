@@ -18,10 +18,9 @@ public class DoNotFall : MonoBehaviour {
 
 
         }
-
         if (gameObject.transform.position.y == 0) {
-            GravityEnabler gravity = gameObject.AddComponent<GravityEnabler>();
-            gravity.coll = coll;
+            GravityEnabler gravity = gameObject.GetComponent<GravityEnabler>();
+            gravity.Coll = coll;
             gravity.DisableGravity();
         }
     }

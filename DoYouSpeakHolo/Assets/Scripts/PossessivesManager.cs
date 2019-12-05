@@ -1,32 +1,30 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using static EventManager;
 
-public class PossessivesManager : MonoBehaviour
+public class PossessivesManager : AbstractSceneManager
 {
-    private int counter = 0;
-    private bool Learning = false;
+    private GameObject Tree;
+    private GameObject House;
 
     // Start is called before the first frame update
     void Start()
     {
-    //    gameObject.GetComponent<LearningPhaseManager>().SetScene(LearningPhaseManager.ScenesEnum.Scene3);
-        StartListening(Triggers.PickedFruit, CountFruits);
+        CreteFixedSceneObjects();
+        //    gameObject.GetComponent<LearningPhaseManager>().SetScene(LearningPhaseManager.ScenesEnum.Scene3);
+        //  StartListening(Triggers.PickedFruit, CountFruits);
+        
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-        //TODO: find another way to start the flow of the activity
-        if (!Learning)
-        {
-            TriggerEvent(Triggers.LearningPhaseStart);
-            Learning = true;
-        }
+    //TODO Add this when we are sure that everything works
+    private void CreteFixedSceneObjects() {
+//        Tree = Instantiate(Resources.Load("Prefab/objects/Tree", typeof(GameObject))) as GameObject;
+//        Tree.transform.position = Positions.TreePosition;
+//        House = Instantiate(Resources.Load("Prefab/objects/House", typeof(GameObject))) as GameObject;
+//        House.transform.position = Positions.TreePosition;
     }
 
-    private void CountFruits()
-    {
-        counter++;
+    public override void StartLearningPhase() {
+        TriggerEvent(Triggers.LearningPhaseStart);
     }
 }

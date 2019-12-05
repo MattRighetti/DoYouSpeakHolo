@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static EventManager;
 
-public class LearningPhaseManager : MonoBehaviour {
+public abstract class LearningPhaseManager : MonoBehaviour {
 
     public List<string> SceneObjects;
     private ObjectPooler Pooler;
@@ -22,53 +22,34 @@ public class LearningPhaseManager : MonoBehaviour {
 
         SceneObjects = Pooler.GetObjects();
         
-
         StartListening(Triggers.LearningPhaseStart, HandleStartOfLearningPhase);
-        StartListening(Triggers.LearningPhaseSingleSpawn, HandleSpawn);
-        StartListening(Triggers.LearningPhasePairSpawn, HandleSpawnPairs);
+        StartListening(Triggers.LearningPhaseSpawn, StartSpawn);
     }
 
     //First phase of the activity, the virtual assistant shows to the user some objects and tells their name
     private void HandleStartOfLearningPhase() {
+        //TODO: Add VA speaking
+
         //Trigger the spawn procedure
-        TriggerEvent(Triggers.LearningPhaseSingleSpawn);
-    }
-    
-    //Handler fot the single object spawn procedure
-    void HandleSpawn() {
-        StartCoroutine(ShowObjects());
+        TriggerEvent(Triggers.LearningPhaseSpawn);
     }
 
-    //Spawn the objects one at time
-    IEnumerator ShowObjects() {
-        foreach (string objectKey in SceneObjects) {
-            StartCoroutine(ShowObject(objectKey));
-            yield return new WaitForSeconds(3);
-        }
-
-        //End of Learning Phase
-        End();
-    }
+    //Handler fot the starting the spawn procedure
+    protected abstract void StartSpawn();
 
     //Spawn the objects in front of the user and destroy them after a timeout
-    IEnumerator ShowObject(string objKey) {
+    protected IEnumerator ShowObject(string objKey) {
         //TODO: Add VA voice
         GameObject objectToCreate = Pooler.ActivateObject(objKey, Positions.Central);
         yield return new WaitForSeconds(2);
         Pooler.DeactivateObject(objKey);
     }
 
-    //Spawn objects
-    void HandleSpawnPairs() {
-        return;
-    }
-
 
     //Stop listening to events and trigger the checking phase
-    private void End() {
+    protected void End() {
         StopListening(Triggers.LearningPhaseStart, HandleStartOfLearningPhase);
-        StopListening(Triggers.LearningPhaseSingleSpawn, HandleSpawn);
-        StopListening(Triggers.LearningPhasePairSpawn, HandleSpawn);
+        StopListening(Triggers.LearningPhaseSpawn, StartSpawn);
 
         //start the checking phase
         //TODO: find a better way to call the method

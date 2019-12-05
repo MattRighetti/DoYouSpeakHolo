@@ -16,11 +16,15 @@ public abstract class AbstractSceneManager : MonoBehaviour {
     
     }
 
-    public void ActivateObject(string key, Vector3 position) {
-        Pooler.ActivateObject(key, position);
+    public GameObject ActivateObject(string key, Vector3 position) {
+        return Pooler.ActivateObject(key, position);
     }
 
     public void DeactivateObject(string key) {
         Pooler.DeactivateObject(key);
+    }
+
+    public GameObject GetPooledObject(string key) {
+        return Pooler.GetPooledObject(key);
     }
 }

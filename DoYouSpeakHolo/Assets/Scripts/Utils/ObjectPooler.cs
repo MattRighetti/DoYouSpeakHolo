@@ -25,7 +25,7 @@ public class ObjectPooler : MonoBehaviour {
             Debug.Log(keyValuePair);
             GameObject obj = Instantiate(Resources.Load(keyValuePair.Value, typeof(GameObject))) as GameObject;
             obj.transform.position = Positions.hiddenPosition;
-            obj.SetActive(true);
+            obj.SetActive(false);
             pooledObjectsDictionary.Add(keyValuePair.Key, obj);
         }
     }

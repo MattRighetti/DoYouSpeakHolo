@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static EventManager;
@@ -63,6 +62,6 @@ public abstract class LearningPhaseManager : MonoBehaviour {
 
         //start the checking phase
         //TODO: find a better way to call the method
-        TriggerEvent(Triggers.CheckingPhase);
+        TriggerEvent(Triggers.LearningPhaseEnd);
     }
 }

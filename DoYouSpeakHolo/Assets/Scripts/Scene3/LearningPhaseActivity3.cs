@@ -13,25 +13,25 @@ public class LearningPhaseActivity3 : LearningPhaseManager {
     }
 
     private IEnumerator ShowObjectsWithPossessives() {
-        //Spawn VA_Male and half of the objects
-        GameObject male = GetComponent<AbstractSceneManager>().ActivateObject("VA_Male", Positions.MalePosition);
         SplitObjects();
+
+        //Spawn VA_Male and half of the objects
+        GameObject male = GetComponent<AbstractSceneManager>().ActivateObject("Male", Positions.MalePosition);
 
         //Show objects and wait for the spawn to finish
         StartCoroutine(ShowObjects(maleObjects));
         yield return new WaitForSeconds(3 * maleObjects.Count);
+        GetComponent<AbstractSceneManager>().DeactivateObject(male.gameObject.name);
 
         //Do the same for the female
-
-        GetComponent<AbstractSceneManager>().DeactivateObject(male.gameObject.name);
-        GameObject female = GetComponent<AbstractSceneManager>().ActivateObject("VA_Female", Positions.FemalePosition);
+        GameObject female = GetComponent<AbstractSceneManager>().ActivateObject("Female", Positions.FemalePosition);
 
         StartCoroutine(ShowObjects(femaleObjects));
         yield return new WaitForSeconds(3 * femaleObjects.Count);
         sceneManager.DeactivateObject(female.gameObject.name);
 
-        //Start the checking phase
-        TriggerEvent(Triggers.CheckingPhase);
+        //End the learning phase
+        TriggerEvent(Triggers.LearningPhaseEnd);
     }
 
     //Split the category of the objects creating two list, one for each character

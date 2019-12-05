@@ -25,8 +25,14 @@
             "Tree": "Prefab/objects/Tree"
         },
         "dynamicObjects": {
-            "Key": "Prefab/objects/Key",
-            "Basket": "Prefab/objects/Basket"
+            "Apple": "Prefab/Fruits/Apple",
+            "Banana": "Prefab/Fruits/Banana",
+            "Orange": "Prefab/Fruits/Orange",
+            "Pear": "Prefab/Fruits/Pear",
+            "MaleBasket": "Prefab/objects/Basket",
+            "FemaleBasket": "Prefab/objects/Basket",
+            "Male": "Prefab/people/VA_Male",
+            "Female": "Prefab/people/VA_Female"
         }
     }
 ]

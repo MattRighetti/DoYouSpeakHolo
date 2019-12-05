@@ -1,20 +1,20 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using static EventManager;
 
 public class PossessivesManager : AbstractSceneManager
 {
     private readonly SceneSettings sceneObjects = SceneSwitcher.settings[2];
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     public override void LoadObjects() {
         Pooler.CreateObjects(sceneObjects.staticObjects);
         Pooler.CreateObjects(sceneObjects.dynamicObjects);
+        CreateScene();
+    }
+
+    //Create static elements of the scene
+    private void CreateScene() {
+        Pooler.ActivateObject("House", Positions.HousePosition);
+        Pooler.ActivateObject("Tree", Positions.TreePosition);
     }
 
     public override void StartLearningPhase() {

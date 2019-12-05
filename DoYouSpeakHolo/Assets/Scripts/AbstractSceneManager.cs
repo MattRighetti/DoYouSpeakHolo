@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class AbstractSceneManager : MonoBehaviour {
@@ -7,9 +8,24 @@ public abstract class AbstractSceneManager : MonoBehaviour {
     public SceneSettings sceneSettings;
 
     // Start is called before the first frame update
-    void Start() {
+    void OnEnable() {
         Pooler = ObjectPooler.GetPooler();
         LoadObjects();
+        StartListening();
+    }
+
+    private void StartListening() {
+        EventManager.StartListening(EventManager.Triggers.LearningPhaseEnd, LearningPhaseEnd);
+        EventManager.StartListening(EventManager.Triggers.CheckingPhaseEnd, CheckingPhaseEnd);
+    }
+
+    private void CheckingPhaseEnd() {
+        //Check if there are more levels to load;
+        throw new NotImplementedException();
+    }
+
+    private void LearningPhaseEnd() {
+        EventManager.TriggerEvent(EventManager.Triggers.CheckingPhaseStart);
     }
 
     public GameObject ActivateObject(string key, Vector3 position) {
@@ -27,7 +43,6 @@ public abstract class AbstractSceneManager : MonoBehaviour {
     public List<string> GetObjects() {
         return Pooler.GetObjects();
     }
-
 
     // -------------------------- ABSTRACT --------------------------------
 

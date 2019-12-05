@@ -12,7 +12,7 @@ public class CheckingPhaseManager : MonoBehaviour {
 
     void Start() {
         sceneManager = GetComponent<AbstractSceneManager>();
-        StartListening(Triggers.CheckingPhase, HandleStartCheckingPhase);
+        StartListening(Triggers.CheckingPhaseStart, HandleStartCheckingPhase);
         StartListening(Triggers.FoundObject, FoundObject);
     }
 
@@ -71,7 +71,7 @@ public class CheckingPhaseManager : MonoBehaviour {
 
     //Stop listening to events and trigger the new phase
     private void End() {
-        StopListening(Triggers.CheckingPhase, HandleStartCheckingPhase);
+        StopListening(Triggers.CheckingPhaseStart, HandleStartCheckingPhase);
 
         //Trigger the new phase
 

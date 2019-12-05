@@ -8,11 +8,14 @@ public class EventManager : MonoBehaviour
         VAIntroduce,
         LearningPhaseStart,
         LearningPhaseSpawn,
-        CheckingPhase,
         PickedFruit,
         VAOk,
         VAKo,
-        FoundObject
+        FoundObject,
+        LearningPhaseEnd,
+        CheckingPhaseEnd,
+        CheckingPhaseStart,
+        LoadingComplete
     };
 
     Dictionary<Triggers, UnityEvent> eventDictionary;

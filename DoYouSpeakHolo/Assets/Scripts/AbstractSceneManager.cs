@@ -4,20 +4,12 @@ using UnityEngine;
 public abstract class AbstractSceneManager : MonoBehaviour {
 
     protected ObjectPooler Pooler;
+    public SceneSettings sceneSettings;
 
     // Start is called before the first frame update
     void Start() {
         Pooler = ObjectPooler.GetPooler();
         LoadObjects();
-    }
-
-    public abstract void LoadObjects();
-
-    public abstract void StartLearningPhase();
-    
-    // Update is called once per frame
-    void Update() {
-    
     }
 
     public GameObject ActivateObject(string key, Vector3 position) {
@@ -35,4 +27,12 @@ public abstract class AbstractSceneManager : MonoBehaviour {
     public List<string> GetObjects() {
         return Pooler.GetObjects();
     }
+
+
+    // -------------------------- ABSTRACT --------------------------------
+
+    public abstract void LoadObjects();
+
+    public abstract void StartLearningPhase();
+
 }

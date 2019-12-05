@@ -12,19 +12,12 @@ public class CheckingPhaseManager : MonoBehaviour {
 
     void Start() {
         sceneManager = GetComponent<AbstractSceneManager>();
-        SceneObjects = sceneManager.GetObjects();
         StartListening(Triggers.CheckingPhase, HandleStartCheckingPhase);
         StartListening(Triggers.FoundObject, FoundObject);
     }
 
-
-
-    private void Update() {
-
-
-    }
-
     private void HandleStartCheckingPhase() {
+        SceneObjects = sceneManager.GetObjects();
         CheckingPhase();
     }
 

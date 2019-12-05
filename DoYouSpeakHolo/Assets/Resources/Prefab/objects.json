@@ -2,14 +2,30 @@
     {
         "staticObjects": {
             "House": "Prefab/objects/House",
-            "Key": "Prefab/objects/Key",
-            "Tree": "Prefab/objects/Tree",
-            "Basket": "Prefab/objects/Basket"
+            "Tree": "Prefab/objects/Tree"
         },
         "dynamicObjects": {
-            "House": "Prefab/objects/House",
             "Key": "Prefab/objects/Key",
-            "Tree": "Prefab/objects/Tree",
+            "Basket": "Prefab/objects/Basket"
+        }
+    },
+    {
+        "staticObjects": {
+            "House": "Prefab/objects/House",
+            "Tree": "Prefab/objects/Tree"
+        },
+        "dynamicObjects": {
+            "Key": "Prefab/objects/Key",
+            "Basket": "Prefab/objects/Basket"
+        }
+    },
+    {
+        "staticObjects": {
+            "House": "Prefab/objects/House",
+            "Tree": "Prefab/objects/Tree"
+        },
+        "dynamicObjects": {
+            "Key": "Prefab/objects/Key",
             "Basket": "Prefab/objects/Basket"
         }
     }

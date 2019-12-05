@@ -5,13 +5,12 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SceneSwitcher : MonoBehaviour {
-    private List<SceneSettings> settings;
+    public static List<SceneSettings> settings;
 
     void Start() {
-        settings = ReadJSONFromFile();
+        if (settings == null)
+            settings = ReadJSONFromFile();
     }
-
-
 
     public void GoToMenuScene() {
         SceneManager.LoadScene("Menu");
@@ -35,8 +34,8 @@ public class SceneSwitcher : MonoBehaviour {
 
     //Read and parse the JSON file
     public List<SceneSettings> ReadJSONFromFile() {
-        using (StreamReader r = new StreamReader("Assets/Resources/Prefab/objects.json")) {
-            string json = r.ReadToEnd();
+        using (StreamReader file = new StreamReader("Assets/Resources/Prefab/objects.json")) {
+            string json = file.ReadToEnd();
             return JsonConvert.DeserializeObject<List<SceneSettings>>(json);
         }
     }

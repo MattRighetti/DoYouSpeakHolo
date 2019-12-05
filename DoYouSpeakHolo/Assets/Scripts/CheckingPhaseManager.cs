@@ -6,12 +6,13 @@ using static EventManager;
 public class CheckingPhaseManager : MonoBehaviour {
 
     private List<string> SceneObjects;
-    private ObjectPooler objectPooler;
     private int findObjectCounter = 0;
 
+    protected AbstractSceneManager sceneManager;
+
     void Start() {
-        objectPooler = ObjectPooler.GetPooler();
-        SceneObjects = objectPooler.GetObjects();
+        sceneManager = GetComponent<AbstractSceneManager>();
+        SceneObjects = sceneManager.GetObjects();
         StartListening(Triggers.CheckingPhase, HandleStartCheckingPhase);
         StartListening(Triggers.FoundObject, FoundObject);
     }
@@ -56,7 +57,7 @@ public class CheckingPhaseManager : MonoBehaviour {
         Debug.Log("Object to find " + SceneObjects[findObjectCounter]);
 
         //Set the current target
-        objectPooler.GetPooledObject(SceneObjects[findObjectCounter]).GetComponent<FindObjectTask>().IsTarget = true;
+        GetComponent<AbstractSceneManager>().GetPooledObject(SceneObjects[findObjectCounter]).GetComponent<FindObjectTask>().IsTarget = true;
     }
 
     private void CreateAllObjectsAndDisplayInRandomOrder() {
@@ -68,7 +69,7 @@ public class CheckingPhaseManager : MonoBehaviour {
         Vector3 startPosition = Positions.startPositionInlineFour;
         foreach (string obj in SceneObjects) {
             //Activate the object and attach to it the script for the task
-            gameObj = objectPooler.ActivateObject(obj, startPosition);
+            gameObj = GetComponent<AbstractSceneManager>().ActivateObject(obj, startPosition);
             FindObjectTask task = gameObj.AddComponent<FindObjectTask>();
             gameObj.AddComponent<Interactable>().AddReceiver<InteractableOnPressReceiver>().OnPress.AddListener(() => task.Check() );
             startPosition += new Vector3(0.5f, 0, 0);
@@ -84,7 +85,7 @@ public class CheckingPhaseManager : MonoBehaviour {
     }
 
     //Randomize a List
-    public List<string> Shuffle(List<string> list) {
+    public static List<string> Shuffle(List<string> list) {
         List<string> randomList = new List<string>();
 
         System.Random random = new System.Random();

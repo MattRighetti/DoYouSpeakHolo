@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public abstract class AbstractSceneManager : MonoBehaviour {
 
@@ -26,5 +27,9 @@ public abstract class AbstractSceneManager : MonoBehaviour {
 
     public GameObject GetPooledObject(string key) {
         return Pooler.GetPooledObject(key);
+    }
+
+    public List<string> GetObjects() {
+        return Pooler.GetObjects();
     }
 }

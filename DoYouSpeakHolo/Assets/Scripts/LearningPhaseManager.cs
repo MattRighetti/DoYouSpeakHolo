@@ -7,7 +7,7 @@ using static EventManager;
 public abstract class LearningPhaseManager : MonoBehaviour {
 
     public List<string> SceneObjects;
-    private ObjectPooler Pooler;
+    protected AbstractSceneManager sceneManager;
 
     void Start() {
         Setup();
@@ -18,9 +18,8 @@ public abstract class LearningPhaseManager : MonoBehaviour {
     // - Start listening to the events
     void Setup() {
         //Get the ObjectPooler instance
-        Pooler = ObjectPooler.GetPooler();
-
-        SceneObjects = Pooler.GetObjects();
+        sceneManager = GetComponent<AbstractSceneManager>();
+        SceneObjects = sceneManager.GetObjects();
         
         StartListening(Triggers.LearningPhaseStart, HandleStartOfLearningPhase);
         StartListening(Triggers.LearningPhaseSpawn, StartSpawn);
@@ -37,12 +36,23 @@ public abstract class LearningPhaseManager : MonoBehaviour {
     //Handler fot the starting the spawn procedure
     protected abstract void StartSpawn();
 
+    //Spawn the objects one at time
+    protected IEnumerator ShowObjects(List<string> objectsToShow) {
+        foreach (string objectKey in objectsToShow) {
+            StartCoroutine(ShowObject(objectKey));
+            yield return new WaitForSeconds(3);
+        }
+
+        //End of Learning Phase
+        End();
+    }
+
     //Spawn the objects in front of the user and destroy them after a timeout
     protected IEnumerator ShowObject(string objKey) {
         //TODO: Add VA voice
-        GameObject objectToCreate = Pooler.ActivateObject(objKey, Positions.Central);
+        GameObject objectToCreate = sceneManager.ActivateObject(objKey, Positions.Central);
         yield return new WaitForSeconds(2);
-        Pooler.DeactivateObject(objKey);
+        sceneManager.DeactivateObject(objKey);
     }
 
 

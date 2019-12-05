@@ -16,12 +16,9 @@ public class PossessivesManager : AbstractSceneManager
         
     }
 
-    //TODO Add this when we are sure that everything works
     private void CreteFixedSceneObjects() {
-//        Tree = Instantiate(Resources.Load("Prefab/objects/Tree", typeof(GameObject))) as GameObject;
-//        Tree.transform.position = Positions.TreePosition;
-//        House = Instantiate(Resources.Load("Prefab/objects/House", typeof(GameObject))) as GameObject;
-//        House.transform.position = Positions.TreePosition;
+        Tree = ActivateObject("Tree", Positions.TreePosition);
+        House = ActivateObject("House", Positions.HousePosition);
     }
 
     public override void StartLearningPhase() {

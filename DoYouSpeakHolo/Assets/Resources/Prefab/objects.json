@@ -1,25 +1,16 @@
-{
-    "ObjectsEnumeration": {
-        "objects": {
+[
+    {
+        "staticObjects": {
             "House": "Prefab/objects/House",
             "Key": "Prefab/objects/Key",
             "Tree": "Prefab/objects/Tree",
-            "Basket" : "Prefab/objects/Basket"
+            "Basket": "Prefab/objects/Basket"
         },
-        "fruits": {
-            "Apple": "Prefab/fruits/Apple",
-            "Pear" : "Prefab/fruits/Pear"
-        },
-        "people": {
-            "VA_Male": "Prefab/people/VA_Male"
-        },
-        "animals": {
-            "Crocodile": "Prefab/animals/Crocodile",
-            "Lion": "Prefab/animals/Lion",
-            "Rabbit": "Prefab/animals/Rabbit",
-            "Rhino": "Prefab/animals/Rhino",
-            "Shark": "Prefab/animals/Shark",
-            "Turtle": "Prefab/animals/Turtle"
+        "dynamicObjects": {
+            "House": "Prefab/objects/House",
+            "Key": "Prefab/objects/Key",
+            "Tree": "Prefab/objects/Tree",
+            "Basket": "Prefab/objects/Basket"
         }
     }
-}
+]

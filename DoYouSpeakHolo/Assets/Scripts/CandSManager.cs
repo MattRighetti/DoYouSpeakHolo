@@ -7,5 +7,11 @@ public class CandSManager : AbstractSceneManager {
         //EventManager.TriggerEvent(Triggers.VAIntroduce);
         TriggerEvent(Triggers.LearningPhaseStart);
     }
+
+    public override void LoadObjects() {
+        Pooler.Scene = ObjectPooler.ScenesEnum.Scene1;
+        Pooler.Setup();
+    }
+
 }
 

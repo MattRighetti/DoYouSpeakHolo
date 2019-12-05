@@ -3,12 +3,15 @@ using UnityEngine;
 
 public abstract class AbstractSceneManager : MonoBehaviour {
 
-    private ObjectPooler Pooler;
+    protected ObjectPooler Pooler;
 
     // Start is called before the first frame update
     void Start() {
         Pooler = ObjectPooler.GetPooler();
+        LoadObjects();
     }
+
+    public abstract void LoadObjects();
 
     public abstract void StartLearningPhase();
     

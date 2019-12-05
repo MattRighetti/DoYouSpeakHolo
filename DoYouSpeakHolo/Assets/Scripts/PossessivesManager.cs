@@ -16,9 +16,17 @@ public class PossessivesManager : AbstractSceneManager
         
     }
 
+    public override void LoadObjects() {
+        Pooler.Scene = ObjectPooler.ScenesEnum.Scene3;
+        Pooler.Setup();
+    }
+
     private void CreteFixedSceneObjects() {
-        Tree = ActivateObject("Tree", Positions.TreePosition);
-        House = ActivateObject("House", Positions.HousePosition);
+        Tree = (GameObject)Instantiate(Resources.Load("Prefab/Objects/Tree"));
+        Tree.transform.position = Positions.TreePosition;
+        House = (GameObject)Instantiate(Resources.Load("Prefab/Objects/House"));
+        House.transform.position = Positions.HousePosition;
+
     }
 
     public override void StartLearningPhase() {

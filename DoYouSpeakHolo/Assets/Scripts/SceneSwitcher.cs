@@ -1,41 +1,49 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using System.IO;
+using Newtonsoft.Json;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneSwitcher : MonoBehaviour
-{
+public class SceneSwitcher : MonoBehaviour {
+    private List<SceneSettings> settings;
 
-    public void GoToMenuScene()
-    {
+    void Start() {
+        settings = ReadJSONFromFile();
+    }
+
+
+
+    public void GoToMenuScene() {
         SceneManager.LoadScene("Menu");
     }
 
-    public void GoToScene1()
-    {
-        SetSceneAndCreateObjects(ObjectPooler.ScenesEnum.Scene1);
+    public void GoToScene1() {
         SceneManager.LoadScene("Scene1");
     }
 
-    public void GoToScene2()
-    {
-        SetSceneAndCreateObjects(ObjectPooler.ScenesEnum.Scene2);
+    public void GoToScene2() {
         SceneManager.LoadScene("Scene1_bis");
     }
 
-    public void GoToScene3()
-    {
-        SetSceneAndCreateObjects(ObjectPooler.ScenesEnum.Scene3);
+    public void GoToScene3() {
         SceneManager.LoadScene("Scene3");
     }
 
-    private void SetSceneAndCreateObjects(ObjectPooler.ScenesEnum scene) {
-        GameObject obj = GameObject.Find("Pooler");
-        ObjectPooler pooler = obj.GetComponent<ObjectPooler>();
-        pooler.Scene = scene;
-        DontDestroyOnLoad(pooler);
-    }
-
-    public void CloseGame()
-    {
+    public void CloseGame() {
         Application.Quit();
     }
+
+    //Read and parse the JSON file
+    public List<SceneSettings> ReadJSONFromFile() {
+        using (StreamReader r = new StreamReader("Assets/Resources/Prefab/objects.json")) {
+            string json = r.ReadToEnd();
+            return JsonConvert.DeserializeObject<List<SceneSettings>>(json);
+        }
+    }
+
+}
+
+public class SceneSettings {
+    public Dictionary<string, string> staticObjects;
+    public Dictionary<string, string> dynamicObjects;
 }

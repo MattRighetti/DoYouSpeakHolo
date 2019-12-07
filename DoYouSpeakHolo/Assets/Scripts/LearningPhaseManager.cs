@@ -20,12 +20,12 @@ public abstract class LearningPhaseManager : MonoBehaviour {
         sceneManager = GetComponent<AbstractSceneManager>();
         SceneObjects = sceneManager.GetObjects();
         
-        StartListening(Triggers.LearningPhaseStart, HandleStartOfLearningPhase);
+        StartListening(Triggers.LearningPhaseStart, StartLearningPhase);
         StartListening(Triggers.LearningPhaseSpawn, StartSpawn);
     }
 
     //First phase of the activity, the virtual assistant shows to the user some objects and tells their name
-    private void HandleStartOfLearningPhase() {
+    private void StartLearningPhase() {
         //TODO: Add VA speaking
 
         //Trigger the spawn procedure
@@ -48,16 +48,20 @@ public abstract class LearningPhaseManager : MonoBehaviour {
 
     //Spawn the objects in front of the user and destroy them after a timeout
     protected IEnumerator ShowObject(string objKey) {
-        //TODO: Add VA voice
+        //Activate the object
         GameObject objectToCreate = sceneManager.ActivateObject(objKey, Positions.Central);
+        //The VA introduces the object
+        sceneManager.IntroduceObject(objKey);
+        //Wait until the end of the introduction
         yield return new WaitForSeconds(2);
+        //Deactivate the object
         sceneManager.DeactivateObject(objKey);
     }
 
 
     //Stop listening to events and trigger the checking phase
     protected void End() {
-        StopListening(Triggers.LearningPhaseStart, HandleStartOfLearningPhase);
+        StopListening(Triggers.LearningPhaseStart, StartLearningPhase);
         StopListening(Triggers.LearningPhaseSpawn, StartSpawn);
 
         //start the checking phase

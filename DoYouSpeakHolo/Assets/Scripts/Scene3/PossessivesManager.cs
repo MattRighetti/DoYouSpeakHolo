@@ -15,6 +15,7 @@ public class PossessivesManager : AbstractSceneManager
     private void CreateScene() {
         Pooler.ActivateObject("House", Positions.HousePosition);
         Pooler.ActivateObject("Tree", Positions.TreePosition);
+        Pooler.ActivateObject("VA", Positions.VAPosition);
     }
 
     public override void StartLearningPhase() {

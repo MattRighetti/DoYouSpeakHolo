@@ -7,7 +7,7 @@ public class VAManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartListening(Triggers.VAIntroduce, Introduce);
+
     }
 
     //Introduction of VA to the activity

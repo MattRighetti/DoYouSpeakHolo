@@ -21,18 +21,18 @@
     },
     {
         "staticObjects": {
-            "House": "Prefab/objects/House",
-            "Tree": "Prefab/objects/Tree"
+            "House": "Prefab/objects/House_right",
+            "Tree": "Prefab/objects/Tree_right",
+            "MaleBasket": "Prefab/objects/Basket",
+            "FemaleBasket": "Prefab/objects/Basket",
+            "Male": "Prefab/people/VA_MaleCorrect",
+            "Female": "Prefab/people/VA_Female_small"
         },
         "dynamicObjects": {
             "Apple": "Prefab/Fruits/Apple",
             "Banana": "Prefab/Fruits/Banana",
             "Orange": "Prefab/Fruits/Orange",
-            "Pear": "Prefab/Fruits/Pear",
-            "MaleBasket": "Prefab/objects/Basket",
-            "FemaleBasket": "Prefab/objects/Basket",
-            "Male": "Prefab/people/VA_Male",
-            "Female": "Prefab/people/VA_Female"
+            "Pear": "Prefab/Fruits/Pear"
         }
     }
 ]

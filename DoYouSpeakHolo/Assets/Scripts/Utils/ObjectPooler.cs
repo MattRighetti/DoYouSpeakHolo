@@ -7,11 +7,13 @@ using UnityEngine;
 public class ObjectPooler : MonoBehaviour {
     public static ObjectPooler SharedInstance;
 
-    public Dictionary<string, GameObject> pooledObjectsDictionary;
+    private Dictionary<string, GameObject> staticObjectsDictionary;
+    private Dictionary<string, GameObject> dynamicObjectsDictionary;
 
     void Awake() {
         SharedInstance = this;
-        pooledObjectsDictionary = new Dictionary<string, GameObject>();
+        staticObjectsDictionary = new Dictionary<string, GameObject>();
+        dynamicObjectsDictionary = new Dictionary<string, GameObject>();
     }
 
     public static ObjectPooler GetPooler() {
@@ -20,23 +22,41 @@ public class ObjectPooler : MonoBehaviour {
     }
 
     //Create the objects, deactivate and store them into the data structure
-    public void CreateObjects(Dictionary<string, string> objectsDict) {
+    public void CreateStaticObjects(Dictionary<string, string> objectsDict) {
         foreach (KeyValuePair<string, string> keyValuePair in objectsDict) {
             Debug.Log(keyValuePair);
             GameObject obj = Instantiate(Resources.Load(keyValuePair.Value, typeof(GameObject))) as GameObject;
             obj.transform.position = Positions.hiddenPosition;
             obj.SetActive(false);
-            pooledObjectsDictionary.Add(keyValuePair.Key, obj);
+            staticObjectsDictionary.Add(keyValuePair.Key, obj);
         }
     }
 
-    internal List<string> GetObjects() {
-        return new List<string>(pooledObjectsDictionary.Keys);
+    //Create the objects, deactivate and store them into the data structure
+    public void CreateDynamicObjects(Dictionary<string, string> objectsDict) {
+        foreach (KeyValuePair<string, string> keyValuePair in objectsDict) {
+            Debug.Log(keyValuePair);
+            GameObject obj = Instantiate(Resources.Load(keyValuePair.Value, typeof(GameObject))) as GameObject;
+            obj.transform.position = Positions.hiddenPosition;
+            obj.SetActive(false);
+            dynamicObjectsDictionary.Add(keyValuePair.Key, obj);
+        }
+    }
+
+    internal List<string> GetStaticObjects() {
+        return new List<string>(staticObjectsDictionary.Keys);
+    }
+
+    internal List<string> GetDynamicObjects() {
+        return new List<string>(dynamicObjectsDictionary.Keys);
     }
 
     public GameObject GetPooledObject(string key) {
-        if (pooledObjectsDictionary.TryGetValue(key, out GameObject obj)) {
-            return obj;
+        if (dynamicObjectsDictionary.TryGetValue(key, out GameObject dobj)) {
+            return dobj;
+        }
+        if (staticObjectsDictionary.TryGetValue(key, out GameObject sobj)) {
+            return sobj;
         }
 
         return null;

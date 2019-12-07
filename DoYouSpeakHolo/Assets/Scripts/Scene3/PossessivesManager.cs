@@ -6,8 +6,8 @@ public class PossessivesManager : AbstractSceneManager
     private readonly SceneSettings sceneObjects = SceneSwitcher.settings[2];
 
     public override void LoadObjects() {
-        Pooler.CreateObjects(sceneObjects.staticObjects);
-        Pooler.CreateObjects(sceneObjects.dynamicObjects);
+        Pooler.CreateStaticObjects(sceneObjects.staticObjects);
+        Pooler.CreateDynamicObjects(sceneObjects.dynamicObjects);
         CreateScene();
     }
 

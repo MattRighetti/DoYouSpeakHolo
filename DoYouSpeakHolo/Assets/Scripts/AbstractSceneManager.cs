@@ -41,7 +41,7 @@ public abstract class AbstractSceneManager : MonoBehaviour {
     }
 
     public List<string> GetObjects() {
-        return Pooler.GetObjects();
+        return Pooler.GetDynamicObjects();
     }
 
     // -------------------------- ABSTRACT --------------------------------

@@ -17,7 +17,6 @@ public class LearningPhaseActivity3 : LearningPhaseManager {
 
         //Spawn VA_Male and half of the objects
         GameObject male = GetComponent<AbstractSceneManager>().ActivateObject("Male", Positions.MalePosition);
-
         //Show objects and wait for the spawn to finish
         StartCoroutine(ShowObjects(maleObjects));
         yield return new WaitForSeconds(3 * maleObjects.Count);
@@ -39,7 +38,7 @@ public class LearningPhaseActivity3 : LearningPhaseManager {
         List<string> objects = CheckingPhaseManager.Shuffle(SceneObjects);
         int half = objects.Count / 2;
         maleObjects = objects.GetRange(0, half);
-        femaleObjects = objects.GetRange(half - 1, half);
+        femaleObjects = objects.GetRange(half, half);
 
     }
 }

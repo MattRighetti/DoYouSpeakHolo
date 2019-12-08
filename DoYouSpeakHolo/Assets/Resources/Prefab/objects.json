@@ -29,7 +29,7 @@
             "FemaleBasket": "Prefab/objects/Basket",
             "Male": "Prefab/people/VA_Male_animated",
             "VA": "Prefab/people/VA_MaleCorrect",
-            "Female": "Prefab/people/VA_Female_small"
+            "Female": "Prefab/people/VA_FemaleCorrect"
         },
         "dynamicObjects": {
             "Apple": "Prefab/Fruits/Apple",

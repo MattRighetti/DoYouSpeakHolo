@@ -7,22 +7,21 @@ public abstract class CheckingPhaseManager : MonoBehaviour {
 
     protected List<string> SceneObjects;
 
-
     protected AbstractSceneManager sceneManager;
 
     protected void Start() {
         sceneManager = GetComponent<AbstractSceneManager>();
-        StartListening(Triggers.CheckingPhaseStart, HandleStartCheckingPhase);
+        StartListening(Triggers.CheckingPhaseStart, StartCheckingPhase);
     }
 
-    private void HandleStartCheckingPhase() {
+    private void StartCheckingPhase() {
         SceneObjects = sceneManager.GetObjects();
         CheckingPhase();
     }
 
     //Stop listening to events and trigger the new phase
     private void End() {
-        StopListening(Triggers.CheckingPhaseStart, HandleStartCheckingPhase);
+        StopListening(Triggers.CheckingPhaseStart, StartCheckingPhase);
 
         //Trigger the new phase
 

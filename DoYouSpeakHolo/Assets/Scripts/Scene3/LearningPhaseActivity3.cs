@@ -5,8 +5,8 @@ using UnityEngine;
 using static EventManager;
 
 public class LearningPhaseActivity3 : LearningPhaseManager {
-    private List<string> maleObjects;
-    private List<string> femaleObjects;
+    public List<string> maleObjects { get; set; }
+    public List<string> femaleObjects { get; set; }
 
     protected override void StartSpawn() {
         StartCoroutine(ShowObjectsWithPossessives());

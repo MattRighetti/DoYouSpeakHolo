@@ -13,5 +13,9 @@ public class CandSManager : AbstractSceneManager {
         TriggerEvent(Triggers.LearningPhaseStart);
     }
 
+    public override void IntroduceObject(string objKey) {
+        throw new System.NotImplementedException();
+    }
+
 }
 

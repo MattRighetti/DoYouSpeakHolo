@@ -8,12 +8,11 @@ public abstract class AbstractSceneManager : MonoBehaviour {
     public SceneSettings sceneSettings;
     public AnimateAvatar VirtualAssistant;
 
-    // Start is called before the first frame update
     void OnEnable() {
         Pooler = ObjectPooler.GetPooler();
         LoadObjects();
         StartListening();
-        VirtualAssistant = GameObject.Find("VA").GetComponent<AnimateAvatar>();
+        VirtualAssistant = ActivateObject("VA", Positions.VAPosition).GetComponent<AnimateAvatar>();
     }
 
     private void StartListening() {
@@ -25,7 +24,7 @@ public abstract class AbstractSceneManager : MonoBehaviour {
     //The VA introduces the activity
     //Triggers the method AnimateAvatar.PlayIntroduction
     public void StartIntroduction() {
-        EventManager.TriggerEvent(EventManager.Triggers.VAIntroduce);
+        VirtualAssistant.PlayIntroduction();
     }
 
     //Start the learning phase
@@ -51,10 +50,6 @@ public abstract class AbstractSceneManager : MonoBehaviour {
         Pooler.DeactivateObject(key);
     }
 
-    internal void IntroduceObject(string objKey) {
-        VirtualAssistant.IntroduceObject(Pooler.GetPooledObject(objKey));
-    }
-
     public GameObject GetPooledObject(string key) {
         return Pooler.GetPooledObject(key);
     }
@@ -68,5 +63,7 @@ public abstract class AbstractSceneManager : MonoBehaviour {
     public abstract void LoadObjects();
 
     public abstract void StartLearningPhase();
+
+    public abstract void IntroduceObject(string objKey);
 
 }

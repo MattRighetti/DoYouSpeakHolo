@@ -2,7 +2,8 @@
     {
         "staticObjects": {
             "House": "Prefab/objects/House",
-            "Tree": "Prefab/objects/Tree"
+            "Tree": "Prefab/objects/Tree",
+            "VA": "Prefab/people/VA_MaleCorrect"
         },
         "dynamicObjects": {
             "Key": "Prefab/objects/Key",
@@ -12,7 +13,8 @@
     {
         "staticObjects": {
             "House": "Prefab/objects/House",
-            "Tree": "Prefab/objects/Tree"
+            "Tree": "Prefab/objects/Tree",
+            "VA": "Prefab/people/VA_MaleCorrect"
         },
         "dynamicObjects": {
             "Key": "Prefab/objects/Key",

@@ -21,4 +21,8 @@ public class PossessivesManager : AbstractSceneManager
     public override void StartLearningPhase() {
         TriggerEvent(Triggers.LearningPhaseStart);
     }
+
+    public override void IntroduceObject(string objKey) {
+        
+    }
 }

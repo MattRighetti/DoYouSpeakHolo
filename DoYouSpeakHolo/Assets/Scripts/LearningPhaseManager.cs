@@ -51,7 +51,7 @@ public abstract class LearningPhaseManager : MonoBehaviour {
         //Activate the object
         GameObject objectToCreate = sceneManager.ActivateObject(objKey, Positions.Central);
         //The VA introduces the object
-        sceneManager.IntroduceObject(objKey);
+      //  sceneManager.IntroduceObject(objKey);
         //Wait until the end of the introduction
         yield return new WaitForSeconds(2);
         //Deactivate the object
@@ -65,7 +65,6 @@ public abstract class LearningPhaseManager : MonoBehaviour {
         StopListening(Triggers.LearningPhaseSpawn, StartSpawn);
 
         //start the checking phase
-        //TODO: find a better way to call the method
         TriggerEvent(Triggers.LearningPhaseEnd);
     }
 }

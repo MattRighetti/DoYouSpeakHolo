@@ -5,20 +5,18 @@ using static EventManager;
 
 public class AnimateAvatar : MonoBehaviour {
     public Animator animator;
-    private AudioSource audio;
+    private AudioSource audioSource;
     private AudioClip introduction;
     private AudioClip ok;
     private AudioClip ko;
-    public GameObject ObjectToIntroduce;
 
     // Start is called before the first frame update
     void Start() {
-        audio = gameObject.AddComponent<AudioSource>();
+        audioSource = gameObject.AddComponent<AudioSource>();
         introduction = Resources.Load("Audio/VAIntroduce") as AudioClip;
         ok = Resources.Load("Audio/VAOk") as AudioClip;
         ko = Resources.Load("Audio/VAKo") as AudioClip;
         animator = GetComponent<Animator>();
-        animator.Play("Idle");
         StartListening();
     }
 
@@ -49,30 +47,30 @@ public class AnimateAvatar : MonoBehaviour {
     }
 
     private IEnumerator PlayOkRoutine() {
-        audio.clip = ok;
-        audio.PlayDelayed(0.5f);
+        audioSource.clip = ok;
+        audioSource.PlayDelayed(0.5f);
         animator.Play("OK");
-        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length + animator.GetCurrentAnimatorStateInfo(0).normalizedTime);
+        yield return new WaitForSeconds(audioSource.clip.length + 3);
         Debug.Log("Trigger new event");
     }
 
     private IEnumerator PlayKoRoutine() {
-        audio.clip = ko;
-        audio.PlayDelayed(1f);
+        audioSource.clip = ko;
+        audioSource.PlayDelayed(1f);
         animator.Play("KO");
-        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length + animator.GetCurrentAnimatorStateInfo(0).normalizedTime);
+        yield return new WaitForSeconds(audioSource.clip.length + 3);
         Debug.Log("Trigger new event");
     }
 
     private IEnumerator PlayIntroductionRoutine() {
         //Set the introduction audio clip and play it
-        audio.clip = introduction;
-        audio.Play();
+        audioSource.clip = introduction;
+        audioSource.Play();
         //Start the corresponding animation
         animator.Play("Talking");
-        //Wait until the animation ends
-        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length + animator.GetCurrentAnimatorStateInfo(0).normalizedTime);
-        
+        //Wait until the audio ends
+        yield return new WaitForSeconds(audioSource.clip.length + 3);
+        Debug.Log("Trigger learning phase");
         //Triggers AbstractSceneManager.LearningPhaseStart()
         EventManager.TriggerEvent(EventManager.Triggers.VAIntroductionEnd);
     }
@@ -83,8 +81,12 @@ public class AnimateAvatar : MonoBehaviour {
     }
 
     private void StartListening() {
-        EventManager.StartListening(Triggers.VAIntroduce, PlayIntroduction);
         EventManager.StartListening(Triggers.VAOk, PlayOk);
+        EventManager.StartListening(Triggers.VAKo, PlayKo);
+    }
+
+    private void StopListening() {
+        EventManager.StopListening(Triggers.VAOk, PlayOk);
         EventManager.StartListening(Triggers.VAKo, PlayKo);
     }
 }

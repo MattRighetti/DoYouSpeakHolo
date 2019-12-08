@@ -20,10 +20,6 @@ public abstract class CheckingPhaseManager : MonoBehaviour {
         CheckingPhase();
     }
 
-
-
-
-
     //Stop listening to events and trigger the new phase
     private void End() {
         StopListening(Triggers.CheckingPhaseStart, HandleStartCheckingPhase);

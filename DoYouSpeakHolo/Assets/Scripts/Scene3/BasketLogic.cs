@@ -15,9 +15,6 @@ public class BasketLogic : MonoBehaviour {
 
     private void SetupBoxCollider() {
         objectCollider = gameObject.GetComponent<BoxCollider>();
-
-        if (objectCollider == null)
-            objectCollider = gameObject.AddComponent<BoxCollider>();
     }
 
     private void SetupGameManager() {
@@ -28,6 +25,7 @@ public class BasketLogic : MonoBehaviour {
     }
 
     public void SetFruitList(List<string> fruitListString) {
+        Debug.Log("fruits " + fruitListString.ToString());
         fruitList = fruitListString;
     }
 

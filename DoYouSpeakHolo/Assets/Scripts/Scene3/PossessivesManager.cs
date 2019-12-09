@@ -4,8 +4,8 @@ using static EventManager;
 public class PossessivesManager : AbstractSceneManager
 {
     private readonly SceneSettings sceneObjects = SceneSwitcher.settings[2];
-    private List<string> maleObjects;
-    private List<string> femaleObjects;
+    public List<string> maleObjects;
+    public List<string> femaleObjects;
 
     public override void LoadObjects() {
         Pooler.CreateStaticObjects(sceneObjects.staticObjects);

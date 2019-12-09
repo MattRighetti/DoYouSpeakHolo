@@ -8,9 +8,6 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 class CheckingPhaseActivity3 : CheckingPhaseManager {
-
-    private List<string> MaleObjects;
-    private List<string> FemaleObjects;
     private PossessivesManager possessivesManager;
 
     protected override void CheckingPhase() {
@@ -38,14 +35,14 @@ class CheckingPhaseActivity3 : CheckingPhaseManager {
         ConfigureBaskets(basket1);
         ConfigureBaskets(basket2);
 
-        basket1.GetComponent<BasketLogic>().SetFruitList(MaleObjects);
-        basket2.GetComponent<BasketLogic>().SetFruitList(FemaleObjects);
+        basket1.GetComponent<BasketLogic>().SetFruitList(possessivesManager.maleObjects);
+        basket2.GetComponent<BasketLogic>().SetFruitList(possessivesManager.femaleObjects);
     }
 
     private void ConfigureBaskets(GameObject basket) {
         basket.AddComponent<DoNotFall>();
         basket.AddComponent<Rigidbody>();
-        basket.AddComponent<BoxCollider>();
+        basket.AddComponent<BoxCollider>().isTrigger = true;
         basket.AddComponent <ManipulationHandler>();
         basket.AddComponent<BasketLogic>();
     }

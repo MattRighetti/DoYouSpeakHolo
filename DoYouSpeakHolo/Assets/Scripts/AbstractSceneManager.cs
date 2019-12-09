@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public abstract class AbstractSceneManager : MonoBehaviour {
 
@@ -56,6 +57,10 @@ public abstract class AbstractSceneManager : MonoBehaviour {
 
     public List<string> GetObjects() {
         return Pooler.GetDynamicObjects();
+    }
+
+    protected void EndActivity() {
+        SceneManager.LoadScene("Menu");
     }
 
     // -------------------------- ABSTRACT --------------------------------

@@ -40,6 +40,11 @@ public class BasketLogic : MonoBehaviour {
     private void OnTriggerEnter(Collider otherCollider) {
         if (CheckIfInList(otherCollider.gameObject.name)) {
             GameManager.DeactivateObject(otherCollider.gameObject.name);
+            fruitList.Remove(otherCollider.gameObject.name);
+        }
+
+        if (fruitList.Count == 0) {
+            EventManager.TriggerEvent(EventManager.Triggers.BasketEmpty);
         }
 
         return;

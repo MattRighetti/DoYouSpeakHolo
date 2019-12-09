@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using static EventManager;
 
 public class PossessivesManager : AbstractSceneManager
@@ -6,11 +7,22 @@ public class PossessivesManager : AbstractSceneManager
     private readonly SceneSettings sceneObjects = SceneSwitcher.settings[2];
     public List<string> maleObjects;
     public List<string> femaleObjects;
+    private int basketFull = 0;
+    
 
     public override void LoadObjects() {
+        EventManager.StartListening(Triggers.BasketEmpty, CheckBaskets);
         Pooler.CreateStaticObjects(sceneObjects.staticObjects);
         Pooler.CreateDynamicObjects(sceneObjects.dynamicObjects);
         CreateScene();
+    }
+
+    private void CheckBaskets() {
+        basketFull++;
+
+        if (basketFull == 2) {
+            EndActivity();
+        }
     }
 
     //Create static elements of the scene

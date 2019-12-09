@@ -9,6 +9,7 @@ public class LearningPhaseActivity3 : LearningPhaseManager {
     private PossessivesManager possessivesManager;
 
     protected override void StartSpawn() {
+        possessivesManager = (PossessivesManager)sceneManager;
         StartCoroutine(ShowObjectsWithPossessives());
     }
 

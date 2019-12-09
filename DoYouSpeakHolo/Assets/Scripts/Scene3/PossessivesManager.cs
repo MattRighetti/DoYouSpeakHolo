@@ -1,9 +1,11 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
 using static EventManager;
 
 public class PossessivesManager : AbstractSceneManager
 {
     private readonly SceneSettings sceneObjects = SceneSwitcher.settings[2];
+    private List<string> maleObjects;
+    private List<string> femaleObjects;
 
     public override void LoadObjects() {
         Pooler.CreateStaticObjects(sceneObjects.staticObjects);
@@ -16,6 +18,14 @@ public class PossessivesManager : AbstractSceneManager
         Pooler.ActivateObject("House", Positions.HousePosition);
         Pooler.ActivateObject("Tree", Positions.TreePosition);
         Pooler.ActivateObject("VA", Positions.VAPosition);
+    }
+
+    internal void SetMaleObjects(List<string> maleObjects) {
+        this.maleObjects = maleObjects;
+    }
+
+    internal void SetFemaleObjects(List<string> femaleObjects) {
+        this.femaleObjects = femaleObjects;
     }
 
     public override void StartLearningPhase() {

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.MixedReality.Toolkit.Input;
+using Microsoft.MixedReality.Toolkit.UI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +9,13 @@ using UnityEngine;
 
 class CheckingPhaseActivity3 : CheckingPhaseManager {
 
+    private List<string> MaleObjects;
+    private List<string> FemaleObjects;
+    private PossessivesManager possessivesManager;
+
     protected override void CheckingPhase() {
+
+        possessivesManager = (PossessivesManager)sceneManager;
 
         //Create the baskets and attach to them the script
         CreatePeopleAndBaskets();
@@ -20,8 +28,26 @@ class CheckingPhaseActivity3 : CheckingPhaseManager {
         Debug.Log("Setting check phase");
         sceneManager.ActivateObject("Male", Positions.MalePosition);
         sceneManager.ActivateObject("Female", Positions.FemalePosition);
-        sceneManager.ActivateObject("MaleBasket", Positions.MaleBasket);
-        sceneManager.ActivateObject("FemaleBasket", Positions.FemaleBasket);
+        CreateAndConfigureBaskets();
+    }
+
+    private void CreateAndConfigureBaskets() {
+        GameObject basket1 = sceneManager.ActivateObject("MaleBasket", Positions.MaleBasket);
+        GameObject basket2 = sceneManager.ActivateObject("FemaleBasket", Positions.FemaleBasket);
+
+        ConfigureBaskets(basket1);
+        ConfigureBaskets(basket2);
+
+        basket1.GetComponent<BasketLogic>().SetFruitList(MaleObjects);
+        basket2.GetComponent<BasketLogic>().SetFruitList(FemaleObjects);
+    }
+
+    private void ConfigureBaskets(GameObject basket) {
+        basket.AddComponent<DoNotFall>();
+        basket.AddComponent<Rigidbody>();
+        basket.AddComponent<BoxCollider>();
+        basket.AddComponent <ManipulationHandler>();
+        basket.AddComponent<BasketLogic>();
     }
 
     protected override void CreateAllObjectsAndDisplayInRandomOrder() {
@@ -33,7 +59,14 @@ class CheckingPhaseActivity3 : CheckingPhaseManager {
         foreach (string obj in SceneObjects) {
             //Activate the object and attach to it the script for the task
             gameObj = GetComponent<AbstractSceneManager>().ActivateObject(obj, startPosition);
-            startPosition += new Vector3(0.5f, 0, 0);
+            startPosition += new Vector3(0.25f, 0, 0);
+            gameObj.AddComponent<DoNotFall>();
+            gameObj.AddComponent<BoxCollider>();
+            Rigidbody body = gameObj.AddComponent<Rigidbody>();
+            body.useGravity = true;
+            body.constraints = RigidbodyConstraints.FreezeRotation;
+            gameObj.AddComponent<ManipulationHandler>();
+            gameObj.AddComponent<NearInteractionGrabbable>();
         }
     }
 }

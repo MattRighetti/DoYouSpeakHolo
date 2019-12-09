@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static EventManager;
 
 public class LearningPhaseActivity3 : LearningPhaseManager {
-    public List<string> maleObjects { get; set; }
-    public List<string> femaleObjects { get; set; }
+    private List<string> maleObjects;
+    private List<string> femaleObjects;
+    private PossessivesManager possessivesManager;
 
     protected override void StartSpawn() {
         StartCoroutine(ShowObjectsWithPossessives());
@@ -16,7 +16,7 @@ public class LearningPhaseActivity3 : LearningPhaseManager {
         SplitObjects();
 
         //Spawn VA_Male and half of the objects
-        GameObject male = GetComponent<AbstractSceneManager>().ActivateObject("Male", Positions.MalePosition);
+        GameObject male = possessivesManager.ActivateObject("Male", Positions.MalePosition);
 
         //Show objects and wait for the spawn to finish
         yield return StartCoroutine(ShowObjects(maleObjects));
@@ -24,12 +24,16 @@ public class LearningPhaseActivity3 : LearningPhaseManager {
         sceneManager.DeactivateObject(male.gameObject.name);
 
         //Do the same for the female
-        GameObject female = GetComponent<AbstractSceneManager>().ActivateObject("Female", Positions.FemalePosition);
+        GameObject female = possessivesManager.ActivateObject("Female", Positions.FemalePosition);
 
         yield return StartCoroutine(ShowObjects(femaleObjects));
 
-        sceneManager.DeactivateObject(female.gameObject.name);
+        possessivesManager.DeactivateObject(female.gameObject.name);
 
+        possessivesManager = (PossessivesManager)sceneManager;
+
+        possessivesManager.SetMaleObjects(maleObjects);
+        possessivesManager.SetFemaleObjects(femaleObjects);
         //End the learning phase
         TriggerEvent(Triggers.LearningPhaseEnd);
     }

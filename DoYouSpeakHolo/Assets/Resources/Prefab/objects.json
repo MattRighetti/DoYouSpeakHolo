@@ -27,7 +27,7 @@
             "Tree": "Prefab/objects/Tree_right",
             "MaleBasket": "Prefab/objects/Basket",
             "FemaleBasket": "Prefab/objects/Basket",
-            "Male": "Prefab/people/VA_Male_animated",
+            "Male": "Prefab/people/VA_MaleCorrect",
             "VA": "Prefab/people/VA_MaleCorrect",
             "Female": "Prefab/people/VA_FemaleCorrect"
         },

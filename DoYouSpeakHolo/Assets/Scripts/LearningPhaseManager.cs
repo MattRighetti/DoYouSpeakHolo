@@ -32,22 +32,17 @@ public abstract class LearningPhaseManager : MonoBehaviour {
         TriggerEvent(Triggers.LearningPhaseSpawn);
     }
 
-    //Handler fot the starting the spawn procedure
-    protected abstract void StartSpawn();
-
     //Spawn the objects one at time
     protected IEnumerator ShowObjects(List<string> objectsToShow) {
         foreach (string objectKey in objectsToShow) {
-            StartCoroutine(ShowObject(objectKey));
-            yield return new WaitForSeconds(3);
+            yield return StartCoroutine(ShowObject(objectKey));
         }
-
-        //End of Learning Phase
-        End();
     }
 
     //Spawn the objects in front of the user and destroy them after a timeout
     protected IEnumerator ShowObject(string objKey) {
+
+      
         //Activate the object
         GameObject objectToCreate = sceneManager.ActivateObject(objKey, Positions.Central);
         //The VA introduces the object
@@ -67,4 +62,8 @@ public abstract class LearningPhaseManager : MonoBehaviour {
         //start the checking phase
         TriggerEvent(Triggers.LearningPhaseEnd);
     }
+
+    // ---------------------------------- ABSTRACT ------------------------------
+    //Handler fot the starting the spawn procedure
+    protected abstract void StartSpawn();
 }

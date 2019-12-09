@@ -19,16 +19,14 @@ public class LearningPhaseActivity3 : LearningPhaseManager {
         GameObject male = GetComponent<AbstractSceneManager>().ActivateObject("Male", Positions.MalePosition);
 
         //Show objects and wait for the spawn to finish
-        StartCoroutine(ShowObjects(maleObjects));
-        yield return new WaitForSeconds(3 * maleObjects.Count);
-
+        yield return StartCoroutine(ShowObjects(maleObjects));
+       
         sceneManager.DeactivateObject(male.gameObject.name);
 
         //Do the same for the female
         GameObject female = GetComponent<AbstractSceneManager>().ActivateObject("Female", Positions.FemalePosition);
 
-        StartCoroutine(ShowObjects(femaleObjects));
-        yield return new WaitForSeconds(3 * femaleObjects.Count);
+        yield return StartCoroutine(ShowObjects(femaleObjects));
 
         sceneManager.DeactivateObject(female.gameObject.name);
 

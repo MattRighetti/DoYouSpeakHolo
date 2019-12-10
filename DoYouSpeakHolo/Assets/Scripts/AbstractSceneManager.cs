@@ -8,6 +8,8 @@ public abstract class AbstractSceneManager : MonoBehaviour {
     protected ObjectPooler Pooler;
     public SceneSettings sceneSettings;
     public AnimateAvatar VirtualAssistant;
+    public LearningPhaseManager LearningPhaseManager { get; set; }
+    public CheckingPhaseManager CheckingPhaseManager { get; set; }
 
     void OnEnable() {
         Pooler = ObjectPooler.GetPooler();
@@ -16,31 +18,31 @@ public abstract class AbstractSceneManager : MonoBehaviour {
         VirtualAssistant = ActivateObject("VA", Positions.VAPosition).GetComponent<AnimateAvatar>();
     }
 
-    private void StartListening() {
-        EventManager.StartListening(EventManager.Triggers.VAIntroductionEnd, LearningPhaseStart);
-        EventManager.StartListening(EventManager.Triggers.LearningPhaseEnd, LearningPhaseEnd);
-        EventManager.StartListening(EventManager.Triggers.CheckingPhaseEnd, CheckingPhaseEnd);
-    }
-
     //The VA introduces the activity
     //Triggers the method AnimateAvatar.PlayIntroduction
     public void StartIntroduction() {
         VirtualAssistant.PlayIntroduction();
     }
 
-    //Start the learning phase
-    //Triggers the event LearningPhaseManager.StartLearningPhase()
-    private void LearningPhaseStart() {
-        EventManager.TriggerEvent(EventManager.Triggers.LearningPhaseStart);
+    //Start the Learning phase
+    protected void StartLearningPhase() {
+        LearningPhaseManager.StartLearningPhase();
     }
 
-    private void CheckingPhaseEnd() {
+    //Start the Checking Phase
+    protected void StartCheckingPhase() {
+        CheckingPhaseManager.StartCheckingPhase();
+    }
+
+    protected void EndActivity() {
+        //TODO after the beta
         //Check if there are more levels to load;
-        throw new NotImplementedException();
-    }
 
-    private void LearningPhaseEnd() {
-        EventManager.TriggerEvent(EventManager.Triggers.CheckingPhaseStart);
+        StopListening();
+
+        //For the demo load the menu
+        SceneManager.LoadScene("Menu");
+
     }
 
     public GameObject ActivateObject(string key, Vector3 position) {
@@ -59,16 +61,44 @@ public abstract class AbstractSceneManager : MonoBehaviour {
         return Pooler.GetDynamicObjects();
     }
 
-    protected void EndActivity() {
-        SceneManager.LoadScene("Menu");
+    private void StartListening() {
+        EventManager.StartListening(EventManager.Triggers.VAIntroductionEnd, StartLearningPhase);
+        EventManager.StartListening(EventManager.Triggers.LearningPhaseEnd, StartCheckingPhase);
+        EventManager.StartListening(EventManager.Triggers.CheckingPhaseEnd, EndActivity);
+        StartListeningToCustomEvents();
+    }
+
+    private void StopListening() {
+        EventManager.StopListening(EventManager.Triggers.VAIntroductionEnd, StartLearningPhase);
+        EventManager.StopListening(EventManager.Triggers.LearningPhaseEnd, StartCheckingPhase);
+        EventManager.StopListening(EventManager.Triggers.CheckingPhaseEnd, EndActivity);
+        StopListeningToCustomEvents();
+    }
+
+    //Randomize a List
+    public static List<string> Shuffle(List<string> list) {
+        List<string> randomList = new List<string>();
+
+        System.Random random = new System.Random();
+        int randomIndex = 0;
+
+        while (list.Count > 0) {
+            randomIndex = random.Next(0, list.Count);
+            randomList.Add(list[randomIndex]);
+            list.RemoveAt(randomIndex);
+        }
+
+        return randomList;
     }
 
     // -------------------------- ABSTRACT --------------------------------
 
     public abstract void LoadObjects();
 
-    public abstract void StartLearningPhase();
-
     public abstract void IntroduceObject(string objKey);
 
+    public abstract void StartListeningToCustomEvents();
+
+    public abstract void StopListeningToCustomEvents();
+    
 }

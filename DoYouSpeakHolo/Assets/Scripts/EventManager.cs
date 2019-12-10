@@ -17,7 +17,8 @@ public class EventManager : MonoBehaviour
         CheckingPhaseStart,
         LoadingComplete,
         VAIntroductionEnd,
-        BasketEmpty
+        BasketEmpty,
+        SetTargetObject
     };
 
     Dictionary<Triggers, UnityEvent> eventDictionary;

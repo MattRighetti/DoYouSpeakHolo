@@ -1,14 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static EventManager;
 
 public class LearningPhaseActivity3 : LearningPhaseManager {
     private List<string> maleObjects;
     private List<string> femaleObjects;
     private PossessivesManager possessivesManager;
 
-    protected override void StartSpawn() {
+    protected override void LearningPhase() {
         possessivesManager = (PossessivesManager)sceneManager;
         StartCoroutine(ShowObjectsWithPossessives());
     }
@@ -31,20 +30,19 @@ public class LearningPhaseActivity3 : LearningPhaseManager {
 
         possessivesManager.DeactivateObject(female.gameObject.name);
 
-        possessivesManager = (PossessivesManager)sceneManager;
-
+        //Set the list of target fruits into the PossessivesManager
         possessivesManager.SetMaleObjects(maleObjects);
         possessivesManager.SetFemaleObjects(femaleObjects);
+        
         //End the learning phase
-        TriggerEvent(Triggers.LearningPhaseEnd);
+        End();
     }
 
     //Split the category of the objects creating two list, one for each character
     private void SplitObjects() {
-        List<string> objects = CheckingPhaseManager.Shuffle(SceneObjects);
+        List<string> objects = AbstractSceneManager.Shuffle(SceneObjects);
         int half = objects.Count / 2;
         maleObjects = objects.GetRange(0, half);
         femaleObjects = objects.GetRange(half, half);
-
     }
 }

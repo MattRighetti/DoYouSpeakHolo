@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using static EventManager;
 
 public class PossessivesManager : AbstractSceneManager
 {
     private readonly SceneSettings sceneObjects = SceneSwitcher.settings[2];
-    public List<string> maleObjects;
-    public List<string> femaleObjects;
+    public List<string> MaleObjects { get; set; }
+    public List<string> FemaleObjects { get; set; }
     private int basketFull = 0;
-    
 
     public override void LoadObjects() {
-        EventManager.StartListening(Triggers.BasketEmpty, CheckBaskets);
         Pooler.CreateStaticObjects(sceneObjects.staticObjects);
         Pooler.CreateDynamicObjects(sceneObjects.dynamicObjects);
         CreateScene();
@@ -33,18 +30,22 @@ public class PossessivesManager : AbstractSceneManager
     }
 
     internal void SetMaleObjects(List<string> maleObjects) {
-        this.maleObjects = maleObjects;
+        MaleObjects = maleObjects;
     }
 
     internal void SetFemaleObjects(List<string> femaleObjects) {
-        this.femaleObjects = femaleObjects;
+        FemaleObjects = femaleObjects;
     }
 
-    public override void StartLearningPhase() {
-        TriggerEvent(Triggers.LearningPhaseStart);
+    public override void StartListeningToCustomEvents() {
+        StartListening(Triggers.BasketEmpty, CheckBaskets);
+    }
+
+    public override void StopListeningToCustomEvents() {
+        StopListening(Triggers.BasketEmpty, CheckBaskets);
     }
 
     public override void IntroduceObject(string objKey) {
-        
+        throw new System.NotImplementedException();
     }
 }

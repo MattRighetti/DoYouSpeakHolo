@@ -1,10 +1,5 @@
 ﻿using Microsoft.MixedReality.Toolkit.Input;
 using Microsoft.MixedReality.Toolkit.UI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 class CheckingPhaseActivity3 : CheckingPhaseManager {
@@ -22,7 +17,6 @@ class CheckingPhaseActivity3 : CheckingPhaseManager {
     }
 
     private void CreatePeopleAndBaskets() {
-        Debug.Log("Setting check phase");
         sceneManager.ActivateObject("Male", Positions.MalePosition);
         sceneManager.ActivateObject("Female", Positions.FemalePosition);
         CreateAndConfigureBaskets();
@@ -35,35 +29,40 @@ class CheckingPhaseActivity3 : CheckingPhaseManager {
         ConfigureBaskets(basket1);
         ConfigureBaskets(basket2);
 
-        basket1.GetComponent<BasketLogic>().SetFruitList(possessivesManager.maleObjects);
-        basket2.GetComponent<BasketLogic>().SetFruitList(possessivesManager.femaleObjects);
+        basket1.GetComponent<BasketLogic>().SetFruitList(possessivesManager.MaleObjects);
+        basket2.GetComponent<BasketLogic>().SetFruitList(possessivesManager.FemaleObjects);
     }
 
     private void ConfigureBaskets(GameObject basket) {
-        basket.AddComponent<DoNotFall>();
         basket.AddComponent<Rigidbody>();
         basket.AddComponent<BoxCollider>().isTrigger = true;
         basket.AddComponent <ManipulationHandler>();
+        basket.AddComponent<DoNotFall>();
         basket.AddComponent<BasketLogic>();
     }
 
     protected override void CreateAllObjectsAndDisplayInRandomOrder() {
         //Shuffle the collection
-        SceneObjects = Shuffle(SceneObjects);
+        SceneObjects = AbstractSceneManager.Shuffle(SceneObjects);
         GameObject gameObj;
         //Define initial spawning position
         Vector3 startPosition = Positions.startPositionInlineFour;
         foreach (string obj in SceneObjects) {
             //Activate the object and attach to it the script for the task
-            gameObj = GetComponent<AbstractSceneManager>().ActivateObject(obj, startPosition);
+            gameObj = possessivesManager.ActivateObject(obj, startPosition);
+            SetFruitScripts(gameObj);
             startPosition += new Vector3(0.25f, 0, 0);
-            gameObj.AddComponent<DoNotFall>();
-            gameObj.AddComponent<BoxCollider>();
-            Rigidbody body = gameObj.AddComponent<Rigidbody>();
-            body.useGravity = true;
-            body.constraints = RigidbodyConstraints.FreezeRotation;
-            gameObj.AddComponent<ManipulationHandler>();
-            gameObj.AddComponent<NearInteractionGrabbable>();
         }
+    }
+
+    //Add to the object al the scripts needed for the activity
+    private void SetFruitScripts(GameObject gameObj) {
+        gameObj.AddComponent<BoxCollider>();
+        Rigidbody body = gameObj.AddComponent<Rigidbody>();
+        body.useGravity = true;
+        body.constraints = RigidbodyConstraints.FreezeRotation;
+        gameObj.AddComponent<ManipulationHandler>();
+        gameObj.AddComponent<NearInteractionGrabbable>();
+        gameObj.AddComponent<DoNotFall>();
     }
 }

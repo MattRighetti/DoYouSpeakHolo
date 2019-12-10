@@ -1,10 +1,12 @@
 using System.Collections;
-using UnityEngine;
-using static EventManager;
+
 
 public class LearningPhaseActivity1 : LearningPhaseManager {
 
-    protected override void StartSpawn() {
+    CandSManager candSManager;
+
+    protected override void LearningPhase() {
+        candSManager = (CandSManager)sceneManager;
         StartCoroutine(Spawn());
     }
 
@@ -12,6 +14,6 @@ public class LearningPhaseActivity1 : LearningPhaseManager {
         yield return StartCoroutine(ShowObjects(SceneObjects));
 
         //End the learning phase
-        TriggerEvent(Triggers.LearningPhaseEnd);
+        End();
     }
 }

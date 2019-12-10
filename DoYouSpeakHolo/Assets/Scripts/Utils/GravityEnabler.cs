@@ -1,37 +1,32 @@
 ﻿using Microsoft.MixedReality.Toolkit.UI;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GravityEnabler : MonoBehaviour
 {
-    public Collider coll;
+    public Rigidbody rigidbody;
     public ManipulationHandler man;
 
     void Start()
     {
-        coll = gameObject.GetComponent<Collider>();
+        rigidbody = gameObject.GetComponent<Rigidbody>();
         man = gameObject.GetComponent<ManipulationHandler>();
         man.OnManipulationEnded.AddListener(FallDown);
     }
 
     private void FallDown(ManipulationEventData arg0) {
-        coll = man.GetComponent<Collider>();
         EnableGravity();
     }
-
+    
     public void EnableGravity()
     {
-        
-        coll.attachedRigidbody.useGravity = true;
-        coll.attachedRigidbody.isKinematic = false;
+        rigidbody.useGravity = true;
+        rigidbody.isKinematic = false;
     }
 
     public void DisableGravity()
     {
-        coll.attachedRigidbody.useGravity = false;
-        coll.attachedRigidbody.isKinematic = true;  
+        rigidbody.useGravity = false;
+        rigidbody.isKinematic = true;  
     }
     
 }

@@ -57,10 +57,10 @@ class CheckingPhaseActivity3 : CheckingPhaseManager {
 
     //Add to the object al the scripts needed for the activity
     private void SetFruitScripts(GameObject gameObj) {
-        gameObj.AddComponent<BoxCollider>();
         Rigidbody body = gameObj.AddComponent<Rigidbody>();
         body.useGravity = true;
         body.constraints = RigidbodyConstraints.FreezeRotation;
+        gameObj.AddComponent<BoxCollider>();
         gameObj.AddComponent<ManipulationHandler>();
         gameObj.AddComponent<NearInteractionGrabbable>();
         gameObj.AddComponent<DoNotFall>();

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 using UnityEngine;
@@ -64,7 +63,6 @@ public class SceneSwitcher : MonoBehaviour {
             return JsonConvert.DeserializeObject<List<SceneObjectsToLoad>>(json);
         }
     }
-
 }
 
 public class SceneObjectsToLoad {

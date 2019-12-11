@@ -1,0 +1,26 @@
+{
+    "scenes": [
+        {
+            "staticObjects": [
+                {
+                    "type": "House",
+                    "path": "Prefab/objects/House"
+                },
+                {
+                    "type": "Tree",
+                    "path": "Prefab/objects/Tree"
+                }
+            ],
+            "dynamicObjects": [
+                {
+                    "type": "Apple",
+                    "path": "Prefab/Fruits/Apple"
+                },
+                {
+                    "type": "Orange",
+                    "path": "Prefab/Fruits/Orange"
+                }
+            ]
+        }
+    ]
+}

@@ -2,8 +2,8 @@
 
 public class Positions
 {
-    public static readonly int Floor = -1;
-    public static readonly int SpaceFrontDistance = 1;
+    public static readonly float Floor = -0.6f;
+    public static readonly float SpaceFrontDistance = 1.5f;
 
     public static readonly Vector3 Central = new Vector3(0, Floor + 0, SpaceFrontDistance + 1.2f);
     public static readonly Vector3 AsideLeft = new Vector3(-0.2f, Floor + 0, SpaceFrontDistance + 1);

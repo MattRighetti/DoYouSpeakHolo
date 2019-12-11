@@ -24,7 +24,7 @@ public class SceneSwitcher : MonoBehaviour {
         scene3.staticObjects.Add("MaleBasket", "Prefab/objects/Basket");
         scene3.staticObjects.Add("FemaleBasket", "Prefab/objects/Basket");
         scene3.staticObjects.Add("Male", "Prefab/people/VA_MaleCorrect");
-        scene3.staticObjects.Add("VA", "Prefab/people/VA_MaleCorrect");
+        scene3.staticObjects.Add("VA", "Prefab/people/BabyGroot");
         scene3.staticObjects.Add("Female", "Prefab/people/VA_FemaleCorrect");
         scene3.dynamicObjects.Add("Apple", "Prefab/Fruits/Apple");
         scene3.dynamicObjects.Add("Banana", "Prefab/Fruits/Banana");

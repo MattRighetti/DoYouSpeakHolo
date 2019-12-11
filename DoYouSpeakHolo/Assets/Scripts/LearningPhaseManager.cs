@@ -34,13 +34,12 @@ public abstract class LearningPhaseManager : MonoBehaviour {
     protected IEnumerator ShowObject(string objKey) { 
         //Activate the object
         GameObject objectToCreate = sceneManager.ActivateObject(objKey, Positions.Central);
-        
+
+
         //The VA introduces the object
-      //  sceneManager.IntroduceObject(objKey);
-        
         //Wait until the end of the introduction
-        yield return new WaitForSeconds(2);
-        
+        yield return sceneManager.IntroduceObject(objectToCreate.name);
+
         //Deactivate the object
         sceneManager.DeactivateObject(objKey);
     }

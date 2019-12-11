@@ -15,8 +15,14 @@ public class LearningPhaseActivity3 : LearningPhaseManager {
     private IEnumerator ShowObjectsWithPossessives() {
         SplitObjects();
 
+        //Get the audio context
+        AudioContext3 audioContext = (AudioContext3)sceneManager.AudioContext;
+
         //Spawn VA_Male and half of the objects
         GameObject male = possessivesManager.ActivateObject("Male", Positions.MalePosition);
+
+        //Set the AudioContext possessive
+        audioContext.Possessive = Possessives.His;
 
         //Show objects and wait for the spawn to finish
         yield return StartCoroutine(ShowObjects(maleObjects));
@@ -25,6 +31,8 @@ public class LearningPhaseActivity3 : LearningPhaseManager {
 
         //Do the same for the female
         GameObject female = possessivesManager.ActivateObject("Female", Positions.FemalePosition);
+
+        audioContext.Possessive = Possessives.Her;
 
         yield return StartCoroutine(ShowObjects(femaleObjects));
 

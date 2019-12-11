@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using static EventManager;
 
 public class PossessivesManager : AbstractSceneManager
@@ -14,6 +16,11 @@ public class PossessivesManager : AbstractSceneManager
 
     //Keeps track of the basket with no more target fruits
     private int basketFull = 0;
+
+    //Set the audio context to scene 3
+    public override void SetAudioContext() {
+        AudioContext = new AudioContext3();
+    }
 
     //Load scene objects
     public override void LoadObjects() {
@@ -53,8 +60,14 @@ public class PossessivesManager : AbstractSceneManager
     public override void StopListeningToCustomEvents() {
         StopListening(Triggers.BasketEmpty, CheckBaskets);
     }
+}
 
-    public override void IntroduceObject(string objKey) {
-        throw new System.NotImplementedException();
-    }
+//Typesafe Enum pattern to do the audio selection
+public class Possessives {
+    private Possessives(string value) { Value = value; }
+
+    public string Value { get; set; }
+
+    public static Possessives His { get { return new Possessives("his"); } }
+    public static Possessives Her { get { return new Possessives("her"); } }
 }

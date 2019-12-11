@@ -58,9 +58,20 @@ public class AnimateAvatar : MonoBehaviour {
         TriggerEvent(Triggers.VAIntroductionEnd);
     }
 
-    //Introduces an object
-    internal void IntroduceObject(GameObject gameObject) {
-        throw new NotImplementedException();
+    internal IEnumerator IntroduceObject(AudioContext context, string objectName) {
+        audioSource.clip = context.GetAudio(objectName);
+    
+        audioSource.Play();
+        yield return new WaitForSeconds(2);
+    }
+
+    //Play audio and wait until it finishes
+    private IEnumerator PlayAudioSync(AudioSource audioSource) {
+        audioSource.Play();
+
+        while(audioSource.isPlaying) {
+            yield return null;
+        }
     }
 
     private void StartListening() {
@@ -72,4 +83,5 @@ public class AnimateAvatar : MonoBehaviour {
         EventManager.StopListening(Triggers.VAOk, PlayOk);
         EventManager.StartListening(Triggers.VAKo, PlayKo);
     }
+
 }

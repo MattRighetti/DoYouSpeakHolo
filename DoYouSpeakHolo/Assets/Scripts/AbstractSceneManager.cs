@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,10 +11,12 @@ public abstract class AbstractSceneManager : MonoBehaviour {
     public AnimateAvatar VirtualAssistant;
     public LearningPhaseManager LearningPhaseManager { get; set; }
     public CheckingPhaseManager CheckingPhaseManager { get; set; }
+    public AudioContext AudioContext { get; set; }
 
     void OnEnable() {
         Pooler = ObjectPooler.GetPooler();
         LoadObjects();
+        SetAudioContext();
         StartListening();
         VirtualAssistant = ActivateObject("VA", Positions.VAPosition).GetComponent<AnimateAvatar>();
     }
@@ -43,6 +46,11 @@ public abstract class AbstractSceneManager : MonoBehaviour {
         //For the demo load the menu
         SceneManager.LoadScene("Menu");
 
+    }
+
+    internal IEnumerator IntroduceObject(string objectToIntroduce) {
+        Debug.Log("VA is going to introduce the object");
+        yield return VirtualAssistant.IntroduceObject(AudioContext, objectToIntroduce);
     }
 
     public GameObject ActivateObject(string key, Vector3 position) {
@@ -95,10 +103,21 @@ public abstract class AbstractSceneManager : MonoBehaviour {
 
     public abstract void LoadObjects();
 
-    public abstract void IntroduceObject(string objKey);
+    public abstract void SetAudioContext();
 
     public abstract void StartListeningToCustomEvents();
-
+    
     public abstract void StopListeningToCustomEvents();
     
+}
+
+//Typesafe Enum pattern to do the audio selection
+public class Scenes {
+    private Scenes(string value) { Value = value; }
+
+    public string Value { get; set; }
+
+    public static Scenes Scene1 { get { return new Scenes("Scene1"); } }
+    public static Scenes Scene2 { get { return new Scenes("Scene2"); } }
+    public static Scenes Scene3 { get { return new Scenes("Scene3"); } }
 }

@@ -11,6 +11,11 @@ public class CandSManager : AbstractSceneManager {
 
     private int findObjectCounter = 0;
 
+    //Set the audio context to scene 1
+    public override void SetAudioContext() {
+        AudioContext = new AudioContext1();
+    }
+
     //Create the scene objects
     public override void LoadObjects() {
         Pooler.CreateStaticObjects(sceneObjects.staticObjects);
@@ -36,10 +41,6 @@ public class CandSManager : AbstractSceneManager {
 
         //Set the current target
         GetPooledObject(TargetObjects[findObjectCounter]).GetComponent<FindObjectTask>().IsTarget = true;
-    }
-
-    public override void IntroduceObject(string objKey) {
-        throw new System.NotImplementedException();
     }
 
     public override void StartListeningToCustomEvents() {

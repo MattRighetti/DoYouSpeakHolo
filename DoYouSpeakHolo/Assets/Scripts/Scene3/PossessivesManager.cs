@@ -3,17 +3,26 @@ using static EventManager;
 
 public class PossessivesManager : AbstractSceneManager
 {
-    private readonly SceneSettings sceneObjects = SceneSwitcher.settings[2];
+
+    private readonly SceneObjectsToLoad sceneObjects = SceneSwitcher.settings[2];
+
+    //Target fruits of the male basket
     public List<string> MaleObjects { get; set; }
+
+    //Target fruits of the female basket
     public List<string> FemaleObjects { get; set; }
+
+    //Keeps track of the basket with no more target fruits
     private int basketFull = 0;
 
+    //Load scene objects
     public override void LoadObjects() {
         Pooler.CreateStaticObjects(sceneObjects.staticObjects);
         Pooler.CreateDynamicObjects(sceneObjects.dynamicObjects);
         CreateScene();
     }
 
+    //Chek if all the baskets are full
     private void CheckBaskets() {
         basketFull++;
 
@@ -22,7 +31,7 @@ public class PossessivesManager : AbstractSceneManager
         }
     }
 
-    //Create static elements of the scene
+    //Activate and put the static elements in the scene
     private void CreateScene() {
         Pooler.ActivateObject("House", Positions.HousePosition);
         Pooler.ActivateObject("Tree", Positions.TreePosition);

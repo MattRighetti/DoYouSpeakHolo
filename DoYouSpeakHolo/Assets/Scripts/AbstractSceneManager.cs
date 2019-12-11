@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public abstract class AbstractSceneManager : MonoBehaviour {
 
     protected ObjectPooler Pooler;
-    public SceneSettings sceneSettings;
+    public SceneObjectsToLoad sceneSettings;
     public AnimateAvatar VirtualAssistant;
     public LearningPhaseManager LearningPhaseManager { get; set; }
     public CheckingPhaseManager CheckingPhaseManager { get; set; }

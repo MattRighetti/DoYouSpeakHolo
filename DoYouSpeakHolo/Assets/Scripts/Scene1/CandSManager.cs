@@ -5,13 +5,13 @@ using static EventManager;
 
 public class CandSManager : AbstractSceneManager {
 
-    private readonly SceneSettings sceneObjects = SceneSwitcher.settings[0];
+    private readonly SceneObjectsToLoad sceneObjects = SceneSwitcher.settings[0];
 
     public List<string> TargetObjects { get; set; }
 
     private int findObjectCounter = 0;
 
-
+    //Create the scene objects
     public override void LoadObjects() {
         Pooler.CreateStaticObjects(sceneObjects.staticObjects);
         Pooler.CreateDynamicObjects(sceneObjects.dynamicObjects);

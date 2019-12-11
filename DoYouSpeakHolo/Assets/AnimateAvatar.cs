@@ -61,8 +61,8 @@ public class AnimateAvatar : MonoBehaviour {
     internal IEnumerator IntroduceObject(AudioContext context, string objectName) {
         audioSource.clip = context.GetAudio(objectName);
     
-        audioSource.Play();
-        yield return new WaitForSeconds(2);
+        animator.Play("TalkingShort");
+        yield return PlayAudioSync(audioSource);
     }
 
     //Play audio and wait until it finishes
@@ -72,6 +72,8 @@ public class AnimateAvatar : MonoBehaviour {
         while(audioSource.isPlaying) {
             yield return null;
         }
+
+        yield return new WaitForSeconds(1.5f);
     }
 
     private void StartListening() {

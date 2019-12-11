@@ -22,5 +22,5 @@ public class Positions
     public static readonly Vector3 hiddenPosition = new Vector3(0, Floor + 0, SpaceFrontDistance - 3);
 
     //Start position for spawning 4 objects aligned in scene1
-    public static readonly Vector3 startPositionInlineFour = new Vector3(-0.5f, Floor + 0, SpaceFrontDistance + 0.8f);
+    public static readonly Vector3 startPositionInlineFour = new Vector3(-0.3f, Floor + 0, SpaceFrontDistance + 0.8f);
 }

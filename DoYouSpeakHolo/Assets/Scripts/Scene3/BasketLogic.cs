@@ -25,7 +25,6 @@ public class BasketLogic : MonoBehaviour {
     }
 
     public void SetFruitList(List<string> fruitListString) {
-        Debug.Log("fruits " + fruitListString.ToString());
         fruitList = fruitListString;
     }
 
@@ -46,16 +45,16 @@ public class BasketLogic : MonoBehaviour {
             fruitList.Remove(otherCollider.gameObject.name);
             //Trigger the positive reaction of the Virtual assistant
             EventManager.TriggerEvent(EventManager.Triggers.VAOk);
+
+            //If there are no more target fruits
+            if (fruitList.Count == 0) {
+                //Notify the Possessives Manager
+                EventManager.TriggerEvent(EventManager.Triggers.BasketEmpty);
+            }
         }
         else {
             //Trigger the negative reaction of the Virtual assistant
             EventManager.TriggerEvent(EventManager.Triggers.VAKo);
-        }
-
-        //If there are no more target fruits
-        if (fruitList.Count == 0) {
-            //Notify the Possessives Manager
-            EventManager.TriggerEvent(EventManager.Triggers.BasketEmpty);
         }
 
         return;

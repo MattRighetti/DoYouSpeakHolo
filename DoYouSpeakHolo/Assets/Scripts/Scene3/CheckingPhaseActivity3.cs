@@ -51,7 +51,7 @@ class CheckingPhaseActivity3 : CheckingPhaseManager {
             //Activate the object and attach to it the script for the task
             gameObj = possessivesManager.ActivateObject(obj, startPosition);
             SetFruitScripts(gameObj);
-            startPosition += new Vector3(0.25f, 0, 0);
+            startPosition += new Vector3(0.2f, 0, 0);
         }
     }
 

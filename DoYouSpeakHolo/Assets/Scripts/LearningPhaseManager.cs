@@ -89,10 +89,11 @@ public abstract class LearningPhaseManager : MonoBehaviour {
     //Stop listening to events and trigger the checking phase
     protected IEnumerator End() {
         //Added only to trigger the method in the specific learning phase at the right time
+        TriggerEvent(Triggers.LearningPhaseEnd);
+
         yield return null;
 
         //start the checking phase
-        TriggerEvent(Triggers.LearningPhaseEnd);
     }
 
     // ---------------------------------- ABSTRACT ------------------------------

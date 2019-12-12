@@ -36,7 +36,7 @@ class CheckingPhaseActivity3Advanced : CheckingPhaseManager {
     private void ConfigureBaskets(GameObject basket) {
         basket.AddComponent<Rigidbody>();
         basket.AddComponent<BoxCollider>().isTrigger = true;
-        basket.AddComponent <ManipulationHandler>();
+        basket.AddComponent<ManipulationHandler>();
         basket.AddComponent<DoNotFall>();
         basket.AddComponent<BasketLogic>();
     }

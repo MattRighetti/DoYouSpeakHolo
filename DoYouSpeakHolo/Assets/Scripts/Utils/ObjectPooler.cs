@@ -1,7 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class ObjectPooler : MonoBehaviour {
@@ -23,28 +20,36 @@ public class ObjectPooler : MonoBehaviour {
 
     //Create the objects, deactivate and store them into the data structure
     public void CreateStaticObjects(Dictionary<string, string> objectsDict) {
+        if (staticObjectsDictionary == null) {
+            staticObjectsDictionary = new Dictionary<string, GameObject>();
+        }
         foreach (KeyValuePair<string, string> keyValuePair in objectsDict) {
-            if (!staticObjectsDictionary.ContainsKey(keyValuePair.Key) ) {
-                Debug.Log(keyValuePair);
-                GameObject obj = Instantiate(Resources.Load(keyValuePair.Value, typeof(GameObject))) as GameObject;
-                obj.transform.position = Positions.hiddenPosition;
-                obj.SetActive(false);
-                staticObjectsDictionary.Add(keyValuePair.Key, obj);
+        
+            Debug.Log(keyValuePair);
+            GameObject obj = Instantiate(Resources.Load(keyValuePair.Value, typeof(GameObject))) as GameObject;
+            obj.transform.position = Positions.hiddenPosition;
+            obj.SetActive(false);
 
-            }
+            staticObjectsDictionary.Add(keyValuePair.Key, obj);
+
+           
         }
     }
 
     //Create the objects, deactivate and store them into the data structure
     public void CreateDynamicObjects(Dictionary<string, string> objectsDict) {
+        if (dynamicObjectsDictionary == null) {
+            dynamicObjectsDictionary = new Dictionary<string, GameObject>();
+        }
         foreach (KeyValuePair<string, string> keyValuePair in objectsDict) {
-            if (!dynamicObjectsDictionary.ContainsKey(keyValuePair.Key)) {
-                Debug.Log(keyValuePair);
-                GameObject obj = Instantiate(Resources.Load(keyValuePair.Value, typeof(GameObject))) as GameObject;
-                obj.transform.position = Positions.hiddenPosition;
-                obj.SetActive(false);
-                dynamicObjectsDictionary.Add(keyValuePair.Key, obj);
-            }
+            Debug.Log(keyValuePair);
+            GameObject obj = Instantiate(Resources.Load(keyValuePair.Value, typeof(GameObject))) as GameObject;
+            obj.transform.position = Positions.hiddenPosition;
+            obj.SetActive(false);
+
+
+            dynamicObjectsDictionary.Add(keyValuePair.Key, obj);
+            
         }
     }
 

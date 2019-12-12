@@ -1,30 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static EventManager;
 
-public class LearningPhaseActivity3Advanced : LearningPhaseManager
-{
+public class LearningPhaseActivity3Advanced : LearningPhaseManager {
     private List<string> maleObjects;
     private List<string> femaleObjects;
     private PossessivesManager possessivesManager;
-    AudioContext3 audioContext;
 
     protected override void LearningPhase() {
         possessivesManager = (PossessivesManager)sceneManager;
-        audioContext = (AudioContext3)possessivesManager.AudioContext;
-        StartCoroutine(SceneIntroduction());
-    }
-
-    private IEnumerator SceneIntroduction() {
-        yield return ShowObjectsWithPossessives();
-        yield return End();
-
-        //TODO:Move to activity 3 advanced
-        //yield return ShowObjectsWithPossessives();
+        StartCoroutine(ShowObjectsWithPossessives());
     }
 
     private IEnumerator ShowObjectsWithPossessives() {
         SplitObjects();
+
+        //Get the audio context
+        AudioContext3 audioContext = (AudioContext3)sceneManager.AudioContext;
 
         //Spawn VA_Male and half of the objects
         GameObject male = possessivesManager.ActivateObject("Male", Positions.MalePosition);
@@ -49,6 +42,9 @@ public class LearningPhaseActivity3Advanced : LearningPhaseManager
         //Set the list of target fruits into the PossessivesManager
         possessivesManager.SetMaleObjects(maleObjects);
         possessivesManager.SetFemaleObjects(femaleObjects);
+
+        //End the learning phase
+        TriggerEvent(Triggers.LearningPhaseEnd);
     }
 
     //Split the category of the objects creating two list, one for each character

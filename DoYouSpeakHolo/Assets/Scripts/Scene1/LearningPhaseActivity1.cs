@@ -11,7 +11,7 @@ public class LearningPhaseActivity1 : LearningPhaseManager {
     }
 
     private IEnumerator Spawn() {
-        yield return StartCoroutine(ShowObjects(SceneObjects));
+        yield return StartCoroutine(ShowObjectsWithContext(SceneObjects));
 
         //End the learning phase
         End();

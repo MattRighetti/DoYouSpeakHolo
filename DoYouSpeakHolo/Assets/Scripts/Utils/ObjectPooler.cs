@@ -24,22 +24,27 @@ public class ObjectPooler : MonoBehaviour {
     //Create the objects, deactivate and store them into the data structure
     public void CreateStaticObjects(Dictionary<string, string> objectsDict) {
         foreach (KeyValuePair<string, string> keyValuePair in objectsDict) {
-            Debug.Log(keyValuePair);
-            GameObject obj = Instantiate(Resources.Load(keyValuePair.Value, typeof(GameObject))) as GameObject;
-            obj.transform.position = Positions.hiddenPosition;
-            obj.SetActive(false);
-            staticObjectsDictionary.Add(keyValuePair.Key, obj);
+            if (!staticObjectsDictionary.ContainsKey(keyValuePair.Key) ) {
+                Debug.Log(keyValuePair);
+                GameObject obj = Instantiate(Resources.Load(keyValuePair.Value, typeof(GameObject))) as GameObject;
+                obj.transform.position = Positions.hiddenPosition;
+                obj.SetActive(false);
+                staticObjectsDictionary.Add(keyValuePair.Key, obj);
+
+            }
         }
     }
 
     //Create the objects, deactivate and store them into the data structure
     public void CreateDynamicObjects(Dictionary<string, string> objectsDict) {
         foreach (KeyValuePair<string, string> keyValuePair in objectsDict) {
-            Debug.Log(keyValuePair);
-            GameObject obj = Instantiate(Resources.Load(keyValuePair.Value, typeof(GameObject))) as GameObject;
-            obj.transform.position = Positions.hiddenPosition;
-            obj.SetActive(false);
-            dynamicObjectsDictionary.Add(keyValuePair.Key, obj);
+            if (!dynamicObjectsDictionary.ContainsKey(keyValuePair.Key)) {
+                Debug.Log(keyValuePair);
+                GameObject obj = Instantiate(Resources.Load(keyValuePair.Value, typeof(GameObject))) as GameObject;
+                obj.transform.position = Positions.hiddenPosition;
+                obj.SetActive(false);
+                dynamicObjectsDictionary.Add(keyValuePair.Key, obj);
+            }
         }
     }
 

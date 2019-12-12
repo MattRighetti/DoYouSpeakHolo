@@ -49,8 +49,13 @@ public abstract class AbstractSceneManager : MonoBehaviour {
     }
 
     internal IEnumerator IntroduceObject(string objectToIntroduce) {
-        Debug.Log("VA is going to introduce the object");
+        Debug.Log("Introduce without context " + objectToIntroduce);
         yield return VirtualAssistant.IntroduceObject(AudioContext, objectToIntroduce);
+    }
+
+    internal IEnumerator IntroduceObjectWithContext(string objectToIntroduce) {
+        Debug.Log("VA is going to introduce the object");
+        yield return VirtualAssistant.IntroduceObjectWithContext(AudioContext, objectToIntroduce);
     }
 
     public GameObject ActivateObject(string key, Vector3 position) {

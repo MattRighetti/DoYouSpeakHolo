@@ -31,7 +31,5 @@ public abstract class CheckingPhaseManager : MonoBehaviour {
 
     // ------------------------------------ ABSTRACT ----------------------------------
 
-    protected abstract void CreateAllObjectsAndDisplayInRandomOrder();
-
     protected abstract void CheckingPhase();
 }

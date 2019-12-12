@@ -4,7 +4,13 @@ using UnityEngine;
 public abstract class AudioContext {
     protected Scenes Scene;
 
-    public abstract AudioClip GetAudio(string objectName);
+    public abstract AudioClip GetAudioWithContext(string objectName);
+
+    public AudioClip GetAudio(string objectName) {
+        string path = "Audio/" + Scene.Value + "/" + objectName;
+        Debug.Log("no context audio " + path);
+        return Resources.Load(path) as AudioClip;
+    }
 }
 
 public class AudioContext1 : AudioContext {
@@ -13,7 +19,7 @@ public class AudioContext1 : AudioContext {
         Scene = Scenes.Scene1;
     }
 
-    public override AudioClip GetAudio(string objectName) {
+    public override AudioClip GetAudioWithContext(string objectName) {
         throw new System.NotImplementedException();
     }
 }
@@ -23,7 +29,7 @@ public class AudioContext2 : AudioContext {
         Scene = Scenes.Scene1;
     }
 
-    public override AudioClip GetAudio(string objectName) {
+    public override AudioClip GetAudioWithContext(string objectName) {
         throw new System.NotImplementedException();
     }
 }
@@ -37,11 +43,9 @@ public class AudioContext3 : AudioContext {
     }
 
     //Get the correct audio based on the current context
-    public override AudioClip GetAudio(string objectName) {
+    public override AudioClip GetAudioWithContext(string objectName) {
         string path = "Audio/" + Scene.Value + "/" + Possessive.Value + objectName;
-        Debug.Log("picking audio " + path);
-        AudioClip clip = Resources.Load(path) as AudioClip;
-
-        return clip;
+        Debug.Log("context audio " + path);
+        return Resources.Load(path) as AudioClip;
     }
 }

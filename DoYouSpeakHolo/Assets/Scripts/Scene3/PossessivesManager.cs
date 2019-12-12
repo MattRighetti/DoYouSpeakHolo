@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using static EventManager;
 
 public class PossessivesManager : AbstractSceneManager
@@ -38,6 +40,10 @@ public class PossessivesManager : AbstractSceneManager
         }
     }
 
+    internal IEnumerator IntroduceCheckingPhase() { 
+        yield return VirtualAssistant.PlayCheckingPhaseIntroduction(AudioContext);
+    }
+
     //Activate and put the static elements in the scene
     private void CreateScene() {
         Pooler.ActivateObject("House", Positions.HousePosition);
@@ -60,6 +66,10 @@ public class PossessivesManager : AbstractSceneManager
     public override void StopListeningToCustomEvents() {
         StopListening(Triggers.BasketEmpty, CheckBaskets);
     }
+
+    internal void changeLevel() {
+        SceneManager.LoadScene("Scene3_bis");
+    }
 }
 
 //Typesafe Enum pattern to do the audio selection
@@ -70,4 +80,14 @@ public class Possessives {
 
     public static Possessives His { get { return new Possessives("his"); } }
     public static Possessives Her { get { return new Possessives("her"); } }
+}
+
+//Typesafe Enum pattern to do the audio selection
+public class Character {
+    private Character(string value) { Value = value; }
+
+    public string Value { get; set; }
+
+    public static Character Male { get { return new Character("Male"); } }
+    public static Character Female { get { return new Character("Female"); } }
 }

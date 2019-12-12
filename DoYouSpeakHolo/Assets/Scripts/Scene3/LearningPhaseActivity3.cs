@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,51 +7,31 @@ public class LearningPhaseActivity3 : LearningPhaseManager {
     private List<string> maleObjects;
     private List<string> femaleObjects;
     private PossessivesManager possessivesManager;
+    AudioContext3 audioContext;
 
     protected override void LearningPhase() {
+        audioContext = (AudioContext3)sceneManager.AudioContext;
         possessivesManager = (PossessivesManager)sceneManager;
-        StartCoroutine(ShowObjectsWithPossessives());
+        StartCoroutine(SceneIntroduction());
     }
 
-    private IEnumerator ShowObjectsWithPossessives() {
-        SplitObjects();
-
-        //Get the audio context
-        AudioContext3 audioContext = (AudioContext3)sceneManager.AudioContext;
-
-        //Spawn VA_Male and half of the objects
-        GameObject male = possessivesManager.ActivateObject("Male", Positions.MalePosition);
-
-        //Set the AudioContext possessive
-        audioContext.Possessive = Possessives.His;
-
-        //Show objects and wait for the spawn to finish
-        yield return StartCoroutine(ShowObjects(maleObjects));
-       
-        sceneManager.DeactivateObject(male.gameObject.name);
-
-        //Do the same for the female
-        GameObject female = possessivesManager.ActivateObject("Female", Positions.FemalePosition);
-
-        audioContext.Possessive = Possessives.Her;
-
-        yield return StartCoroutine(ShowObjects(femaleObjects));
-
-        possessivesManager.DeactivateObject(female.gameObject.name);
-
-        //Set the list of target fruits into the PossessivesManager
-        possessivesManager.SetMaleObjects(maleObjects);
-        possessivesManager.SetFemaleObjects(femaleObjects);
-        
-        //End the learning phase
-        End();
+    private IEnumerator SceneIntroduction() {
+        yield return IntroduceCharacterAndBasket(Character.Male);
+        yield return IntroduceCharacterAndBasket(Character.Female);
+        yield return ShowObjects(SceneObjects);
+        yield return End();
     }
 
-    //Split the category of the objects creating two list, one for each character
-    private void SplitObjects() {
-        List<string> objects = AbstractSceneManager.Shuffle(SceneObjects);
-        int half = objects.Count / 2;
-        maleObjects = objects.GetRange(0, half);
-        femaleObjects = objects.GetRange(half, half);
+    private IEnumerator IntroduceCharacterAndBasket(Character character) {
+
+        //Set the right possessive
+        if (character.Value == "Male") {
+            audioContext.Possessive = Possessives.His;
+            yield return ShowObjectPair(character.Value, character.Value + "Basket");
+        } else {
+            audioContext.Possessive = Possessives.Her;
+            yield return ShowObjectPair(character.Value, character.Value + "Basket");
+        }
+
     }
 }

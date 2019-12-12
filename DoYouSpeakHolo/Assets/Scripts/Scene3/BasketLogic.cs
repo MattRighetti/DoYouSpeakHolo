@@ -45,7 +45,7 @@ public class BasketLogic : MonoBehaviour {
             fruitList.Remove(otherCollider.gameObject.name);
             //Trigger the positive reaction of the Virtual assistant
             EventManager.TriggerEvent(EventManager.Triggers.VAOk);
-
+            EventManager.TriggerEvent(EventManager.Triggers.PickedFruit);
             //If there are no more target fruits
             if (fruitList.Count == 0) {
                 //Notify the Possessives Manager

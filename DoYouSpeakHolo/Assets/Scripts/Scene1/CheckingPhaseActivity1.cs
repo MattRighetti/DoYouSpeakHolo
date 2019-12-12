@@ -21,7 +21,7 @@ class CheckingPhaseActivity1 : CheckingPhaseManager {
     }
 
 
-    protected override void CreateAllObjectsAndDisplayInRandomOrder() {
+    protected void CreateAllObjectsAndDisplayInRandomOrder() {
         //Shuffle the collection
         SceneObjects = AbstractSceneManager.Shuffle(SceneObjects);
         GameObject gameObj;

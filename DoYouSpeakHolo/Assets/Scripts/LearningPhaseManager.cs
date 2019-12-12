@@ -31,7 +31,7 @@ public abstract class LearningPhaseManager : MonoBehaviour {
     }
 
     //Spawn the objects in front of the user and destroy them after a timeout
-    protected IEnumerator ShowObject(string objKey) { 
+    protected IEnumerator ShowObject(string objKey) {
         //Activate the object
         GameObject objectToCreate = sceneManager.ActivateObject(objKey, Positions.Central);
 
@@ -44,9 +44,53 @@ public abstract class LearningPhaseManager : MonoBehaviour {
         sceneManager.DeactivateObject(objKey);
     }
 
+    //Spawn the objects one at time
+    protected IEnumerator ShowObjectsWithContext(List<string> objectsToShow) {
+        foreach (string objectKey in objectsToShow) {
+            yield return StartCoroutine(ShowObjectWithContext(objectKey));
+        }
+    }
+
+    //Spawn the objects in front of the user and destroy them after a timeout
+    protected IEnumerator ShowObjectWithContext(string objKey) {
+        //Activate the object
+        GameObject objectToCreate = sceneManager.ActivateObject(objKey, Positions.Central);
+
+
+        //The VA introduces the object
+        //Wait until the end of the introduction
+        yield return sceneManager.IntroduceObjectWithContext(objectToCreate.name);
+
+        //Deactivate the object
+        sceneManager.DeactivateObject(objKey);
+    }
+
+
+    protected IEnumerator ShowObjectPair(string object1, string object2) {
+
+        //Activate the first object
+        GameObject objectToCreate1 = sceneManager.ActivateObject(object1, Positions.Central);
+
+        //Introduce it without context
+        yield return sceneManager.IntroduceObject(objectToCreate1.name);
+
+        //Activate the second object
+        GameObject objectToCreate2 = sceneManager.ActivateObject(object2, Positions.CentralNear);
+
+        //Introduce it with context
+        yield return sceneManager.IntroduceObject(objectToCreate2.name);
+
+        //Deactivate the objects
+        sceneManager.DeactivateObject(object1);
+        sceneManager.DeactivateObject(object2);
+    }
+
 
     //Stop listening to events and trigger the checking phase
-    protected void End() {
+    protected IEnumerator End() {
+        //Added only to trigger the method in the specific learning phase at the right time
+        yield return null;
+
         //start the checking phase
         TriggerEvent(Triggers.LearningPhaseEnd);
     }

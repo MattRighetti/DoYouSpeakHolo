@@ -18,7 +18,8 @@ public class EventManager : MonoBehaviour
         LoadingComplete,
         VAIntroductionEnd,
         BasketEmpty,
-        SetTargetObject
+        SetTargetObject,
+        GuidedHarvesting
     };
 
     Dictionary<Triggers, UnityEvent> eventDictionary;

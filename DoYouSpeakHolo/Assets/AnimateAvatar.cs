@@ -58,8 +58,23 @@ public class AnimateAvatar : MonoBehaviour {
         TriggerEvent(Triggers.VAIntroductionEnd);
     }
 
+    internal IEnumerator PlayCheckingPhaseIntroduction(AudioContext context) {
+        Debug.Log("VA INTRO " + context);
+        audioSource.clip = context.GetAudio("yourTurn");
+        animator.Play("TalkingShort");
+        yield return PlayAudioSync(audioSource);
+    }
+
     internal IEnumerator IntroduceObject(AudioContext context, string objectName) {
+
         audioSource.clip = context.GetAudio(objectName);
+
+        animator.Play("TalkingShort");
+        yield return PlayAudioSync(audioSource);
+    }
+
+    internal IEnumerator IntroduceObjectWithContext(AudioContext context, string objectName) {
+        audioSource.clip = context.GetAudioWithContext(objectName);
     
         animator.Play("TalkingShort");
         yield return PlayAudioSync(audioSource);
@@ -67,6 +82,8 @@ public class AnimateAvatar : MonoBehaviour {
 
     //Play audio and wait until it finishes
     private IEnumerator PlayAudioSync(AudioSource audioSource) {
+        yield return WaitForAudioEnd();
+
         audioSource.Play();
 
         while(audioSource.isPlaying) {
@@ -75,6 +92,13 @@ public class AnimateAvatar : MonoBehaviour {
 
         yield return new WaitForSeconds(1.5f);
     }
+
+    private IEnumerator WaitForAudioEnd() {
+        while (audioSource.isPlaying) {
+            yield return null;
+        }
+    }
+
 
     private void StartListening() {
         EventManager.StartListening(Triggers.VAOk, PlayOk);

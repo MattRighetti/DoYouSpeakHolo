@@ -43,6 +43,16 @@ public class AnimateAvatar : MonoBehaviour {
         animator.Play("OK");
     }
 
+//    public IEnumerator PlayOkRoutine() {
+ //       yield return WaitForAudioEnd();
+  //      yield return PlayAnimation("OK");
+   // }
+
+//    private object PlayAnimation(string animation) {
+ //       animator.Play(animation);
+ //       
+ //   }
+
     private IEnumerator PlayIntroductionRoutine() {
         //Set the introduction audio clip and play it
         audioSource.clip = introduction;
@@ -92,6 +102,11 @@ public class AnimateAvatar : MonoBehaviour {
 
         yield return new WaitForSeconds(1.5f);
     }
+
+//    private IEnumerator WaitForAnimationEnd() {
+ //       animator.GetCurrentAnimatorClipInfo(0).Length;
+  //      whi()
+   // }
 
     private IEnumerator WaitForAudioEnd() {
         while (audioSource.isPlaying) {

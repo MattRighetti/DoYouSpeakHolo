@@ -19,37 +19,26 @@ public class ObjectPooler : MonoBehaviour {
     }
 
     //Create the objects, deactivate and store them into the data structure
-    public void CreateStaticObjects(Dictionary<string, string> objectsDict) {
-        if (staticObjectsDictionary == null) {
-            staticObjectsDictionary = new Dictionary<string, GameObject>();
-        }
-        foreach (KeyValuePair<string, string> keyValuePair in objectsDict) {
-        
-            Debug.Log(keyValuePair);
-            GameObject obj = Instantiate(Resources.Load(keyValuePair.Value, typeof(GameObject))) as GameObject;
+    public void CreateStaticObjects(List<SingleObjectToLoad> staticObjects) {
+        foreach (SingleObjectToLoad objectString in staticObjects) {
+            Debug.Log(objectString);
+            GameObject obj = Instantiate(Resources.Load(objectString.path, typeof(GameObject))) as GameObject;
             obj.transform.position = Positions.hiddenPosition;
             obj.SetActive(false);
 
-            staticObjectsDictionary.Add(keyValuePair.Key, obj);
-
-           
+            staticObjectsDictionary.Add(objectString.type, obj);
         }
     }
 
     //Create the objects, deactivate and store them into the data structure
-    public void CreateDynamicObjects(Dictionary<string, string> objectsDict) {
-        if (dynamicObjectsDictionary == null) {
-            dynamicObjectsDictionary = new Dictionary<string, GameObject>();
-        }
-        foreach (KeyValuePair<string, string> keyValuePair in objectsDict) {
-            Debug.Log(keyValuePair);
-            GameObject obj = Instantiate(Resources.Load(keyValuePair.Value, typeof(GameObject))) as GameObject;
+    public void CreateDynamicObjects(List<SingleObjectToLoad> dynamicObjects) {
+        foreach (SingleObjectToLoad objectString in dynamicObjects) {
+            Debug.Log(objectString);
+            GameObject obj = Instantiate(Resources.Load(objectString.path, typeof(GameObject))) as GameObject;
             obj.transform.position = Positions.hiddenPosition;
             obj.SetActive(false);
 
-
-            dynamicObjectsDictionary.Add(keyValuePair.Key, obj);
-            
+            dynamicObjectsDictionary.Add(objectString.type, obj);
         }
     }
 

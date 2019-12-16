@@ -3,9 +3,31 @@ using System.IO;
 using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+#if WINDOWS_UWP
+using Windows.Storage;
+using System.Threading.Tasks;
+using System;
+#endif
+
+[System.Serializable]
+public class SingleObjectToLoad {
+    public string type;
+    public string path;
+}
+
+[System.Serializable]
+public class SceneObjectsToLoad {
+    public List<SingleObjectToLoad> staticObjects;
+    public List<SingleObjectToLoad> dynamicObjects;
+}
+
+[System.Serializable]
+public class SceneSettings {
+    public List<SceneObjectsToLoad> scenes;
+}
 
 public class SceneSwitcher : MonoBehaviour {
-    public static List<SceneObjectsToLoad> settings;
+    public static SceneSettings settings;
 
     void Start() {
         if (settings == null) {
@@ -15,25 +37,36 @@ public class SceneSwitcher : MonoBehaviour {
     }
 
     private void tryMethod() {
-        SceneObjectsToLoad scene1 = new SceneObjectsToLoad();
-        SceneObjectsToLoad scene2 = new SceneObjectsToLoad();
-        SceneObjectsToLoad scene3 = new SceneObjectsToLoad();
-        //settings = ReadJSONFromFile();
-        scene3.staticObjects.Add("House", "Prefab/objects/House_right");
-        scene3.staticObjects.Add("Tree", "Prefab/objects/Tree_right");
-        scene3.staticObjects.Add("MaleBasket", "Prefab/objects/Basket");
-        scene3.staticObjects.Add("FemaleBasket", "Prefab/objects/Basket");
-        scene3.staticObjects.Add("Male", "Prefab/people/VA_MaleCorrect");
-        scene3.staticObjects.Add("VA", "Prefab/people/Groot");
-        scene3.staticObjects.Add("Female", "Prefab/people/VA_FemaleCorrect");
-        scene3.dynamicObjects.Add("Apple", "Prefab/Fruits/Apple");
-        scene3.dynamicObjects.Add("Banana", "Prefab/Fruits/Banana");
-        scene3.dynamicObjects.Add("Orange", "Prefab/Fruits/Orange");
-        scene3.dynamicObjects.Add("Pear", "Prefab/Fruits/Pear");
-        settings = new List<SceneObjectsToLoad>();
-        settings.Add(scene1);
-        settings.Add(scene2);
-        settings.Add(scene3);
+#if UNITY_EDITOR && UNITY_METRO
+        string path = "Assets/Resources/Prefab/objects.json";
+        string text = File.ReadAllText(path);
+        settings = JsonUtility.FromJson<SceneSettings>(text);
+#endif
+
+#if WINDOWS_UWP
+        Task<Task> task = new Task<Task>(async () =>
+            {
+                try
+                {
+		            StorageFile jsonFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///prova.json"));
+                    string jsonText = await FileIO.ReadTextAsync(jsonFile);
+                    //Debug.Log(jsonText);
+                    deserializedObject = JsonUtility.FromJson<prova3>(jsonText);
+                }
+                catch (Exception e)
+                {
+                    Debug.Log(e);
+                }
+            });
+        task.Start();
+        task.Wait();
+        task.Result.Wait();
+#endif
+
+        Debug.Log("deserialized object" + settings);
+        Debug.Log(settings.scenes[0].dynamicObjects[0].type);
+   
+
     }
 
     public void GoToMenuScene() {
@@ -62,15 +95,5 @@ public class SceneSwitcher : MonoBehaviour {
             string json = file.ReadToEnd();
             return JsonConvert.DeserializeObject<List<SceneObjectsToLoad>>(json);
         }
-    }
-}
-
-public class SceneObjectsToLoad {
-    public Dictionary<string, string> staticObjects;
-    public Dictionary<string, string> dynamicObjects;
-
-    public SceneObjectsToLoad() {
-        staticObjects = new Dictionary<string, string>();
-        dynamicObjects = new Dictionary<string, string>();
     }
 }

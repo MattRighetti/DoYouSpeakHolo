@@ -6,7 +6,6 @@ class CheckingPhaseActivity3Advanced : CheckingPhaseManager {
     private PossessivesManager possessivesManager;
 
     protected override void CheckingPhase() {
-
         possessivesManager = (PossessivesManager)sceneManager;
 
         //Create the baskets and attach to them the script

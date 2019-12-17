@@ -25,7 +25,7 @@ public class LearningPhaseActivity3 : LearningPhaseManager {
         yield return ShowObjects(SceneObjects);
 
         //Trigger the Checking Phase
-        yield return End();
+        End();
     }
 
     private IEnumerator IntroducePeopleAndBaskets() {

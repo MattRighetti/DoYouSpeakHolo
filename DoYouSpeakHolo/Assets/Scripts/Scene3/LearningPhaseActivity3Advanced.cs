@@ -1,42 +1,36 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static EventManager;
 
 public class LearningPhaseActivity3Advanced : LearningPhaseManager {
     private List<string> maleObjects;
     private List<string> femaleObjects;
     private PossessivesManager possessivesManager;
+    private AudioContext3 audioContext;
 
     protected override void LearningPhase() {
+        audioContext = (AudioContext3)sceneManager.AudioContext;
         possessivesManager = (PossessivesManager)sceneManager;
-        StartCoroutine(ShowObjectsWithPossessives());
+        StartCoroutine(SceneIntroduction());
     }
 
-    private IEnumerator ShowObjectsWithPossessives() {
+    protected override IEnumerator SceneIntroduction() {
         SplitObjects();
 
-        //Get the audio context
-        AudioContext3 audioContext = (AudioContext3)sceneManager.AudioContext;
 
         //Spawn VA_Male and half of the objects
-        GameObject male = possessivesManager.ActivateObject("Male", Positions.MalePosition);
-
-        //Set the AudioContext possessive
+        Character character = Character.Male;
+        GameObject male = possessivesManager.ActivateObject(character.Value, Positions.MalePosition);
         audioContext.Possessive = Possessives.His;
-
-        //Show objects and wait for the spawn to finish
-        yield return StartCoroutine(ShowObjectsWithContext(maleObjects));
-
+        //Introduce object with context
+        yield return ShowObjectsWithContext(maleObjects);
         sceneManager.DeactivateObject(male.gameObject.name);
 
         //Do the same for the female
-        GameObject female = possessivesManager.ActivateObject("Female", Positions.FemalePosition);
-
+        character = Character.Female;
+        GameObject female = possessivesManager.ActivateObject(character.Value, Positions.FemalePosition);
         audioContext.Possessive = Possessives.Her;
-
-        yield return StartCoroutine(ShowObjectsWithContext(femaleObjects));
-
+        yield return ShowObjectsWithContext(femaleObjects);
         possessivesManager.DeactivateObject(female.gameObject.name);
 
         //Set the list of target fruits into the PossessivesManager
@@ -44,7 +38,7 @@ public class LearningPhaseActivity3Advanced : LearningPhaseManager {
         possessivesManager.SetFemaleObjects(femaleObjects);
 
         //End the learning phase
-        TriggerEvent(Triggers.LearningPhaseEnd);
+        End();
     }
 
     //Split the category of the objects creating two list, one for each character

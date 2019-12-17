@@ -71,23 +71,3 @@ public class PossessivesManager : AbstractSceneManager
         SceneManager.LoadScene("Scene3_bis");
     }
 }
-
-//Typesafe Enum pattern to do the audio selection
-public class Possessives {
-    private Possessives(string value) { Value = value; }
-
-    public string Value { get; set; }
-
-    public static Possessives His { get { return new Possessives("his"); } }
-    public static Possessives Her { get { return new Possessives("her"); } }
-}
-
-//Typesafe Enum pattern to do the audio selection
-public class Character {
-    private Character(string value) { Value = value; }
-
-    public string Value { get; set; }
-
-    public static Character Male { get { return new Character("Male"); } }
-    public static Character Female { get { return new Character("Female"); } }
-}

@@ -66,26 +66,6 @@ public abstract class LearningPhaseManager : MonoBehaviour {
     }
 
 
-    protected IEnumerator ShowObjectPair(string object1, string object2) {
-
-        //Activate the first object
-        GameObject objectToCreate1 = sceneManager.ActivateObject(object1, Positions.Central);
-
-        //Introduce it without context
-        yield return sceneManager.IntroduceObject(objectToCreate1.name);
-
-        //Activate the second object
-        GameObject objectToCreate2 = sceneManager.ActivateObject(object2, Positions.CentralNear);
-
-        //Introduce it with context
-        yield return sceneManager.IntroduceObject(objectToCreate2.name);
-
-        //Deactivate the objects
-        sceneManager.DeactivateObject(object1);
-        sceneManager.DeactivateObject(object2);
-    }
-
-
     //Stop listening to events and trigger the checking phase
     protected IEnumerator End() {
         //Added only to trigger the method in the specific learning phase at the right time
@@ -99,4 +79,6 @@ public abstract class LearningPhaseManager : MonoBehaviour {
     // ---------------------------------- ABSTRACT ------------------------------
     //Handler fot the starting the spawn procedure
     protected abstract void LearningPhase();
+
+    protected abstract IEnumerator SceneIntroduction();
 }

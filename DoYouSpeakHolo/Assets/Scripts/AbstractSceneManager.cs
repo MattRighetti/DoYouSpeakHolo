@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -114,15 +113,4 @@ public abstract class AbstractSceneManager : MonoBehaviour {
     
     public abstract void StopListeningToCustomEvents();
     
-}
-
-//Typesafe Enum pattern to do the audio selection
-public class Scenes {
-    private Scenes(string value) { Value = value; }
-
-    public string Value { get; set; }
-
-    public static Scenes Scene1 { get { return new Scenes("Scene1"); } }
-    public static Scenes Scene2 { get { return new Scenes("Scene2"); } }
-    public static Scenes Scene3 { get { return new Scenes("Scene3"); } }
 }

@@ -7,10 +7,10 @@ public class LearningPhaseActivity1 : LearningPhaseManager {
 
     protected override void LearningPhase() {
         candSManager = (CandSManager)sceneManager;
-        StartCoroutine(Spawn());
+        StartCoroutine(SceneIntroduction());
     }
 
-    private IEnumerator Spawn() {
+    protected override IEnumerator SceneIntroduction() {
         yield return StartCoroutine(ShowObjectsWithContext(SceneObjects));
 
         //End the learning phase

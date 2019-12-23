@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -60,7 +59,7 @@ public class SceneSwitcher : MonoBehaviour {
     public List<SceneObjectsToLoad> ReadJSONFromFile() {
         using (StreamReader file = new StreamReader("Assets/Resources/Prefab/objects.json")) {
             string json = file.ReadToEnd();
-            return JsonConvert.DeserializeObject<List<SceneObjectsToLoad>>(json);
+            return new List<SceneObjectsToLoad>();
         }
     }
 }

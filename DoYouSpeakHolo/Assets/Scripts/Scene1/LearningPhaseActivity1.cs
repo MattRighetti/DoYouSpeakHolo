@@ -10,7 +10,7 @@ public class LearningPhaseActivity1 : LearningPhaseManager {
         StartCoroutine(SceneIntroduction());
     }
 
-    protected override IEnumerator SceneIntroduction() {
+    protected IEnumerator SceneIntroduction() {
         yield return StartCoroutine(ShowObjectsWithContext(SceneObjects));
 
         //End the learning phase

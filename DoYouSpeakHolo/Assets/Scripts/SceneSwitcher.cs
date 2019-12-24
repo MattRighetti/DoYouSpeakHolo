@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 #if WINDOWS_UWP
@@ -62,11 +61,6 @@ public class SceneSwitcher : MonoBehaviour {
         task.Wait();
         task.Result.Wait();
 #endif
-
-        Debug.Log("deserialized object" + settings);
-        Debug.Log(settings.scenes[0].dynamicObjects[0].type);
-   
-
     }
 
     public void GoToMenuScene() {
@@ -93,7 +87,7 @@ public class SceneSwitcher : MonoBehaviour {
     public List<SceneObjectsToLoad> ReadJSONFromFile() {
         using (StreamReader file = new StreamReader("Assets/Resources/Prefab/objects.json")) {
             string json = file.ReadToEnd();
-            return JsonConvert.DeserializeObject<List<SceneObjectsToLoad>>(json);
+            return JsonUtility.FromJson<List<SceneObjectsToLoad>>(json);
         }
     }
 }

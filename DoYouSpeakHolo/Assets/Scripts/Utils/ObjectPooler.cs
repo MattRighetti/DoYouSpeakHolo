@@ -21,7 +21,6 @@ public class ObjectPooler : MonoBehaviour {
     //Create the objects, deactivate and store them into the data structure
     public void CreateStaticObjects(List<SingleObjectToLoad> staticObjects) {
         foreach (SingleObjectToLoad objectString in staticObjects) {
-            Debug.Log(objectString);
             GameObject obj = Instantiate(Resources.Load(objectString.path, typeof(GameObject))) as GameObject;
             obj.transform.position = Positions.hiddenPosition;
             obj.SetActive(false);
@@ -33,7 +32,6 @@ public class ObjectPooler : MonoBehaviour {
     //Create the objects, deactivate and store them into the data structure
     public void CreateDynamicObjects(List<SingleObjectToLoad> dynamicObjects) {
         foreach (SingleObjectToLoad objectString in dynamicObjects) {
-            Debug.Log(objectString);
             GameObject obj = Instantiate(Resources.Load(objectString.path, typeof(GameObject))) as GameObject;
             obj.transform.position = Positions.hiddenPosition;
             obj.SetActive(false);

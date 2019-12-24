@@ -12,12 +12,13 @@ public abstract class AbstractSceneManager : MonoBehaviour {
     public CheckingPhaseManager CheckingPhaseManager { get; set; }
     public AudioContext AudioContext { get; set; }
 
-    void OnEnable() {
+    public void ConfigureScene() {
         Pooler = ObjectPooler.GetPooler();
         LoadObjects();
         SetAudioContext();
         StartListening();
         VirtualAssistant = ActivateObject("VA", Positions.VAPosition).GetComponent<AnimateAvatar>();
+        VirtualAssistant.Setup();
     }
 
     //The VA introduces the activity
@@ -48,12 +49,10 @@ public abstract class AbstractSceneManager : MonoBehaviour {
     }
 
     internal IEnumerator IntroduceObject(string objectToIntroduce) {
-        Debug.Log("Introduce without context " + objectToIntroduce);
         yield return VirtualAssistant.IntroduceObject(AudioContext, objectToIntroduce);
     }
 
     internal IEnumerator IntroduceObjectWithContext(string objectToIntroduce) {
-        Debug.Log("VA is going to introduce the object");
         yield return VirtualAssistant.IntroduceObjectWithContext(AudioContext, objectToIntroduce);
     }
 

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using static EventManager;
 
@@ -10,25 +9,11 @@ public class AnimateAvatar : MonoBehaviour {
 
 
     // Start is called before the first frame update
-    void Start() {
+    public void Setup() {
         audioSource = gameObject.AddComponent<AudioSource>();
         introduction = Resources.Load("Audio/VAIntroduce") as AudioClip;
         animator = GetComponent<Animator>();
         StartListening();
-    }
-
-    // Update is called once per frame
-    void Update() {
-        if (Input.GetKeyDown(KeyCode.M)) {
-            PlayOk();
-        }
-        else if (Input.GetKeyDown(KeyCode.N)) {
-            PlayIntroduction();
-        }
-        else if (Input.GetKeyDown(KeyCode.O)) {
-            PlayKo();
-        }
-            
     }
 
     public void PlayKo() {
@@ -69,7 +54,6 @@ public class AnimateAvatar : MonoBehaviour {
     }
 
     internal IEnumerator PlayCheckingPhaseIntroduction(AudioContext context) {
-        Debug.Log("VA INTRO " + context);
         audioSource.clip = context.GetAudio("yourTurn");
         animator.Play("TalkingShort");
         yield return PlayAudioSync(audioSource);

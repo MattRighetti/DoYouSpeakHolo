@@ -9,10 +9,10 @@ public abstract class CheckingPhaseManager : MonoBehaviour {
     protected AbstractSceneManager sceneManager;
 
     protected void Start() {
-        Setup();
+       // Setup();
     }
 
-    private void Setup() {
+    public void Setup() {
         //Get the ObjectPooler instance
         sceneManager = GetComponent<AbstractSceneManager>();
         sceneManager.CheckingPhaseManager = this;

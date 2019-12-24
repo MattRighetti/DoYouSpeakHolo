@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BasketLogic : MonoBehaviour {
-    PossessivesManager GameManager;
+    private PossessivesManager GameManager;
     private Animator anime;
     private List<string> fruitList;
-    BoxCollider objectCollider;
+    private BoxCollider objectCollider;
 
     void Start() {
         anime = GameObject.Find("VA").GetComponent<AnimateAvatar>().animator;
@@ -48,12 +48,6 @@ public class BasketLogic : MonoBehaviour {
             //Trigger the positive reaction of the Virtual assistant
             EventManager.TriggerEvent(EventManager.Triggers.VAOk);
             Wait(3);
-            //EventManager.TriggerEvent(EventManager.Triggers.PickedFruit);
-            //If there are no more target fruits
-            if (fruitList.Count == 0) {
-                //Notify the Possessives Manager
-                EventManager.TriggerEvent(EventManager.Triggers.BasketEmpty);
-            }
         }
         else {
             //Trigger the negative reaction of the Virtual assistant
@@ -70,6 +64,7 @@ public class BasketLogic : MonoBehaviour {
 
     IEnumerator _wait(float time) {
         yield return new WaitForSeconds(time);
+        Debug.Log("Picked fruit");
         EventManager.TriggerEvent(EventManager.Triggers.PickedFruit);
     }
 

@@ -9,10 +9,10 @@ public abstract class LearningPhaseManager : MonoBehaviour {
     protected AbstractSceneManager sceneManager;
 
     void Start() {
-        Setup();
+       // Setup();
     }
 
-    private void Setup() {
+    public void Setup() {
         sceneManager = GetComponent<AbstractSceneManager>();
         sceneManager.LearningPhaseManager = this;
         SceneObjects = sceneManager.GetObjects();
@@ -75,6 +75,4 @@ public abstract class LearningPhaseManager : MonoBehaviour {
     // ---------------------------------- ABSTRACT ------------------------------
     //Handler fot the starting the spawn procedure
     protected abstract void LearningPhase();
-
-    protected abstract IEnumerator SceneIntroduction();
 }

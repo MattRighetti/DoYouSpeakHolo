@@ -13,12 +13,18 @@ public abstract class AbstractSceneManager : MonoBehaviour {
     public CheckingPhaseManager CheckingPhaseManager { get; set; }
     public AudioContext AudioContext { get; set; }
 
-    void OnEnable() {
+    private void OnEnable() {
         Pooler = ObjectPooler.GetPooler();
         LoadObjects();
         SetAudioContext();
         StartListening();
+    }
+
+    public void ConfigureScene() {
+        Pooler.FindFloor();
         VirtualAssistant = ActivateObject("VA", Positions.VAPosition).GetComponent<AnimateAvatar>();
+        Debug.Log("START");
+        StartIntroduction();
     }
 
     //The VA introduces the activity

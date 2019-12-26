@@ -24,6 +24,13 @@ namespace HoloToolkit.Unity.SpatialMapping.Tests
         [Tooltip("Minimum number of floor planes required in order to exit scanning/processing mode.")]
         public uint minimumFloors = 1;
 
+        [Tooltip("Minimum number of table planes required in order to exit scanning/processing mode.")]
+        public uint minimumTables = 0;
+
+        // LISTA DI PIANI
+        public List<GameObject> floors = new List<GameObject>();
+        public List<GameObject> tables = new List<GameObject>();
+
         /// <summary>
         /// Indicates if processing of the surface meshes is complete.
         /// </summary>
@@ -84,11 +91,13 @@ namespace HoloToolkit.Unity.SpatialMapping.Tests
         private void SurfaceMeshesToPlanes_MakePlanesComplete(object source, System.EventArgs args)
         {
             // Collection of floor planes that we can use to set horizontal items on.
-            List<GameObject> floors = new List<GameObject>();
             floors = SurfaceMeshesToPlanes.Instance.GetActivePlanes(PlaneTypes.Floor);
+            
+            // Collection of table planes that we can use to set horizontal items on.
+            tables = SurfaceMeshesToPlanes.Instance.GetActivePlanes(PlaneTypes.Table);
 
             // Check to see if we have enough floors (minimumFloors) to start processing.
-            if (floors.Count >= minimumFloors)
+            if (floors.Count >= minimumFloors && tables.Count >= minimumTables)
             {
                 // Reduce our triangle count by removing any triangles
                 // from SpatialMapping meshes that intersect with active planes.
@@ -96,6 +105,10 @@ namespace HoloToolkit.Unity.SpatialMapping.Tests
 
                 // After scanning is over, switch to the secondary (occlusion) material.
                 SpatialMappingManager.Instance.SetSurfaceMaterial(secondaryMaterial);
+
+                Debug.Log("Scanning complete");
+                //TODO: Call SceneStarter to start the activity
+                GameObject.Find("PossessivesManager").GetComponent<AbstractSceneManager>().ConfigureScene();
             }
             else
             {

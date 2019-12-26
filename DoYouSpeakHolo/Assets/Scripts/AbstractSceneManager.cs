@@ -17,6 +17,7 @@ public abstract class AbstractSceneManager : MonoBehaviour {
         LoadObjects();
         SetAudioContext();
         StartListening();
+        Pooler.FindFloor();
         VirtualAssistant = ActivateObject("VA", Positions.VAPosition).GetComponent<AnimateAvatar>();
         VirtualAssistant.Setup();
     }

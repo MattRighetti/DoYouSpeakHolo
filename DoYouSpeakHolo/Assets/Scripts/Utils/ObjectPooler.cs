@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ObjectPooler : MonoBehaviour {
@@ -6,16 +7,22 @@ public class ObjectPooler : MonoBehaviour {
 
     private Dictionary<string, GameObject> staticObjectsDictionary;
     private Dictionary<string, GameObject> dynamicObjectsDictionary;
+    public Positions Positions;
 
     void Awake() {
         SharedInstance = this;
         staticObjectsDictionary = new Dictionary<string, GameObject>();
         dynamicObjectsDictionary = new Dictionary<string, GameObject>();
+        Positions = new Positions();
     }
 
     public static ObjectPooler GetPooler() {
         GameObject obj = GameObject.Find("Pooler");
         return obj.GetComponent<ObjectPooler>();
+    }
+
+    internal void FindFloor() {
+        Positions.FindFloor();
     }
 
     //Create the objects, deactivate and store them into the data structure
@@ -59,9 +66,9 @@ public class ObjectPooler : MonoBehaviour {
         return null;
     }
 
-    public GameObject ActivateObject(string objKey, Vector3 position) {
+    public GameObject ActivateObject(string objKey, Vector3 position) { 
         GameObject objectToCreate = GetPooledObject(objKey);
-        objectToCreate.transform.position = position;
+        objectToCreate.transform.position = Positions.GetPosition(position);
         objectToCreate.name = objKey;
         objectToCreate.SetActive(true);
         return objectToCreate;

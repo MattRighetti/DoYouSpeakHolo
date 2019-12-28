@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CheckingPhaseActivity3Basic : CheckingPhaseActivity3
@@ -30,17 +31,16 @@ public class CheckingPhaseActivity3Basic : CheckingPhaseActivity3
         //Pick a fruit among 
         System.Random rnd = new System.Random();
         int choice = rnd.Next(0, possessivesManager.PossessivesObjects.Count);
-        Debug.Log("Remaining fruits " + possessivesManager.PossessivesObjects.Count);
         yield return TargetNextFruit(choice);
     }
 
     private IEnumerator TargetNextFruit(int choice) {
-        Possessives possessive = possessivesManager.PossessivesList[choice];
-        if (possessivesManager.PossessivesObjects[possessive.Value].Count > 0) {
+        string possessive = (new List<string>(possessivesManager.PossessivesObjects.Keys))[choice];
+        if (possessivesManager.PossessivesObjects[possessive].Count > 0) {
             //Trigger the male objects
-            audioContext.Possessive = possessive;
+            audioContext.Possessive = Possessives.FromString(possessive);
 
-            GameObject objectToCreate = sceneManager.ActivateObject(possessivesManager.PossessivesObjects[possessive.Value][0], Positions.Central);
+            GameObject objectToCreate = sceneManager.ActivateObject(possessivesManager.PossessivesObjects[possessive][0], Positions.Central);
 
             SetFruitScripts(objectToCreate);
 
@@ -51,10 +51,11 @@ public class CheckingPhaseActivity3Basic : CheckingPhaseActivity3
     }
 
     public override void PickedFruit() {
-
-        TriggerHarvesting();
-
         //Call the superclass method
         base.PickedFruit();
+
+        //Only if there are fruits left trigger the harvesting next step
+        if (possessivesManager.PossessivesObjects.Count > 0) 
+            TriggerHarvesting();
     }
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 //The class is responsible of getting the right audio to play related to a Game Object
 public abstract class AudioContext {
@@ -94,4 +95,8 @@ public class Possessives {
 
     public static Possessives His { get { return new Possessives("his"); } }
     public static Possessives Her { get { return new Possessives("her"); } }
+
+    internal static Possessives FromString(string possessive) {
+        return new Possessives(possessive);
+    }
 }

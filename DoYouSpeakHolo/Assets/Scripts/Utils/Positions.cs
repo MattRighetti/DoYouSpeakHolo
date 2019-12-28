@@ -6,6 +6,7 @@ public class Positions
 {
     Vector3 gazePosition;
     public Vector3 floorPosition;
+    private bool foundFloor = false;
 
     public static readonly float Floor = 0;
     public static readonly float SpaceFrontDistance = 1.5f;
@@ -57,12 +58,12 @@ public class Positions
         System.Random rnd = new System.Random();
         floorPosition = floor.transform.position + (plane.PlaneThickness * plane.SurfaceNormal);
         floorPosition = AdjustPositionWithSpatialMap(floorPosition, plane.SurfaceNormal);
-
+        foundFloor = true;
         gazePosition = new Vector3(0f, 0f, 0f);
         RaycastHit hitInfo;
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hitInfo, 20f, Physics.DefaultRaycastLayers)) {
             gazePosition = hitInfo.point;
-        }
+        }       
     }
     
 }

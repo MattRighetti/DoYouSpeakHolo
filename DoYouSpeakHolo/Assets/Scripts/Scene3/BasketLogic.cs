@@ -53,8 +53,6 @@ public class BasketLogic : MonoBehaviour {
             //Trigger the negative reaction of the Virtual assistant
             EventManager.TriggerEvent(EventManager.Triggers.VAKo);
         }
-
-        return;
     }
 
     public void Wait(float seconds) {

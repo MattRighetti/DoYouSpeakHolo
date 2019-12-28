@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -108,10 +110,7 @@ namespace HoloToolkit.Unity.SpatialMapping.Tests
 
                 Debug.Log("Scanning complete");
                 //TODO: Call SceneStarter to start the activity
-                GameObject.Find("PossessivesManager").GetComponent<AbstractSceneManager>().ConfigureScene();
-                GameObject.Find("PossessivesManager").GetComponent<LearningPhaseManager>().Setup();
-                GameObject.Find("PossessivesManager").GetComponent<CheckingPhaseManager>().Setup();
-                GameObject.Find("PossessivesManager").GetComponent<AbstractSceneManager>().StartIntroduction();
+                StartCoroutine(Wait());
             }
             else
             {
@@ -121,6 +120,14 @@ namespace HoloToolkit.Unity.SpatialMapping.Tests
                 // Re-process spatial data after scanning completes.
                 meshesProcessed = false;
             }
+        }
+
+        private IEnumerator Wait() {
+            yield return new WaitForSeconds(3);
+            GameObject.Find("PossessivesManager").GetComponent<AbstractSceneManager>().ConfigureScene();
+            GameObject.Find("PossessivesManager").GetComponent<LearningPhaseManager>().Setup();
+            GameObject.Find("PossessivesManager").GetComponent<CheckingPhaseManager>().Setup();
+            GameObject.Find("PossessivesManager").GetComponent<AbstractSceneManager>().StartIntroduction();
         }
 
         /// <summary>

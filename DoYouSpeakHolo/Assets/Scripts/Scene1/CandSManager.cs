@@ -5,7 +5,7 @@ using static EventManager;
 
 public class CandSManager : AbstractSceneManager {
 
-    private readonly SceneObjectsToLoad sceneObjects = SceneSwitcher.settings.scenes[0];
+    private readonly SceneObjectsToLoad sceneObjects = SceneSelector.settings.scenes[0];
     
 
     public List<string> TargetObjects { get; set; }

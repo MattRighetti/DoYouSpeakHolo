@@ -1,7 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+#if WINDOWS_UWP
+using Windows.Storage;
+using System.Threading.Tasks;
+using System;
+#endif
 
 public abstract class AbstractSceneManager : MonoBehaviour {
 
@@ -11,13 +17,16 @@ public abstract class AbstractSceneManager : MonoBehaviour {
     public LearningPhaseManager LearningPhaseManager { get; set; }
     public CheckingPhaseManager CheckingPhaseManager { get; set; }
     public AudioContext AudioContext { get; set; }
+    protected SceneSettings settings;
 
     public void ConfigureScene() {
+        ParseJson();
+        //Debug.Log("obj" + settings.scenes[0].dynamicObjects[0].type);
         Pooler = ObjectPooler.GetPooler();
+        Pooler.FindFloor();
         LoadObjects();
         SetAudioContext();
         StartListening();
-        Pooler.FindFloor();
         VirtualAssistant = ActivateObject("VA", Positions.VAPosition).GetComponent<AnimateAvatar>();
         VirtualAssistant.Setup();
     }
@@ -112,5 +121,56 @@ public abstract class AbstractSceneManager : MonoBehaviour {
     public abstract void StartListeningToCustomEvents();
     
     public abstract void StopListeningToCustomEvents();
-    
+
+    // ------------------------- OBJECTS LOAD -----------------------------
+
+    private void ParseJson() {
+        string path = "Assets/Resources/Prefab/objects.json";
+        string text = File.ReadAllText(path);
+        Debug.Log("Text: " + text);
+        settings = JsonUtility.FromJson<SceneSettings>(text);
+#if UNITY_EDITOR && UNITY_METRO
+        string path = "Assets/Resources/Prefab/objects.json";
+        string text = File.ReadAllText(path);
+        Debug.Log("Text: " + text);
+        settings = JsonUtility.FromJson<SceneSettings>(text);
+#endif
+
+#if WINDOWS_UWP
+        Task<Task> task = new Task<Task>(async () =>
+            {
+                try
+                {
+		            StorageFile jsonFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx://objects.json"));
+                    string jsonText = await FileIO.ReadTextAsync(jsonFile);
+                    //Debug.Log(jsonText);
+                    deserializedObject = JsonUtility.FromJson<SceneSettings>(jsonText);
+                }
+                catch (Exception e)
+                {
+                    Debug.Log(e);
+                }
+            });
+        task.Start();
+        task.Wait();
+        task.Result.Wait();
+#endif
+    }
+}
+
+[System.Serializable]
+public class SingleObjectToLoad {
+    public string type;
+    public string path;
+}
+
+[System.Serializable]
+public class SceneObjectsToLoad {
+    public List<SingleObjectToLoad> staticObjects;
+    public List<SingleObjectToLoad> dynamicObjects;
+}
+
+[System.Serializable]
+public class SceneSettings {
+    public List<SceneObjectsToLoad> scenes;
 }

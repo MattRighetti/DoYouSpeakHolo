@@ -43,12 +43,14 @@ public abstract class CheckingPhaseActivity3 : CheckingPhaseManager
         gameObj.AddComponent<BoxCollider>();
         gameObj.AddComponent<ManipulationHandler>();
         gameObj.AddComponent<NearInteractionGrabbable>();
-        gameObj.AddComponent<DoNotFall>();
+       // gameObj.AddComponent<DoNotFall>();
     }
 
     public virtual void PickedFruit() {
         DeleteEmptyPossessives();
-       
+
+        Debug.Log("Remaining possessives " + possessivesManager.PossessivesObjects.Count);
+
         //If there are no more fruits end the activity
         if (possessivesManager.PossessivesObjects.Count == 0) {
             EventManager.TriggerEvent(EventManager.Triggers.CheckingPhaseEnd);

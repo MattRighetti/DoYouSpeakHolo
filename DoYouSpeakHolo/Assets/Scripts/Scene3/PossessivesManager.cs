@@ -7,8 +7,8 @@ using static EventManager;
 public class PossessivesManager : AbstractSceneManager
 {
 
-    private readonly SceneObjectsToLoad sceneObjects = SceneSwitcher.settings.scenes[2];
-   
+    private SceneObjectsToLoad sceneObjects;
+
     public Dictionary<string, List<string>> PossessivesObjects { get; set; }
     public List<Possessives> PossessivesList { get; set; }
 
@@ -22,7 +22,7 @@ public class PossessivesManager : AbstractSceneManager
 
     //Load scene objects
     public override void LoadObjects() {
-
+        sceneObjects = settings.scenes[2];
         PossessivesObjects = new Dictionary<string, List<string>>();
 
         Pooler.CreateStaticObjects(sceneObjects.staticObjects);
@@ -45,9 +45,8 @@ public class PossessivesManager : AbstractSceneManager
 
     //Activate and put the static elements in the scene
     private void CreateScene() {
-        Pooler.ActivateObject("House", Positions.HousePosition);
-        Pooler.ActivateObject("Tree", Positions.TreePosition);
-        Pooler.ActivateObject("VA", Positions.VAPosition);
+        ActivateObject("House", Positions.HousePosition);
+        ActivateObject("Tree", Positions.TreePosition);
     }
 
     public override void StartListeningToCustomEvents() {
@@ -69,7 +68,6 @@ public class PossessivesManager : AbstractSceneManager
 
     //Split the category of the objects creating two list, one for each character
     private void SplitObjects(List<string> dynamicObjects) {
-        Debug.Log("creating obj" + Possessives.His.Value + " " + Possessives.Her.Value);
         List<string> objects = Shuffle(dynamicObjects);
         int half = objects.Count / 2;
         var maleObjects = objects.GetRange(0, half);

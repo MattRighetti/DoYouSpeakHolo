@@ -125,10 +125,6 @@ public abstract class AbstractSceneManager : MonoBehaviour {
     // ------------------------- OBJECTS LOAD -----------------------------
 
     private void ParseJson() {
-        string path = "Assets/Resources/Prefab/objects.json";
-        string text = File.ReadAllText(path);
-        Debug.Log("Text: " + text);
-        settings = JsonUtility.FromJson<SceneSettings>(text);
 #if UNITY_EDITOR && UNITY_METRO
         string path = "Assets/Resources/Prefab/objects.json";
         string text = File.ReadAllText(path);
@@ -144,7 +140,7 @@ public abstract class AbstractSceneManager : MonoBehaviour {
 		            StorageFile jsonFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx://objects.json"));
                     string jsonText = await FileIO.ReadTextAsync(jsonFile);
                     //Debug.Log(jsonText);
-                    deserializedObject = JsonUtility.FromJson<SceneSettings>(jsonText);
+                    settings = JsonUtility.FromJson<SceneSettings>(jsonText);
                 }
                 catch (Exception e)
                 {

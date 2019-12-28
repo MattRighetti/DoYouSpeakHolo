@@ -153,7 +153,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 839bb3e3002f1864dac6bf0086431c4c, type: 2}
+  m_Motion: {fileID: 7400000, guid: 6418c1fa9e920744c9faee09f20a923e, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -180,7 +180,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 463aa8aaccf1afe4d91fd99800351f38, type: 2}
+  m_Motion: {fileID: 7400000, guid: 78ffe83efcdf7b64ea8ceff9f849863d, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -207,7 +207,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 3ee38321af8a58843b0911d687c7f838, type: 3}
+  m_Motion: {fileID: 7400000, guid: 950cde51e0b4d40499501d3e392559f0, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -233,7 +233,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: cc3c2aeec4878d44287361038810348e, type: 3}
+  m_Motion: {fileID: 7400000, guid: a5245270297858a4aab74e8fb935ade6, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -286,7 +286,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 8fab8d7d515a5a74da1704b2c66d1058, type: 2}
+  m_Motion: {fileID: 7400000, guid: cc6380b5de57c9d41933a0f0150de24b, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -321,7 +321,7 @@ AnimatorStateMachine:
   m_EntryTransitions: []
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
-  m_AnyStatePosition: {x: -24, y: -60, z: 0}
+  m_AnyStatePosition: {x: 1188, y: -732, z: 0}
   m_EntryPosition: {x: -36, y: 96, z: 0}
   m_ExitPosition: {x: 408, y: -108, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}

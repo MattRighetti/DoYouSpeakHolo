@@ -31,7 +31,7 @@ public class SceneSelector: MonoBehaviour {
 		            StorageFile jsonFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx://objects.json"));
                     string jsonText = await FileIO.ReadTextAsync(jsonFile);
                     //Debug.Log(jsonText);
-                    deserializedObject = JsonUtility.FromJson<SceneSettings>(jsonText);
+                    settings = JsonUtility.FromJson<SceneSettings>(jsonText);
                 }
                 catch (Exception e)
                 {

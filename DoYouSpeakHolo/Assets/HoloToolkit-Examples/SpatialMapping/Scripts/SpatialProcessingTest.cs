@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
+using Microsoft.MixedReality.Toolkit.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -33,6 +34,9 @@ namespace HoloToolkit.Unity.SpatialMapping.Tests
         public List<GameObject> floors = new List<GameObject>();
         public List<GameObject> tables = new List<GameObject>();
 
+        //Wait Button
+        private GameObject waitButton;
+
         /// <summary>
         /// Indicates if processing of the surface meshes is complete.
         /// </summary>
@@ -48,6 +52,9 @@ namespace HoloToolkit.Unity.SpatialMapping.Tests
 
             // Register for the MakePlanesComplete event.
             SurfaceMeshesToPlanes.Instance.MakePlanesComplete += SurfaceMeshesToPlanes_MakePlanesComplete;
+
+            //Create the button
+            waitButton =(GameObject) Instantiate(Resources.Load("Prefab/Buttons/WaitButton"));
         }
 
         /// <summary>
@@ -94,7 +101,7 @@ namespace HoloToolkit.Unity.SpatialMapping.Tests
         {
             // Collection of floor planes that we can use to set horizontal items on.
             floors = SurfaceMeshesToPlanes.Instance.GetActivePlanes(PlaneTypes.Floor);
-            
+
             // Collection of table planes that we can use to set horizontal items on.
             tables = SurfaceMeshesToPlanes.Instance.GetActivePlanes(PlaneTypes.Table);
 
@@ -109,8 +116,12 @@ namespace HoloToolkit.Unity.SpatialMapping.Tests
                 SpatialMappingManager.Instance.SetSurfaceMaterial(secondaryMaterial);
 
                 Debug.Log("Scanning complete");
-                //TODO: Call SceneStarter to start the activity
-                StartCoroutine(Wait());
+
+                //Delete the wait button
+                Destroy(waitButton);
+                //Setup each table and floor in the scene in order to capture a tap event
+                SetupFloorsAndTables();
+                GameObject.Find("PossessivesManager").GetComponent<SceneStarter>().WaitForUserTap();
             }
             else
             {
@@ -122,12 +133,34 @@ namespace HoloToolkit.Unity.SpatialMapping.Tests
             }
         }
 
-        private IEnumerator Wait() {
-            yield return new WaitForSeconds(3);
-            GameObject.Find("PossessivesManager").GetComponent<AbstractSceneManager>().ConfigureScene();
-            GameObject.Find("PossessivesManager").GetComponent<LearningPhaseManager>().Setup();
-            GameObject.Find("PossessivesManager").GetComponent<CheckingPhaseManager>().Setup();
-            GameObject.Find("PossessivesManager").GetComponent<AbstractSceneManager>().StartIntroduction();
+        //For each table and floor in the scene add an Interactable component and execute handleTap() whenever the surface is tapped
+        private void SetupFloorsAndTables() {
+            foreach (GameObject floor in floors) {
+                Interactable interactable = floor.AddComponent<Interactable>();
+                interactable.AddReceiver<InteractableOnPressReceiver>().OnPress.AddListener(() => handleTap(floor));
+            }
+            foreach (GameObject table in tables) {
+                Interactable interactable = table.AddComponent<Interactable>();
+                interactable.AddReceiver<InteractableOnPressReceiver>().OnPress.AddListener(() => handleTap(table));
+            }
+        }
+
+        //When the user taps on a surface:
+        //1) Start the Activity
+        //2) Remove the Interactable component from the surfaces
+        private void handleTap(GameObject floor) {
+            GameObject.Find("PossessivesManager").GetComponent<SceneStarter>().StartActivity();
+            RemoveReceiversFromFloorsAndTables();
+        }
+
+        // Remove the Interactable component from the surfaces
+        private void RemoveReceiversFromFloorsAndTables() {
+            foreach (GameObject floor in floors) {
+                Destroy(floor.GetComponent<Interactable>());
+            }
+            foreach (GameObject table in tables) {
+                Destroy(table.GetComponent<Interactable>());
+            }
         }
 
         /// <summary>

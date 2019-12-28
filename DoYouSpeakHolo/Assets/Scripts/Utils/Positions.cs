@@ -9,7 +9,7 @@ public class Positions
     private bool foundFloor = false;
 
     public static readonly float Floor = 0;
-    public static readonly float SpaceFrontDistance = 1.5f;
+    public static readonly float SpaceFrontDistance = 0.1f;
 
     public static readonly Vector3 Central = new Vector3(0, Floor + 0, SpaceFrontDistance + 1.2f);
     public static readonly Vector3 AsideLeft = new Vector3(-0.2f, Floor + 0, SpaceFrontDistance + 1);
@@ -22,7 +22,7 @@ public class Positions
     public static readonly Vector3 MaleBasket = new Vector3(-0.425f, Floor + 0, SpaceFrontDistance + 1);
     public static readonly Vector3 FemalePosition = new Vector3(0.425f, Floor + 0, SpaceFrontDistance + 1.1f);
     public static readonly Vector3 FemaleBasket = new Vector3(0.425f, Floor + 0, SpaceFrontDistance + 1);
-    public static readonly Vector3 VAPosition = new Vector3(-0.6f, Floor + 0, SpaceFrontDistance + 0.8f);
+    public static readonly Vector3 VAPosition = new Vector3(-0.6f, Floor + 0.3f, SpaceFrontDistance + 0.8f);
 
     //Default position for non active objects
     public static readonly Vector3 hiddenPosition = new Vector3(0, Floor + 0, SpaceFrontDistance - 3);

@@ -10,7 +10,7 @@ public class BasketLogic : MonoBehaviour {
     private BoxCollider objectCollider;
 
     void Start() {
-        anime = GameObject.Find("VA").GetComponent<AnimateAvatar>().animator;
+        anime = GameObject.Find("VA").GetComponent<VirtualAssistantManager>().animator;
         SetupBoxCollider();
         SetupGameManager();
     }

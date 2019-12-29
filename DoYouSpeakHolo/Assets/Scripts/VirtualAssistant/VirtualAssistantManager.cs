@@ -2,7 +2,7 @@
 using UnityEngine;
 using static EventManager;
 
-public class AnimateAvatar : MonoBehaviour {
+public class VirtualAssistantManager : MonoBehaviour {
     public Animator animator;
     private AudioSource audioSource;
     private AudioClip introduction;

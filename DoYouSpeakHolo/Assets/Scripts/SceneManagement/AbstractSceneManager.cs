@@ -17,7 +17,7 @@ public abstract class AbstractSceneManager : MonoBehaviour {
 
     //  Contains the list of objects's name and path to load into the scene
     public SceneObjectsToLoad sceneSettings;
-    public AnimateAvatar VirtualAssistant;
+    public VirtualAssistantManager VirtualAssistant;
     public LearningPhaseManager LearningPhaseManager { get; set; }
     public CheckingPhaseManager CheckingPhaseManager { get; set; }
 
@@ -41,7 +41,7 @@ public abstract class AbstractSceneManager : MonoBehaviour {
         StartListening();
 
         //  Activate the Virtual Assistant and set it up
-        VirtualAssistant = ActivateObject("VA", Positions.VAPosition).GetComponent<AnimateAvatar>();
+        VirtualAssistant = ActivateObject("VA", Positions.VAPosition).GetComponent<VirtualAssistantManager>();
         VirtualAssistant.Setup();
     }
 

@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
 
+//  Wrapper for the Virtual Assitant audio contained into the animations:
+//  - OK
+//  - KO
 public class TaskReactionSound : MonoBehaviour
 {
-
     private AudioSource audioSource;
-    private AudioClip introduction;
     private AudioClip ok;
     private AudioClip ko;
 
-    // Start is called before the first frame update
     void Start()
     {
         audioSource = gameObject.AddComponent<AudioSource>();

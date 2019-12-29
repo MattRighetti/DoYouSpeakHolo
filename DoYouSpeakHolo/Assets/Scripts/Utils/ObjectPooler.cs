@@ -1,12 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
+//  Class responsible of active/deactivate objects
 public class ObjectPooler : MonoBehaviour {
     public static ObjectPooler SharedInstance;
 
+    //  Static objects (e.g. scene background)
     private Dictionary<string, GameObject> staticObjectsDictionary;
+
+    //  Dynamic objects (everything interacting with the user)
     private Dictionary<string, GameObject> dynamicObjectsDictionary;
+
+    //  Determines the position of the objects
     public Positions Positions;
 
     void Awake() {
@@ -21,6 +26,7 @@ public class ObjectPooler : MonoBehaviour {
         return obj.GetComponent<ObjectPooler>();
     }
 
+    //  Set the floor position
     internal void FindFloor() {
         Positions.FindFloor();
     }
@@ -66,6 +72,7 @@ public class ObjectPooler : MonoBehaviour {
         return null;
     }
 
+    //  Activate an object in a given position (it will be adjusted according to the Spatial Mapping scans)
     public GameObject ActivateObject(string objKey, Vector3 position) { 
         GameObject objectToCreate = GetPooledObject(objKey);
         objectToCreate.transform.position = Positions.GetPosition(position);
@@ -74,6 +81,7 @@ public class ObjectPooler : MonoBehaviour {
         return objectToCreate;
     }
 
+    //  Deactivate an object
     public void DeactivateObject(string objKey) {
         GameObject objectToCreate = GetPooledObject(objKey);
         objectToCreate.transform.position = Positions.hiddenPosition;

@@ -1,0 +1,252 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="AnimateAvatar">
+    <Position X="4" Y="14" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BFYAQAAECQAAAACAAAQAEAAAAAAAEAAAAAAAEAAAAIA=</HashCode>
+      <FileName>Assets\AnimateAvatar.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AbstractSceneManager">
+    <Position X="3.75" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>IQAAAAAAAAgAgEGAAAAgEAAAARCIEACAEAAaEAJBEIA=</HashCode>
+      <FileName>Assets\Scripts\AbstractSceneManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SingleObjectToLoad">
+    <Position X="6.75" Y="22.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAACAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\AbstractSceneManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SceneObjectsToLoad">
+    <Position X="15.25" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\AbstractSceneManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SceneSettings">
+    <Position X="11.75" Y="22.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\AbstractSceneManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AudioContext">
+    <Position X="5.75" Y="9.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAAAAAAAgAAAAAAQAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\AudioContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AudioContext1">
+    <Position X="3.25" Y="11.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\AudioContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AudioContext2">
+    <Position X="5.75" Y="11.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\AudioContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AudioContext3">
+    <Position X="8.25" Y="11.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\AudioContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Scenes">
+    <Position X="26.75" Y="30" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\AudioContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Possessives">
+    <Position X="12" Y="16.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgAEAIAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\AudioContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EventManager">
+    <Position X="14.5" Y="17" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="EventManager.Triggers" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\EventManager.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAAAAAAAAAAABAABAAAAAAAACEAAQAIA=</HashCode>
+      <FileName>Assets\Scripts\EventManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FindObjectTask">
+    <Position X="6" Y="18.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\FindObjectTask.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LearningPhaseManager">
+    <Position X="12.25" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAEACCAAgEAAgAAAAIAAAEAAAAAAAAAABAAAACA=</HashCode>
+      <FileName>Assets\Scripts\LearningPhaseManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CandSManager">
+    <Position X="0.75" Y="4" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAAEAAAAAAAAAAxEQAAAAQAAAAABAAAA=</HashCode>
+      <FileName>Assets\Scripts\Scene1\CandSManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LearningPhaseActivity1">
+    <Position X="9.75" Y="5.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAEAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Scene1\LearningPhaseActivity1.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BasketLogic">
+    <Position X="9.75" Y="16.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAgAQAgACAAAAAAAAAIAAAAAgQAAAACQAAAAgDAAAA=</HashCode>
+      <FileName>Assets\Scripts\Scene3\BasketLogic.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LearningPhaseActivity3">
+    <Position X="13.5" Y="5.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAEQAEAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAEAA=</HashCode>
+      <FileName>Assets\Scripts\Scene3\LearningPhaseActivity3.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LearningPhaseActivity3Advanced">
+    <Position X="11.25" Y="8.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Scene3\LearningPhaseActivity3Advanced.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LearningPhaseActivity3Basic">
+    <Position X="14.25" Y="8.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Scene3\LearningPhaseActivity3Basic.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PossessivesManager">
+    <Position X="6.5" Y="4" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAhAAQAAAAEEAAAEAAABAARAAAAkAAAAAAABAAAA=</HashCode>
+      <FileName>Assets\Scripts\Scene3\PossessivesManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SceneSelector">
+    <Position X="9" Y="22.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAnCAAAAALAAAAAAAAAACAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\SceneSelector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SceneStarter">
+    <Position X="17.5" Y="18.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAACAQAAAAAAAAAAAAAAAAAAIBAAAAA=</HashCode>
+      <FileName>Assets\Scripts\SceneStarter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DoNotFall">
+    <Position X="15.25" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAgAACAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Utils\DoNotFall.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GravityEnabler">
+    <Position X="4.5" Y="22.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAMEAQAACAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Utils\GravityEnabler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ObjectPooler">
+    <Position X="11.75" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAQgAAUAwAAAgAAAAAAAgBBAAIAACAAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\Utils\ObjectPooler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Positions">
+    <Position X="18.5" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BqEAAAAEACAQAAgAAAAAgQAgAAAAGgYBAAgACAAAABA=</HashCode>
+      <FileName>Assets\Scripts\Utils\Positions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TaskReactionSound">
+    <Position X="2.5" Y="24.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAAAAAAAAAAAEBAAABEAAAAAAAAAAAAQA=</HashCode>
+      <FileName>Assets\Scripts\Utils\TaskReactionSound.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="VAManager">
+    <Position X="0.75" Y="21.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\VAManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CheckingPhaseActivity1">
+    <Position X="17.5" Y="5.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAEAAA=</HashCode>
+      <FileName>Assets\Scripts\Scene1\CheckingPhaseActivity1.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CheckingPhaseActivity3">
+    <Position X="21" Y="5.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAEACAAAAAAGAAAAQAACAAAEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Scene3\CheckingPhaseActivity3.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CheckingPhaseManager">
+    <Position X="19.25" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAIAAEAACCAAAEAAAAAAAAAAAAAAAAAAAAAIBAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\CheckingPhaseManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CheckingPhaseActivity3Basic">
+    <Position X="19.5" Y="8.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAFAAAAAAAAAIAAAAAIAAAQAAAAAAAAAAABAAEAA=</HashCode>
+      <FileName>Assets\Scripts\Scene3\CheckingPhaseActivity3Basic.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CheckingPhaseActivity3Advanced">
+    <Position X="22.75" Y="8.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>Assets\Scripts\Scene3\CheckingPhaseActivity3Advanced.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -3,8 +3,9 @@
     "",
     "\\DoYouSpeakHolo",
     "\\DoYouSpeakHolo\\Assets",
-    "\\DoYouSpeakHolo\\Assets\\Scripts"
+    "\\DoYouSpeakHolo\\Assets\\Scripts",
+    "\\DoYouSpeakHolo\\Assets\\Scripts\\Utils"
   ],
-  "SelectedNode": "\\DoYouSpeakHolo\\Assets\\Scripts",
+  "SelectedNode": "\\DoYouSpeakHolo\\Assets\\Scripts\\Utils\\TaskReactionSound.cs.meta",
   "PreviewInSolutionExplorer": false
 }

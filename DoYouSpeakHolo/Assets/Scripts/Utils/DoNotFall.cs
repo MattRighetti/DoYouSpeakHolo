@@ -1,6 +1,4 @@
-﻿
-using UnityEngine;
-using static Positions;
+﻿using UnityEngine;
 
 public class DoNotFall : MonoBehaviour {
     private GravityEnabler gravity;
@@ -15,7 +13,7 @@ public class DoNotFall : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (gameObject.transform.position.y < Floor) {
+        if (gameObject.transform.position.y < floor) {
             Vector3 temp = new Vector3(0, floor -gameObject.transform.position.y, 0);
             gameObject.transform.position += temp;
         }

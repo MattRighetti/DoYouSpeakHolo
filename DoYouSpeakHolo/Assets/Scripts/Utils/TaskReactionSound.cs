@@ -12,7 +12,6 @@ public class TaskReactionSound : MonoBehaviour
     void Start()
     {
         audioSource = gameObject.AddComponent<AudioSource>();
-        introduction = Resources.Load("Audio/VAIntroduce") as AudioClip;
         ok = Resources.Load("Audio/VAOk") as AudioClip;
         ko = Resources.Load("Audio/VAKo") as AudioClip;
     }
@@ -25,12 +24,5 @@ public class TaskReactionSound : MonoBehaviour
     //PLay ko sound triggered by the animation event
     void KoSound() {
         audioSource.PlayOneShot(ko);
-    }
-
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

@@ -125,7 +125,7 @@ public abstract class AbstractSceneManager : MonoBehaviour {
     // ------------------------- OBJECTS LOAD -----------------------------
 
     private void ParseJson() {
-#if UNITY_EDITOR && UNITY_METRO
+#if UNITY_EDITOR
         string path = "Assets/Resources/Prefab/objects.json";
         string text = File.ReadAllText(path);
         Debug.Log("Text: " + text);

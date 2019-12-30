@@ -25,13 +25,9 @@ public class CandSManager : AbstractSceneManager {
     }
 
     public override void StartListeningToCustomEvents() {
-        StartListening(Triggers.FoundObject, FoundObject);
-        StartListening(Triggers.SetTargetObject, SetTargetObject);
     }
 
     public override void StopListeningToCustomEvents() {
-        StopListening(Triggers.FoundObject, FoundObject);
-        StopListening(Triggers.SetTargetObject, SetTargetObject);
     }
 }
 

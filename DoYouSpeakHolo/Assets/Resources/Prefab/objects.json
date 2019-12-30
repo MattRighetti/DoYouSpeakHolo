@@ -30,7 +30,7 @@
       "staticObjects": [
         {
           "type": "VA",
-          "path": "Prefab/people/VA_MaleCorrect"
+          "path": "Prefab/people/Groot"
         }
       ],
       "dynamicObjects": [

@@ -149,7 +149,7 @@ namespace HoloToolkit.Unity.SpatialMapping.Tests
         //1) Start the Activity
         //2) Remove the Interactable component from the surfaces
         private void handleTap(GameObject floor) {
-            GameObject.Find("PossessivesManager").GetComponent<SceneStarter>().StartActivity();
+            GameObject.Find("SceneManager").GetComponent<SceneStarter>().StartActivity();
             RemoveReceiversFromFloorsAndTables();
         }
 

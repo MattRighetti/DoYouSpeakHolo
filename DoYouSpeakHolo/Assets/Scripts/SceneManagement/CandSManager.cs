@@ -1,7 +1,4 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
-using static EventManager;
-
 //  Scene Manager of Activity 1
 public class CandSManager : AbstractSceneManager {
 
@@ -12,7 +9,7 @@ public class CandSManager : AbstractSceneManager {
 
     //  Set the audio context to scene 1
     public override void SetAudioContext() {
-        AudioContext = new AudioContext1();
+        AudioContext = new AudioContext2();
     }
 
     //  Create the scene objects

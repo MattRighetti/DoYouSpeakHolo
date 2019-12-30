@@ -121,7 +121,7 @@ namespace HoloToolkit.Unity.SpatialMapping.Tests
                 Destroy(waitButton);
                 //Setup each table and floor in the scene in order to capture a tap event
                 SetupFloorsAndTables();
-                GameObject.Find("PossessivesManager").GetComponent<SceneStarter>().WaitForUserTap();
+                GameObject.Find("SceneManager").GetComponent<SceneStarter>().WaitForUserTap();
             }
             else
             {

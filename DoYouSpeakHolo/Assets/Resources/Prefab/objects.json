@@ -29,26 +29,22 @@
     {
       "staticObjects": [
         {
-          "type": "House",
-          "path": "Prefab/objects/House"
-        },
-        {
-          "type": "Tree",
-          "path": "Prefab/objects/Tree"
-        },
-        {
           "type": "VA",
           "path": "Prefab/people/VA_MaleCorrect"
         }
       ],
       "dynamicObjects": [
         {
-          "type": "Key",
-          "path": "Prefab/objects/Key"
+          "type": "Rhino",
+          "path": "Prefab/Animals/Rhino"
         },
         {
-          "type": "Basket",
-          "path": "Prefab/object/Basket"
+          "type": "Turtle",
+          "path": "Prefab/Animals/Turtle"
+        },
+        {
+          "type": "Rabbit",
+          "path": "Prefab/Animals/Rabbit"
         }
       ]
     },

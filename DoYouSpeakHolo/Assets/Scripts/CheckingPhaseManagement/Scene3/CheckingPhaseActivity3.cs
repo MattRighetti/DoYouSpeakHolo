@@ -56,7 +56,7 @@ public abstract class CheckingPhaseActivity3 : CheckingPhaseManager
         DeleteEmptyPossessives();
 
         if (possessivesManager.PossessivesObjects.Count == 0) {
-            EventManager.TriggerEvent(EventManager.Triggers.CheckingPhaseEnd);
+            End();
         }
     }
 

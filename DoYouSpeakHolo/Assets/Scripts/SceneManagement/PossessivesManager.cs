@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using static EventManager;
@@ -23,7 +23,7 @@ public class PossessivesManager : AbstractSceneManager
 
     //Load scene objects
     public override void LoadObjects() {
-        sceneObjects = settings.scenes[2];
+        sceneObjects = settings.scenes[0];
         PossessivesObjects = new Dictionary<string, List<string>>();
 
         Pooler.CreateStaticObjects(sceneObjects.staticObjects);

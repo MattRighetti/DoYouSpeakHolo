@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
 using Microsoft.MixedReality.Toolkit.UI;
@@ -54,7 +54,7 @@ namespace HoloToolkit.Unity.SpatialMapping.Tests
             SurfaceMeshesToPlanes.Instance.MakePlanesComplete += SurfaceMeshesToPlanes_MakePlanesComplete;
 
             //Create the button
-            waitButton =(GameObject) Instantiate(Resources.Load("Prefab/Buttons/WaitButton"));
+            waitButton = (GameObject)Instantiate(Resources.Load("Prefab/Buttons/WaitButton"));
         }
 
         /// <summary>
@@ -134,12 +134,15 @@ namespace HoloToolkit.Unity.SpatialMapping.Tests
         }
 
         //For each table and floor in the scene add an Interactable component and execute handleTap() whenever the surface is tapped
-        private void SetupFloorsAndTables() {
-            foreach (GameObject floor in floors) {
+        private void SetupFloorsAndTables()
+        {
+            foreach (GameObject floor in floors)
+            {
                 Interactable interactable = floor.AddComponent<Interactable>();
                 interactable.AddReceiver<InteractableOnPressReceiver>().OnPress.AddListener(() => handleTap(floor));
             }
-            foreach (GameObject table in tables) {
+            foreach (GameObject table in tables)
+            {
                 Interactable interactable = table.AddComponent<Interactable>();
                 interactable.AddReceiver<InteractableOnPressReceiver>().OnPress.AddListener(() => handleTap(table));
             }
@@ -148,17 +151,21 @@ namespace HoloToolkit.Unity.SpatialMapping.Tests
         //When the user taps on a surface:
         //1) Start the Activity
         //2) Remove the Interactable component from the surfaces
-        private void handleTap(GameObject floor) {
+        private void handleTap(GameObject floor)
+        {
             GameObject.Find("SceneManager").GetComponent<SceneStarter>().StartActivity();
             RemoveReceiversFromFloorsAndTables();
         }
 
         // Remove the Interactable component from the surfaces
-        private void RemoveReceiversFromFloorsAndTables() {
-            foreach (GameObject floor in floors) {
+        private void RemoveReceiversFromFloorsAndTables()
+        {
+            foreach (GameObject floor in floors)
+            {
                 Destroy(floor.GetComponent<Interactable>());
             }
-            foreach (GameObject table in tables) {
+            foreach (GameObject table in tables)
+            {
                 Destroy(table.GetComponent<Interactable>());
             }
         }

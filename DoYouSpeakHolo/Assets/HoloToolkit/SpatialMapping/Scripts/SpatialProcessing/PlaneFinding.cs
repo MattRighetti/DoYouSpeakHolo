@@ -307,7 +307,7 @@ namespace HoloToolkit.Unity.SpatialMapping
                 public IntPtr indices;
             };
 
-            [DllImport("PlaneFinding")]
+            [DllImport("PlaneFinding", CallingConvention = CallingConvention.Cdecl)]
             public static extern void FindPlanes(
                 [In] int meshCount,
                 [In] IntPtr meshes,
@@ -316,7 +316,7 @@ namespace HoloToolkit.Unity.SpatialMapping
                 [Out] out int planeCount,
                 [Out] out IntPtr planesPtr);
 
-            [DllImport("PlaneFinding")]
+            [DllImport("PlaneFinding", CallingConvention = CallingConvention.Cdecl)]
             public static extern void FindSubPlanes(
                 [In] int meshCount,
                 [In] IntPtr meshes,
@@ -324,7 +324,7 @@ namespace HoloToolkit.Unity.SpatialMapping
                 [Out] out int planeCount,
                 [Out] out IntPtr planesPtr);
 
-            [DllImport("PlaneFinding")]
+            [DllImport("PlaneFinding", CallingConvention = CallingConvention.Cdecl)]
             public static extern void MergeSubPlanes(
                 [In] int subPlaneCount,
                 [In] IntPtr subPlanes,

@@ -11,15 +11,15 @@ public abstract class CheckingPhaseActivity3 : CheckingPhaseManager
 
     //  Create and configure the characters with their baskets
     protected void CreatePeopleAndBaskets() {
-        sceneManager.ActivateObject("Male", Positions.MalePosition);
-        sceneManager.ActivateObject("Female", Positions.FemalePosition);
+        sceneManager.ActivateObject("Male", Positions.MalePosition, Positions.ObjectsRotation);
+        sceneManager.ActivateObject("Female", Positions.FemalePosition, Positions.ObjectsRotation);
         CreateAndConfigureBaskets();
     }
 
     //  Create baskets and attach the necessary scripts
     protected void CreateAndConfigureBaskets() {
-        GameObject basket1 = sceneManager.ActivateObject("MaleBasket", Positions.MaleBasket);
-        GameObject basket2 = sceneManager.ActivateObject("FemaleBasket", Positions.FemaleBasket);
+        GameObject basket1 = sceneManager.ActivateObject("MaleBasket", Positions.MaleBasket, Positions.ObjectsRotation);
+        GameObject basket2 = sceneManager.ActivateObject("FemaleBasket", Positions.FemaleBasket, Positions.ObjectsRotation);
 
         ConfigureBaskets(basket1);
         ConfigureBaskets(basket2);

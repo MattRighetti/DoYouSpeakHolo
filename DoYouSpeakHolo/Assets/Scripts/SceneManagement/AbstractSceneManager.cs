@@ -41,7 +41,7 @@ public abstract class AbstractSceneManager : MonoBehaviour {
         StartListening();
 
         //  Activate the Virtual Assistant and set it up
-        VirtualAssistant = ActivateObject("VA", Positions.VAPosition).GetComponent<VirtualAssistantManager>();
+        VirtualAssistant = ActivateObject("VA", Positions.VAPosition, Positions.ObjectsRotation).GetComponent<VirtualAssistantManager>();
         VirtualAssistant.Setup();
     }
 
@@ -86,8 +86,8 @@ public abstract class AbstractSceneManager : MonoBehaviour {
     }
 
     //  Activate a GameObject in a specified position
-    public GameObject ActivateObject(string key, Vector3 position) {
-        return Pooler.ActivateObject(key, position);
+    public GameObject ActivateObject(string key, Vector3 position, Quaternion rotation) {
+        return Pooler.ActivateObject(key, position, rotation);
     }
 
     //  Deactivate a GameObject

@@ -31,7 +31,7 @@ public abstract class LearningPhaseManager : MonoBehaviour {
     //  playing the corresponding audio without the scene context
     protected IEnumerator ShowObject(string objKey) {
         //  Activate the object
-        GameObject objectToCreate = sceneManager.ActivateObject(objKey, Positions.Central);
+        GameObject objectToCreate = sceneManager.ActivateObject(objKey, Positions.Central, Positions.ObjectsRotation);
 
 
         //  The VA introduces the object
@@ -53,7 +53,7 @@ public abstract class LearningPhaseManager : MonoBehaviour {
     //  playing the corresponding audio with the scene context
     protected IEnumerator ShowObjectWithContext(string objKey) {
         //  Activate the object
-        GameObject objectToCreate = sceneManager.ActivateObject(objKey, Positions.Central);
+        GameObject objectToCreate = sceneManager.ActivateObject(objKey, Positions.Central, Positions.ObjectsRotation);
 
 
         //  The VA introduces the object

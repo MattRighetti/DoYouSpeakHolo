@@ -30,7 +30,7 @@ public class LearningPhaseActivity2 : LearningPhaseManager {
 		Vector3 startingPosition = Positions.startPositionInlineFour;
 
 		foreach (string obj in SceneObjects) {
-			gameObjects.Add(candSManager.ActivateObject(obj, positions.GetPosition(startingPosition)));
+			gameObjects.Add(candSManager.ActivateObject(obj, positions.GetPosition(startingPosition), Positions.ObjectsRotation));
 			startingPosition += new Vector3(0.5f, 0, 0);
 		}
 	}

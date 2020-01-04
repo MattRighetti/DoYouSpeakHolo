@@ -22,7 +22,7 @@ class CheckingPhaseActivity3Advanced : CheckingPhaseActivity3 {
         Vector3 startPosition = Positions.startPositionInlineFour;
         foreach (string obj in SceneObjects) {
             //  Activate the object and attach to it the script for the task
-            gameObj = possessivesManager.ActivateObject(obj, startPosition);
+            gameObj = possessivesManager.ActivateObject(obj, startPosition, Positions.ObjectsRotation);
             //  Attach the script to the fruit
             SetFruitScripts(gameObj);
             //  Determine the new fruit position

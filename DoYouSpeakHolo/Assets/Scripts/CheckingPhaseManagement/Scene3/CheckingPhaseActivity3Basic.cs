@@ -41,7 +41,7 @@ public class CheckingPhaseActivity3Basic : CheckingPhaseActivity3
             //Trigger the male objects
             audioContext.Possessive = Possessives.FromString(possessive);
 
-            GameObject objectToCreate = sceneManager.ActivateObject(possessivesManager.PossessivesObjects[possessive][0], Positions.Central);
+            GameObject objectToCreate = sceneManager.ActivateObject(possessivesManager.PossessivesObjects[possessive][0], Positions.Central, Positions.ObjectsRotation);
 
             SetFruitScripts(objectToCreate);
 

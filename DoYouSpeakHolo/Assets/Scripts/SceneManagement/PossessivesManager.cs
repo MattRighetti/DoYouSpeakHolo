@@ -43,8 +43,8 @@ public class PossessivesManager : AbstractSceneManager
 
     //  Activate and put the static elements in the scene
     private void CreateScene() {
-        ActivateObject("House", Positions.HousePosition);
-        ActivateObject("Tree", Positions.TreePosition);
+        ActivateObject("House", Positions.HousePosition, Positions.ObjectsRotation);
+        ActivateObject("Tree", Positions.TreePosition, Positions.ObjectsRotation);
     }
 
     //  Start Listening to the PickedFruit event.

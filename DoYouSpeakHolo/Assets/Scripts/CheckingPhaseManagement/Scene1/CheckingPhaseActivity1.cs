@@ -29,7 +29,7 @@ class CheckingPhaseActivity1 : CheckingPhaseManager {
         Vector3 startPosition = Positions.startPositionInlineFour;
         foreach (string obj in SceneObjects) {
             //Activate the object and attach to it the script for the task
-            gameObj = candsManager.ActivateObject(obj, startPosition);
+            gameObj = candsManager.ActivateObject(obj, startPosition, Positions.ObjectsRotation);
             FindObjectTask task = gameObj.AddComponent<FindObjectTask>();
             gameObj.AddComponent<Interactable>().AddReceiver<InteractableOnPressReceiver>().OnPress.AddListener(() => task.Check());
             startPosition += new Vector3(0.5f, 0, 0);

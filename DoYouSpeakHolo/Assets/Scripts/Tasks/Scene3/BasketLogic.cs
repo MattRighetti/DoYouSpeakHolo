@@ -20,7 +20,7 @@ public class BasketLogic : MonoBehaviour {
     }
 
     private void SetupGameManager() {
-        GameManager = GameObject.Find("PossessivesManager").GetComponent<PossessivesManager>();
+        GameManager = GameObject.Find("SceneManager").GetComponent<PossessivesManager>();
 
         if (GameManager == null)
             throw new Exception("GameManager Object could not be found");

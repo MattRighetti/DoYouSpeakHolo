@@ -8,6 +8,16 @@ public class VirtualAssistantManager : MonoBehaviour {
     private AudioClip introduction;
 
 
+    public void Update()
+    {
+        Vector3 relativePos = Camera.main.transform.position - transform.position;
+        Quaternion rotation = Quaternion.LookRotation(relativePos);
+        rotation.x = 0f;
+        rotation.z = 0f;
+        transform.rotation = rotation;
+    }
+
+
     // Start is called before the first frame update
     public void Setup() {
         audioSource = gameObject.AddComponent<AudioSource>();

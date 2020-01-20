@@ -29,7 +29,8 @@ public abstract class AbstractSceneManager : MonoBehaviour {
 
     public void ConfigureScene() {
         //  Read the objects information JSON file
-        DumbLoad();
+        //DumbLoad();
+        ParseJson();
         Pooler = ObjectPooler.GetPooler();
         //  Find the floor position with respect to the user gaze
         Pooler.FindFloor();
@@ -162,13 +163,15 @@ public abstract class AbstractSceneManager : MonoBehaviour {
         string text = File.ReadAllText(path);
         Debug.Log("Text: " + text);
         settings = JsonUtility.FromJson<SceneSettings>(text);
+        if (settings == null)
+            Debug.Log("Non sono riuscito a leggere il JSON");
 #endif
 
 #if WINDOWS_UWP
         Task<Task> task = new Task<Task>(async () =>
         {
             try {
-                StorageFile jsonFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx://objects.json"));
+                StorageFile jsonFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///objects.json"));
                 string jsonText = await FileIO.ReadTextAsync(jsonFile);
                 Debug.Log(jsonText);
                 settings = JsonUtility.FromJson<SceneSettings>(jsonText);

@@ -33,7 +33,7 @@ public abstract class CheckingPhaseActivity3 : CheckingPhaseManager
         basket.AddComponent<Rigidbody>();
         basket.AddComponent<BoxCollider>().isTrigger = true;
         //  TODO:Delete ManipulationHandler -> the basket can be dragged
-        basket.AddComponent<ManipulationHandler>();
+        //basket.AddComponent<ManipulationHandler>();
         basket.AddComponent<DoNotFall>();
         basket.AddComponent<BasketLogic>();
     }

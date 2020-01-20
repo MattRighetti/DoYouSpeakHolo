@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using static EventManager;
 
@@ -23,17 +24,21 @@ public class PossessivesManager : AbstractSceneManager
 
     //Load scene objects
     public override void LoadObjects() {
-        sceneObjects = settings.scenes[0];
-        PossessivesObjects = new Dictionary<string, List<string>>();
+        if (settings.scenes.Count > 0) {
+            sceneObjects = settings.scenes[2];
+            PossessivesObjects = new Dictionary<string, List<string>>();
 
-        Pooler.CreateStaticObjects(sceneObjects.staticObjects);
-        Pooler.CreateDynamicObjects(sceneObjects.dynamicObjects);
+            Pooler.CreateStaticObjects(sceneObjects.staticObjects);
+            Pooler.CreateDynamicObjects(sceneObjects.dynamicObjects);
 
-        List<string> dynamicObjects = Pooler.GetDynamicObjects();
+            List<string> dynamicObjects = Pooler.GetDynamicObjects();
 
-        SplitObjects(dynamicObjects);
+            SplitObjects(dynamicObjects);
 
-        CreateScene();
+            CreateScene();
+        }
+        else
+            Debug.Log("DIOOOOOO");
     }
 
     //  The Virtual Assitant introduces the Checking Phase of the Activity

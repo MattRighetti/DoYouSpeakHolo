@@ -14,7 +14,7 @@ public class Positions {
     //  Floor coordinates
     public Vector3 floorPosition;
 
-    public static readonly float FrontDistance = -0.8f;
+    public static readonly float FrontDistance = -0.9f;
 
     public static readonly Vector3 Central = new Vector3(0, 0, FrontDistance + 1.2f);
     public static readonly Vector3 AsideLeft = new Vector3(-0.2f, 0, FrontDistance + 1);

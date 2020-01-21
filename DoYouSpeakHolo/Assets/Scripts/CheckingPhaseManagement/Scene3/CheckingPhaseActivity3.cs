@@ -30,7 +30,8 @@ public abstract class CheckingPhaseActivity3 : CheckingPhaseManager
 
     //  Attach the scripts to the baskets
     protected void ConfigureBaskets(GameObject basket) {
-        basket.AddComponent<Rigidbody>();
+        Rigidbody rb = basket.AddComponent<Rigidbody>();
+        rb.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
         basket.AddComponent<BoxCollider>().isTrigger = true;
         //  TODO:Delete ManipulationHandler -> the basket can be dragged
         //basket.AddComponent<ManipulationHandler>();

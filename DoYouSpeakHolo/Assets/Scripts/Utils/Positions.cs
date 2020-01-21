@@ -4,8 +4,8 @@ using UnityEngine;
 
 //  Class responsible of object placement in the scene with respect to 
 //  the initial position given by the user tap
-public class Positions {
-    // User gaze coordinates after the Spatial processing scan
+public class Positions { 
+                                  // User gaze coordinates after the Spatial processing scan
     Vector3 gazePosition;
 
     // Used to calculate the offset positions of the objects from the gazePosition
@@ -14,7 +14,7 @@ public class Positions {
     //  Floor coordinates
     public Vector3 floorPosition;
 
-    public static readonly float FrontDistance = 0.1f;
+    public static readonly float FrontDistance = -0.8f;
 
     public static readonly Vector3 Central = new Vector3(0, 0, FrontDistance + 1.2f);
     public static readonly Vector3 AsideLeft = new Vector3(-0.2f, 0, FrontDistance + 1);

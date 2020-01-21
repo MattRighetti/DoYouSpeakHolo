@@ -119,8 +119,6 @@ namespace HoloToolkit.Unity.SpatialMapping.Tests
 
                 //Delete the wait button
                 Destroy(waitButton);
-                //Setup each table and floor in the scene in order to capture a tap event
-                SetupFloorsAndTables();
                 GameObject.Find("SceneManager").GetComponent<SceneStarter>().WaitForUserTap();
             }
             else
@@ -130,21 +128,6 @@ namespace HoloToolkit.Unity.SpatialMapping.Tests
 
                 // Re-process spatial data after scanning completes.
                 meshesProcessed = false;
-            }
-        }
-
-        //For each table and floor in the scene add an Interactable component and execute handleTap() whenever the surface is tapped
-        private void SetupFloorsAndTables()
-        {
-            foreach (GameObject floor in floors)
-            {
-                Interactable interactable = floor.AddComponent<Interactable>();
-                interactable.AddReceiver<InteractableOnPressReceiver>().OnPress.AddListener(() => handleTap(floor));
-            }
-            foreach (GameObject table in tables)
-            {
-                Interactable interactable = table.AddComponent<Interactable>();
-                interactable.AddReceiver<InteractableOnPressReceiver>().OnPress.AddListener(() => handleTap(table));
             }
         }
 

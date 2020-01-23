@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 //  Scene Manager of Activity 1
 public class CandSManager : AbstractSceneManager {
 
@@ -19,6 +20,12 @@ public class CandSManager : AbstractSceneManager {
         Pooler.CreateStaticObjects(sceneObjects.staticObjects);
         Pooler.CreateDynamicObjects(sceneObjects.dynamicObjects);
         TargetObjects = Shuffle(Pooler.GetDynamicObjects());
+
+        CreateScene();
+    }
+
+    private void CreateScene() {
+        ActivateObject("Ark", Positions.ArkPosition, Positions.ObjectsRotation);
     }
 
     public override void StartListeningToCustomEvents() {

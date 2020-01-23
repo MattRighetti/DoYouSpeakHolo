@@ -31,20 +31,24 @@
         {
           "type": "VA",
           "path": "Prefab/people/Groot"
+        },
+        {
+          "type": "Ark",
+          "path": "Prefab/Objects/Ark"
         }
       ],
       "dynamicObjects": [
         {
-          "type": "Rhino",
-          "path": "Prefab/Animals/Rhino"
-        },
-        {
-          "type": "Turtle",
-          "path": "Prefab/Animals/Turtle"
-        },
-        {
           "type": "Rabbit",
           "path": "Prefab/Animals/Rabbit"
+        },
+        {
+          "type": "Koala",
+          "path": "Prefab/Animals/Koala"
+        },
+        {
+          "type": "Lion",
+          "path": "Prefab/Animals/Lion"
         }
       ]
     },

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,12 +12,12 @@ public class LearningPhaseActivity2 : LearningPhaseManager {
 	protected override void LearningPhase() {
 		audioContext = (AudioContext2)sceneManager.AudioContext;
 		candSManager = (CandSManager)sceneManager;
-		StartCoroutine(SceneIntroduction());
-		positions = new Positions();
+        positions = new Positions();
+        SceneIntroduction();
 	}
 
-	private IEnumerator SceneIntroduction() {
-		yield return ShowObjects(SceneObjects);
+	private void SceneIntroduction() {
+		//yield return ShowObjects(SceneObjects);
 		DisplayInlineObjects();
 		End();
 	}
@@ -27,11 +26,11 @@ public class LearningPhaseActivity2 : LearningPhaseManager {
 
 		gameObjects = new List<GameObject>();
 
-		Vector3 startingPosition = Positions.startPositionInlineFour;
+		Vector3 startingPosition = Positions.startPositionInlineThree;
 
 		foreach (string obj in SceneObjects) {
 			gameObjects.Add(candSManager.ActivateObject(obj, positions.GetPosition(startingPosition), Positions.ObjectsRotation));
-			startingPosition += new Vector3(0.5f, 0, 0);
+			startingPosition += new Vector3(0.15f, 0, 0);
 		}
 	}
 

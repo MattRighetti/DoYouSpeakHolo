@@ -37,8 +37,6 @@ public class PossessivesManager : AbstractSceneManager
 
             CreateScene();
         }
-        else
-            Debug.Log("DIOOOOOO");
     }
 
     //  The Virtual Assitant introduces the Checking Phase of the Activity

@@ -20,6 +20,9 @@ public class Positions {
     public static readonly Vector3 AsideLeft = new Vector3(-0.2f, 0, FrontDistance + 1);
     public static readonly Vector3 AsideRight = new Vector3(0.2f, 0, FrontDistance + 1);
 
+    //Scene 2
+    public static readonly Vector3 ArkPosition = new Vector3(0.018f, 0, 0.6f);
+    public static readonly Vector3 startPositionInlineThree = new Vector3(-0.076f, 0, 0.2f);
     //Scene 3
     public static readonly Vector3 TreePosition = new Vector3(0, 0, FrontDistance + 1.9f);
     public static readonly Vector3 HousePosition = new Vector3(-1.3f, 0, FrontDistance + 2);
@@ -37,7 +40,7 @@ public class Positions {
     public static readonly Vector3 CentralNear = new Vector3(0, 0, FrontDistance + 1);
 
     //Rotation to make the objects be oriented towards the user
-    public static Quaternion ObjectsRotation = new Quaternion();
+    public static Quaternion ObjectsRotation = Quaternion.identity;
 
     // Compute the object position with respect to the gazePosition and the floorPosition
     public Vector3 GetPosition(Vector3 position) {

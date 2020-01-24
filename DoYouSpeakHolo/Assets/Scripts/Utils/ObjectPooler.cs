@@ -76,7 +76,8 @@ public class ObjectPooler : MonoBehaviour {
     public GameObject ActivateObject(string objKey, Vector3 position, Quaternion rotation) { 
         GameObject objectToCreate = GetPooledObject(objKey);
         objectToCreate.transform.position = Positions.GetPosition(position);
-        objectToCreate.transform.rotation = Positions.ObjectsRotation * objectToCreate.transform.rotation * Positions.ObjectsRotation;
+        objectToCreate.transform.rotation = Quaternion.identity * objectToCreate.transform.rotation * Quaternion.identity;
+        Debug.Log("ROTATION " + Positions.ObjectsRotation.x + " " + Positions.ObjectsRotation.y);
         objectToCreate.name = objKey;
         objectToCreate.SetActive(true);
         return objectToCreate;

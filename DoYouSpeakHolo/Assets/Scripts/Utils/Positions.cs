@@ -24,13 +24,13 @@ public class Positions {
     public static readonly Vector3 ArkPosition = new Vector3(0.018f, 0, 0.6f);
     public static readonly Vector3 startPositionInlineThree = new Vector3(-0.076f, 0, 0.2f);
     //Scene 3
-    public static readonly Vector3 TreePosition = new Vector3(0, 0, FrontDistance + 1.9f);
-    public static readonly Vector3 HousePosition = new Vector3(-1.3f, 0, FrontDistance + 2);
-    public static readonly Vector3 MalePosition = new Vector3(-0.425f, 0, FrontDistance + 1.1f);
-    public static readonly Vector3 MaleBasket = new Vector3(-0.425f, 0, FrontDistance + 0.95f);
-    public static readonly Vector3 FemalePosition = new Vector3(0.425f, 0, FrontDistance + 1.1f);
-    public static readonly Vector3 FemaleBasket = new Vector3(0.425f, 0, FrontDistance + 0.9f);
-    public static readonly Vector3 VAPosition = new Vector3(-0.6f, 0.3f, FrontDistance + 0.8f);
+    public static readonly Vector3 TreePosition = new Vector3(0, 0, FrontDistance + 1.6f);
+    public static readonly Vector3 HousePosition = new Vector3(-0.7f, 0, FrontDistance + 1.7f);
+    public static readonly Vector3 MalePosition = new Vector3(-0.375f, 0, FrontDistance + 1.1f);
+    public static readonly Vector3 MaleBasket = new Vector3(-0.375f, 0, FrontDistance + 0.95f);
+    public static readonly Vector3 FemalePosition = new Vector3(0.375f, 0, FrontDistance + 1.1f);
+    public static readonly Vector3 FemaleBasket = new Vector3(0.375f, 0, FrontDistance + 0.9f);
+    public static readonly Vector3 VAPosition = new Vector3(-0.4f, 0.3f, FrontDistance + 0.7f);
 
     //Default position for non active objects
     public static readonly Vector3 hiddenPosition = new Vector3(0, 0, FrontDistance - 3);
@@ -40,7 +40,7 @@ public class Positions {
     public static readonly Vector3 CentralNear = new Vector3(0, 0, FrontDistance + 1);
 
     //Rotation to make the objects be oriented towards the user
-    public static Quaternion ObjectsRotation = Quaternion.identity;
+    public static Quaternion ObjectsRotation = new Quaternion();
 
     // Compute the object position with respect to the gazePosition and the floorPosition
     public Vector3 GetPosition(Vector3 position) {

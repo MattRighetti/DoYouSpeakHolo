@@ -29,7 +29,7 @@ public abstract class AbstractSceneManager : MonoBehaviour {
 
     public void ConfigureScene() {
         //  Read the objects information JSON file
-        //DumbLoad();
+        //  DumbLoad();
         ParseJson();
         Pooler = ObjectPooler.GetPooler();
         //  Find the floor position with respect to the user gaze

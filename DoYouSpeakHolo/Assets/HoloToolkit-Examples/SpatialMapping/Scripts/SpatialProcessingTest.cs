@@ -54,7 +54,7 @@ namespace HoloToolkit.Unity.SpatialMapping.Tests
             SurfaceMeshesToPlanes.Instance.MakePlanesComplete += SurfaceMeshesToPlanes_MakePlanesComplete;
 
             //Create the button
-            waitButton = (GameObject)Instantiate(Resources.Load("Prefab/Buttons/WaitButton"));
+            waitButton = (GameObject) Instantiate(Resources.Load("Prefab/Buttons/WaitButton"));
         }
 
         /// <summary>
@@ -97,8 +97,8 @@ namespace HoloToolkit.Unity.SpatialMapping.Tests
         /// </summary>
         /// <param name="source">Source of the event.</param>
         /// <param name="args">Args for the event.</param>
-        private void SurfaceMeshesToPlanes_MakePlanesComplete(object source, System.EventArgs args)
-        {
+        private void SurfaceMeshesToPlanes_MakePlanesComplete(object source, System.EventArgs args) {
+
             // Collection of floor planes that we can use to set horizontal items on.
             floors = SurfaceMeshesToPlanes.Instance.GetActivePlanes(PlaneTypes.Floor);
 
@@ -106,8 +106,7 @@ namespace HoloToolkit.Unity.SpatialMapping.Tests
             tables = SurfaceMeshesToPlanes.Instance.GetActivePlanes(PlaneTypes.Table);
 
             // Check to see if we have enough floors (minimumFloors) to start processing.
-            if (floors.Count >= minimumFloors && tables.Count >= minimumTables)
-            {
+            if (floors.Count >= minimumFloors && tables.Count >= minimumTables) {
                 // Reduce our triangle count by removing any triangles
                 // from SpatialMapping meshes that intersect with active planes.
                 RemoveVertices(SurfaceMeshesToPlanes.Instance.ActivePlanes);
@@ -121,8 +120,7 @@ namespace HoloToolkit.Unity.SpatialMapping.Tests
                 Destroy(waitButton);
                 GameObject.Find("SceneManager").GetComponent<SceneStarter>().WaitForUserTap();
             }
-            else
-            {
+            else {
                 // Re-enter scanning mode so the user can find more surfaces before processing.
                 SpatialMappingManager.Instance.StartObserver();
 
@@ -131,9 +129,9 @@ namespace HoloToolkit.Unity.SpatialMapping.Tests
             }
         }
 
-        //When the user taps on a surface:
-        //1) Start the Activity
-        //2) Remove the Interactable component from the surfaces
+        //  When the user taps on a surface:
+        //  1) Start the Activity
+        //  2) Remove the Interactable component from the surfaces
         private void handleTap(GameObject floor)
         {
             GameObject.Find("SceneManager").GetComponent<SceneStarter>().StartActivity();

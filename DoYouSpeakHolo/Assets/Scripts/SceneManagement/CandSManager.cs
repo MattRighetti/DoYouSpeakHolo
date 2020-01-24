@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 //  Scene Manager of Activity 1
 public class CandSManager : AbstractSceneManager {
 
@@ -31,6 +33,14 @@ public class CandSManager : AbstractSceneManager {
     }
 
     public override void StopListeningToCustomEvents() {
+    }
+
+    public IEnumerator IntroduceObjectWithComparatives(string objectKey) {
+        yield return IntroduceObjectWithContext(objectKey);
+    }
+
+    public IEnumerator IntroduceObjectWithSuperlatives(string objectKey, string superlative) {
+        yield return IntroduceObject(objectKey + superlative);
     }
 }
 

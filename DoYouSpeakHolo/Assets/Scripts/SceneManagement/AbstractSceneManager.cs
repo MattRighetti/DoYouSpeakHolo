@@ -76,13 +76,13 @@ public abstract class AbstractSceneManager : MonoBehaviour {
 
     //  The Virtual Assistant introduces an object without the scene context
     //  e.g. pear -> audio: "This is a pear"
-    internal IEnumerator IntroduceObject(string objectToIntroduce) {
+    public IEnumerator IntroduceObject(string objectToIntroduce) {
         yield return VirtualAssistant.IntroduceObject(AudioContext, objectToIntroduce);
     }
 
     //  The Virtual Assistant introduces an object wit the scene context
     //  e.g. pear with the possessives context -> audio: "This is his/her pear"
-    internal IEnumerator IntroduceObjectWithContext(string objectToIntroduce) {
+    public IEnumerator IntroduceObjectWithContext(string objectToIntroduce) {
         yield return VirtualAssistant.IntroduceObjectWithContext(AudioContext, objectToIntroduce);
     }
 

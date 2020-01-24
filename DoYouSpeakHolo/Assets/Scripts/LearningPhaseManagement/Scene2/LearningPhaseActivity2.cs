@@ -13,13 +13,36 @@ public class LearningPhaseActivity2 : LearningPhaseManager {
 		audioContext = (AudioContext2)sceneManager.AudioContext;
 		candSManager = (CandSManager)sceneManager;
         positions = new Positions();
-        SceneIntroduction();
+        StartCoroutine(SceneIntroduction());
 	}
 
-	private void SceneIntroduction() {
-		//yield return ShowObjects(SceneObjects);
-		DisplayInlineObjects();
-		End();
+	private IEnumerator SceneIntroduction() {
+
+        //1) Show all the animals
+        DisplayInlineObjects();
+
+        //2) Introduce animals with audio
+        foreach (string objectkKey in SceneObjects) {
+            yield return candSManager.IntroduceObject(objectkKey);
+        }
+
+        //3) Introduce the smallest animal
+        yield return candSManager.IntroduceObjectWithSuperlatives(SceneObjects[0], "Smallest");
+
+        //4) Introduce animals with with comparatives
+        foreach (string objectkKey in SceneObjects) {
+            yield return candSManager.IntroduceObjectWithComparatives(objectkKey);
+        }
+
+        //5) Introduce the biggest animal
+        yield return candSManager.IntroduceObjectWithSuperlatives(SceneObjects[SceneObjects.Count - 1], "Biggest");
+
+
+
+
+        //  IntroduceObjectsWithComparativesAndSuperlatives();
+
+        End();
 	}
 
 	private void DisplayInlineObjects() {

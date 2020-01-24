@@ -1,8 +1,18 @@
 ﻿using System;
-
+using UnityEngine;
 
 public class CheckingPhaseActivity2 : CheckingPhaseManager {
 
-	protected override void CheckingPhase() { }
+    protected CandSManager candSManager;
+    private AudioContext2 audioContext;
+
+    private GameObject targetAnimal;
+
+	protected override void CheckingPhase() {
+        audioContext = (AudioContext2)sceneManager.AudioContext;
+        candSManager = (CandSManager)sceneManager;
+
+
+    }
 
 }

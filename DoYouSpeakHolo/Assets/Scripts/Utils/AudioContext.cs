@@ -1,11 +1,13 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using System.IO;
+using UnityEngine;
 
 //The class is responsible of getting the right audio to play related to a Game Object
 public abstract class AudioContext {
     protected Scenes Scene;
 
     //Get audio for a specific activity
-    public abstract AudioClip GetContextAudio(string objectName);
+    public abstract List<AudioClip> GetContextAudio(string objectName);
 
     //Get audio describing the object
     //i.e. "This is a Tree"
@@ -23,7 +25,7 @@ public class AudioContext1 : AudioContext {
         Scene = Scenes.Scene1;
     }
 
-    public override AudioClip GetContextAudio(string objectName) {
+    public override List<AudioClip> GetContextAudio(string objectName) {
         throw new System.NotImplementedException();
     }
 }
@@ -35,8 +37,10 @@ public class AudioContext2 : AudioContext {
         Scene = Scenes.Scene2;
     }
 
-    public override AudioClip GetContextAudio(string objectName) {
-        throw new System.NotImplementedException();
+    public override List<AudioClip> GetContextAudio(string objectName) {
+        string path = "Audio/" + Scene.Value + "/" + "Comparative" + objectName + "/";
+        List<AudioClip> audioFiles = new List<AudioClip>(Resources.LoadAll<AudioClip>(path));
+        return audioFiles;
     }
 }
 
@@ -53,10 +57,12 @@ public class AudioContext3 : AudioContext {
     }
 
     //Get the correct audio based on the current context
-    public override AudioClip GetContextAudio(string objectName) {
+    public override List<AudioClip> GetContextAudio(string objectName) {
         string path = "Audio/" + Scene.Value + "/" + Possessive.Value + objectName;
         Debug.Log("context audio " + path);
-        return Resources.Load(path) as AudioClip;
+        List<AudioClip> audioList = new List<AudioClip>();
+        audioList.Add(Resources.Load(path) as AudioClip);
+        return audioList;
     }
 }
 

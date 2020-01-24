@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using static EventManager;
 
@@ -60,7 +61,6 @@ public class VirtualAssistantManager : MonoBehaviour {
     }
 
     internal IEnumerator IntroduceObject(AudioContext context, string objectName) {
-
         audioSource.clip = context.GetAudio(objectName);
 
         animator.Play("TalkingShort");
@@ -68,10 +68,14 @@ public class VirtualAssistantManager : MonoBehaviour {
     }
 
     internal IEnumerator IntroduceObjectWithContext(AudioContext context, string objectName) {
-        audioSource.clip = context.GetContextAudio(objectName);
-    
-        animator.Play("TalkingShort");
-        yield return PlayAudioSync(audioSource);
+        List<AudioClip> clips = context.GetContextAudio(objectName);
+
+        foreach (AudioClip clip in clips) {
+            audioSource.clip = clip;
+
+            animator.Play("TalkingShort");
+            yield return PlayAudioSync(audioSource);
+        }
     }
 
     //Play audio and wait until it finishes

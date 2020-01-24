@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 //  Scene Manager of Activity 1
 public class CandSManager : AbstractSceneManager {
 
@@ -8,7 +7,7 @@ public class CandSManager : AbstractSceneManager {
 
     public List<string> TargetObjects { get; set; }
 
-    //  Set the audio context to scene 1
+    //  Set the audio context to scene 2
     public override void SetAudioContext() {
         AudioContext = new AudioContext2();
     }

@@ -11,7 +11,7 @@ public abstract class AudioContext {
     //i.e. "This is a Tree"
     public AudioClip GetAudio(string objectName) {
         string path = "Audio/" + Scene.Value + "/" + objectName;
-        Debug.Log("no context audio " + path);
+        Debug.Log("getting audio " + path);
         return Resources.Load(path) as AudioClip;
     }
 }
@@ -32,7 +32,7 @@ public class AudioContext1 : AudioContext {
 public class AudioContext2 : AudioContext {
 
     public AudioContext2() {
-        Scene = Scenes.Scene1;
+        Scene = Scenes.Scene2;
     }
 
     public override AudioClip GetContextAudio(string objectName) {

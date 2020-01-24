@@ -50,7 +50,7 @@ public abstract class AbstractSceneManager : MonoBehaviour {
     //  The VA introduces the activity
     //  Triggers the method AnimateAvatar.PlayIntroduction
     public void StartIntroduction() {
-        VirtualAssistant.PlayIntroduction();
+        VirtualAssistant.PlayIntroduction(AudioContext);
     }
 
     //  Start the Learning phase

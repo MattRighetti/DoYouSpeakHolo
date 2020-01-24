@@ -30,17 +30,17 @@ public class VirtualAssistantManager : MonoBehaviour {
         animator.Play("KO");
     }
 
-    public void PlayIntroduction() {
-        StartCoroutine(PlayIntroductionRoutine());
+    public void PlayIntroduction(AudioContext audioContext) {
+        StartCoroutine(PlayIntroductionRoutine(audioContext));
     }
 
     public void PlayOk() {
         animator.Play("OK");
     }
 
-    private IEnumerator PlayIntroductionRoutine() {
+    private IEnumerator PlayIntroductionRoutine(AudioContext context) {
         //Set the introduction audio clip and play it
-        audioSource.clip = introduction;
+        audioSource.clip = context.GetAudio("Introduction");
         audioSource.Play();
 
         //Start the corresponding animation

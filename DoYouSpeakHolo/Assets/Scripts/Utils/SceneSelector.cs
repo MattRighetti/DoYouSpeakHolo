@@ -18,7 +18,7 @@ public class SceneSelector: MonoBehaviour {
     }
 
     public void GoToScene2() {
-        SceneManager.LoadScene("Scene1_bis");
+        SceneManager.LoadScene("Scene2");
     }
 
     public void GoToScene3() {

@@ -7,7 +7,7 @@ public class BasketLogic : MonoBehaviour {
     private PossessivesManager GameManager;
     private Animator anime;
     private List<string> fruitList;
-    private SphereCollider objectCollider;
+    private BoxCollider objectCollider;
 
     void Start() {
         anime = GameObject.Find("VA").GetComponent<VirtualAssistantManager>().animator;
@@ -16,7 +16,7 @@ public class BasketLogic : MonoBehaviour {
     }
 
     private void SetupBoxCollider() {
-        objectCollider = gameObject.GetComponent<SphereCollider>();
+        objectCollider = gameObject.GetComponent<BoxCollider>();
     }
 
     private void SetupGameManager() {

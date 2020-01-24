@@ -19,14 +19,10 @@ public class GravityEnabler : MonoBehaviour
     
     public void EnableGravity()
     {
-        rigidbody.useGravity = true;
-        rigidbody.isKinematic = false;
     }
 
     public void DisableGravity()
     {
-        rigidbody.useGravity = false;
-        rigidbody.isKinematic = true;  
     }
     
 }

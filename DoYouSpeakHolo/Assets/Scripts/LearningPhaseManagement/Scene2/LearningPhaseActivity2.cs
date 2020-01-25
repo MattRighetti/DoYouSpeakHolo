@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,7 +24,7 @@ public class LearningPhaseActivity2 : LearningPhaseManager {
 
         //2) Introduce animals with audio
         foreach (string objectkKey in SceneObjects) {
-            yield return candSManager.IntroduceObject(objectkKey);
+            yield return IntroduceAndOutlineObject(objectkKey);
         }
 
         //3) Introduce the smallest animal
@@ -45,7 +46,13 @@ public class LearningPhaseActivity2 : LearningPhaseManager {
         End();
 	}
 
-	private void DisplayInlineObjects() {
+    private IEnumerator IntroduceAndOutlineObject(string objectkKey) {
+        candSManager.EnableOutline(objectkKey);
+        yield return candSManager.IntroduceObject(objectkKey);
+        candSManager.DisableOutline(objectkKey);
+    }
+
+    private void DisplayInlineObjects() {
 
 		gameObjects = new List<GameObject>();
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 //  Scene Manager of Activity 1
 public class CandSManager : AbstractSceneManager {
 
@@ -42,5 +43,16 @@ public class CandSManager : AbstractSceneManager {
     public IEnumerator IntroduceObjectWithSuperlatives(string objectKey, string superlative) {
         yield return IntroduceObject(objectKey + superlative);
     }
+
+    internal void EnableOutline(string objectkKey) {
+        Debug.Log("KEY " + objectkKey);
+        GameObject gameObject = Pooler.GetPooledObject(objectkKey);
+        Debug.Log("GAMEOBJ " + gameObject.name);
+        HighlightEnabler enabler = gameObject.GetComponent<HighlightEnabler>();
+        Debug.Log("ENABLER " + enabler);
+        enabler.EnableOutline();
+    } 
+
+    internal void DisableOutline(string objectkKey) => Pooler.GetPooledObject(objectkKey).GetComponent<HighlightEnabler>().DisableOutline();
 }
 

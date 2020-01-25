@@ -69,7 +69,6 @@ public class Positions {
         DebugDrawPlanes(floor);
 
         SurfacePlane plane = floor.GetComponent<SurfacePlane>();
-        System.Random rnd = new System.Random();
         floorPosition = floor.transform.position + (plane.PlaneThickness * plane.SurfaceNormal);
         floorPosition = AdjustPositionWithSpatialMap(floorPosition, plane.SurfaceNormal);
         gazePosition = new Vector3(0f, 0f, 0f);
@@ -130,7 +129,6 @@ public class Positions {
         rotation.x = 0f;
         rotation.z = 0f;
         ObjectsRotation = rotation;
-
     }
 
     private Bounds GetColliderBounds(Transform transform) {

@@ -45,8 +45,7 @@ namespace HoloToolkit.Unity.SpatialMapping.Tests
         /// <summary>
         /// GameObject initialization.
         /// </summary>
-        private void Start()
-        {
+        private void Start() {
             // Update surfaceObserver and storedMeshes to use the same material during scanning.
             SpatialMappingManager.Instance.SetSurfaceMaterial(defaultMaterial);
 
@@ -60,25 +59,19 @@ namespace HoloToolkit.Unity.SpatialMapping.Tests
         /// <summary>
         /// Called once per frame.
         /// </summary>
-        private void Update()
-        {
+        private void Update() {
             // Check to see if the spatial mapping data has been processed yet.
-            if (!meshesProcessed)
-            {
+            if (!meshesProcessed) {
                 // Check to see if enough scanning time has passed
                 // since starting the observer.
-                if ((Time.unscaledTime - SpatialMappingManager.Instance.StartTime) < scanTime)
-                {
+                if ((Time.unscaledTime - SpatialMappingManager.Instance.StartTime) < scanTime) {
                     // If we have a limited scanning time, then we should wait until
                     // enough time has passed before processing the mesh.
-                }
-                else
-                {
+                } else {
                     // The user should be done scanning their environment,
                     // so start processing the spatial mapping data...
 
-                    if (SpatialMappingManager.Instance.IsObserverRunning())
-                    {
+                    if (SpatialMappingManager.Instance.IsObserverRunning()) {
                         // Stop the observer.
                         SpatialMappingManager.Instance.StopObserver();
                     }
@@ -119,8 +112,8 @@ namespace HoloToolkit.Unity.SpatialMapping.Tests
                 //Delete the wait button
                 Destroy(waitButton);
                 GameObject.Find("SceneManager").GetComponent<SceneStarter>().WaitForUserTap();
-            }
-            else {
+
+            } else {
                 // Re-enter scanning mode so the user can find more surfaces before processing.
                 SpatialMappingManager.Instance.StartObserver();
 
@@ -132,21 +125,18 @@ namespace HoloToolkit.Unity.SpatialMapping.Tests
         //  When the user taps on a surface:
         //  1) Start the Activity
         //  2) Remove the Interactable component from the surfaces
-        private void handleTap(GameObject floor)
-        {
+        private void handleTap(GameObject floor) {
             GameObject.Find("SceneManager").GetComponent<SceneStarter>().StartActivity();
             RemoveReceiversFromFloorsAndTables();
         }
 
         // Remove the Interactable component from the surfaces
-        private void RemoveReceiversFromFloorsAndTables()
-        {
-            foreach (GameObject floor in floors)
-            {
+        private void RemoveReceiversFromFloorsAndTables() {
+            foreach (GameObject floor in floors) {
                 Destroy(floor.GetComponent<Interactable>());
             }
-            foreach (GameObject table in tables)
-            {
+
+            foreach (GameObject table in tables) {
                 Destroy(table.GetComponent<Interactable>());
             }
         }
@@ -158,8 +148,7 @@ namespace HoloToolkit.Unity.SpatialMapping.Tests
         {
             // Generate planes based on the spatial map.
             SurfaceMeshesToPlanes surfaceToPlanes = SurfaceMeshesToPlanes.Instance;
-            if (surfaceToPlanes != null && surfaceToPlanes.enabled)
-            {
+            if (surfaceToPlanes != null && surfaceToPlanes.enabled) {
                 surfaceToPlanes.MakePlanes();
             }
         }
@@ -168,11 +157,9 @@ namespace HoloToolkit.Unity.SpatialMapping.Tests
         /// Removes triangles from the spatial mapping surfaces.
         /// </summary>
         /// <param name="boundingObjects"></param>
-        private void RemoveVertices(IEnumerable<GameObject> boundingObjects)
-        {
+        private void RemoveVertices(IEnumerable<GameObject> boundingObjects) {
             RemoveSurfaceVertices removeVerts = RemoveSurfaceVertices.Instance;
-            if (removeVerts != null && removeVerts.enabled)
-            {
+            if (removeVerts != null && removeVerts.enabled) {
                 removeVerts.RemoveSurfaceVerticesWithinBounds(boundingObjects);
             }
         }
@@ -180,10 +167,8 @@ namespace HoloToolkit.Unity.SpatialMapping.Tests
         /// <summary>
         /// Called when the GameObject is unloaded.
         /// </summary>
-        protected override void OnDestroy()
-        {
-            if (SurfaceMeshesToPlanes.Instance != null)
-            {
+        protected override void OnDestroy() {
+            if (SurfaceMeshesToPlanes.Instance != null) {
                 SurfaceMeshesToPlanes.Instance.MakePlanesComplete -= SurfaceMeshesToPlanes_MakePlanesComplete;
             }
 

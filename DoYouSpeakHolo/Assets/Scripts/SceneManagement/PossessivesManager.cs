@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 using static EventManager;
 
@@ -33,7 +32,7 @@ public class PossessivesManager : AbstractSceneManager
 
             List<string> dynamicObjects = Pooler.GetDynamicObjects();
 
-            SplitObjects(dynamicObjects);
+            PossessivesObjects = SplitObjects(dynamicObjects);
 
             CreateScene();
         }
@@ -66,17 +65,15 @@ public class PossessivesManager : AbstractSceneManager
         StopListening(Triggers.PickedFruit, PickedFruit);
     }
 
-    internal void changeLevel() {
-        SceneManager.LoadScene("Scene3_bis");
-    }
-
     //Split the category of the objects into two list, one for each possessive
-    private void SplitObjects(List<string> dynamicObjects) {
+    private Dictionary<string, List<string>> SplitObjects(List<string> dynamicObjects) {
+        Dictionary<string, List<string>> possessivesObjects = new Dictionary<string, List<string>>();
         List<string> objects = Shuffle(dynamicObjects);
         int half = objects.Count / 2;
         var maleObjects = objects.GetRange(0, half);
         var femaleObjects = objects.GetRange(half, half);
-        PossessivesObjects.Add(Possessives.His.Value,maleObjects);
-        PossessivesObjects.Add(Possessives.Her.Value, femaleObjects);
+        possessivesObjects.Add(Possessives.His.Value,maleObjects);
+        possessivesObjects.Add(Possessives.Her.Value, femaleObjects);
+        return possessivesObjects;
     }
 }

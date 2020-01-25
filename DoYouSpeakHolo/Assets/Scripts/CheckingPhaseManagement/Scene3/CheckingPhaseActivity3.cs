@@ -8,18 +8,22 @@ using UnityEngine;
 public abstract class CheckingPhaseActivity3 : CheckingPhaseManager
 {
     protected PossessivesManager possessivesManager;
+    Possessives character1Possessive;
+    Possessives character2Possessive;
 
     //  Create and configure the characters with their baskets
     protected void CreatePeopleAndBaskets() {
-        sceneManager.ActivateObject("Male", Positions.MalePosition, Positions.ObjectsRotation);
-        sceneManager.ActivateObject("Female", Positions.FemalePosition, Positions.ObjectsRotation);
+        character1Possessive = Possessives.His;
+        character2Possessive = Possessives.Her;
+        sceneManager.ActivateObject(character1Possessive.Value + "Character", Positions.MalePosition, Positions.ObjectsRotation);
+        sceneManager.ActivateObject(character2Possessive.Value + "Character", Positions.FemalePosition, Positions.ObjectsRotation);
         CreateAndConfigureBaskets();
     }
 
     //  Create baskets and attach the necessary scripts
     protected void CreateAndConfigureBaskets() {
-        GameObject basket1 = sceneManager.ActivateObject("MaleBasket", Positions.MaleBasket, Positions.ObjectsRotation);
-        GameObject basket2 = sceneManager.ActivateObject("FemaleBasket", Positions.FemaleBasket, Positions.ObjectsRotation);
+        GameObject basket1 = sceneManager.ActivateObject(character1Possessive.Value + "Basket", Positions.MaleBasket, Positions.ObjectsRotation);
+        GameObject basket2 = sceneManager.ActivateObject(character2Possessive.Value + "Basket", Positions.FemaleBasket, Positions.ObjectsRotation);
 
         ConfigureBaskets(basket1);
         ConfigureBaskets(basket2);

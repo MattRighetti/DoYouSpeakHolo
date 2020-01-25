@@ -24,7 +24,6 @@ public class VirtualAssistantManager : MonoBehaviour {
     // Start is called before the first frame update
     public void Setup() {
         audioSource = gameObject.AddComponent<AudioSource>();
-        introduction = Resources.Load("Audio/VAIntroduce") as AudioClip;
         animator = GetComponent<Animator>();
         StartListening();
     }

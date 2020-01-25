@@ -19,13 +19,14 @@ public class LearningPhaseActivity3Basic : LearningPhaseActivity3 {
     private IEnumerator IntroducePeopleAndBaskets() {
 
         //Introduce the first character without the scene context
-        audioContext.Possessive = Possessives.His;
-        Character character = Character.Male;
-        yield return ShowCharacterAndBasket(character.Value, character.Value + "Basket");
+        Possessives character1Possessive = Possessives.His;
+        audioContext.Possessive = character1Possessive;
+        
+        yield return ShowCharacterAndBasket(character1Possessive.Value + "Character", character1Possessive.Value + "Basket");
 
         //Introduce the second character without the scene context
-        audioContext.Possessive = Possessives.Her;
-        character = Character.Female;
-        yield return ShowCharacterAndBasket(character.Value, character.Value + "Basket");
+        Possessives character2Possessive = Possessives.Her;
+        audioContext.Possessive = character2Possessive;
+        yield return ShowCharacterAndBasket(character2Possessive.Value + "Character", character2Possessive.Value + "Basket");
     }
 }

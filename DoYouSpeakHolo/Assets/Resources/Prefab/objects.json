@@ -67,19 +67,19 @@
           "path": "Prefab/people/Groot"
         },
         {
-          "type": "MaleBasket",
+          "type": "hisBasket",
           "path": "Prefab/objects/Basket"
         },
         {
-          "type": "FemaleBasket",
+          "type": "herBasket",
           "path": "Prefab/objects/Basket"
         },
         {
-          "type": "Male",
+          "type": "hisCharacter",
           "path": "Prefab/people/VA_MaleCorrect"
         },
         {
-          "type": "Female",
+          "type": "herCharacter",
           "path": "Prefab/people/VA_FemaleCorrect"
         }
       ],

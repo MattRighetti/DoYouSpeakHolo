@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 
 //The class is responsible of getting the right audio to play related to a Game Object
@@ -81,18 +80,6 @@ public class Scenes {
 //Typesafe Enum pattern to do the audio selection
 //Additional class for audio selection
 //Used in Scene 3
-public class Character {
-    private Character(string value) { Value = value; }
-
-    public string Value { get; set; }
-
-    public static Character Male { get { return new Character("Male"); } }
-    public static Character Female { get { return new Character("Female"); } }
-}
-
-//Typesafe Enum pattern to do the audio selection
-//Additional class for audio selection
-//Used in Scene 3
 public class Possessives {
     private Possessives(string value) { Value = value; }
 
@@ -100,7 +87,7 @@ public class Possessives {
 
     public static Possessives His { get { return new Possessives("his"); } }
     public static Possessives Her { get { return new Possessives("her"); } }
-
+    public static Possessives Theirs { get { return new Possessives("their"); } }
     internal static Possessives FromString(string possessive) {
         return new Possessives(possessive);
     }

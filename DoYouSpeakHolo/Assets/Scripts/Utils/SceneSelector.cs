@@ -1,10 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
-#if WINDOWS_UWP
-using Windows.Storage;
-using System.Threading.Tasks;
-using System;
-#endif
 
 //  Method wrapper for loading levelss
 public class SceneSelector: MonoBehaviour {

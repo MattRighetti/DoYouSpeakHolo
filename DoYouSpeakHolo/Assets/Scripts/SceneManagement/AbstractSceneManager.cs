@@ -29,7 +29,6 @@ public abstract class AbstractSceneManager : MonoBehaviour {
 
     public void ConfigureScene() {
         //  Read the objects information JSON file
-        //  DumbLoad();
         ParseJson();
         Pooler = ObjectPooler.GetPooler();
         //  Find the floor position with respect to the user gaze
@@ -185,76 +184,6 @@ public abstract class AbstractSceneManager : MonoBehaviour {
         task.Result.Wait();
 #endif
     }
-
-    private void DumbLoad() {
-        SceneObjectsToLoad sceneobj = new SceneObjectsToLoad();
-        settings = new SceneSettings();
-        settings.scenes = new List<SceneObjectsToLoad>();
-        SingleObjectToLoad apple = new SingleObjectToLoad();
-
-        apple.type = "Apple";
-        apple.path = "Prefab/Fruits/Apple";
-
-        SingleObjectToLoad pear = new SingleObjectToLoad();
-        pear.type = "Pear";
-        pear.path = "Prefab/Fruits/Pear";
-
-        SingleObjectToLoad banana = new SingleObjectToLoad();
-        banana.type = "Banana";
-        banana.path = "Prefab/Fruits/Banana";
-
-        SingleObjectToLoad orange = new SingleObjectToLoad();
-        orange.type = "Orange";
-        orange.path = "Prefab/Fruits/Orange";
-
-        SingleObjectToLoad house = new SingleObjectToLoad();
-        house.type = "House";
-        house.path = "Prefab/objects/House_right";
-
-        SingleObjectToLoad tree = new SingleObjectToLoad();
-        tree.type = "Tree";
-        tree.path = "Prefab/objects/Tree_right";
-
-        SingleObjectToLoad va = new SingleObjectToLoad();
-        va.type = "VA";
-        va.path = "Prefab/people/Groot";
-
-        SingleObjectToLoad maleBasket = new SingleObjectToLoad();
-        maleBasket.type = "MaleBasket";
-        maleBasket.path = "Prefab/objects/Basket";
-
-        SingleObjectToLoad femaleBasket = new SingleObjectToLoad();
-        femaleBasket.type = "FemaleBasket";
-        femaleBasket.path = "Prefab/objects/Basket";
-
-        SingleObjectToLoad male = new SingleObjectToLoad();
-        male.type = "Male";
-        male.path = "Prefab/people/VA_MaleCorrect";
-
-        SingleObjectToLoad female = new SingleObjectToLoad();
-        female.type = "Female";
-        female.path = "Prefab/people/VA_FemaleCorrect";
-
-        sceneobj.dynamicObjects = new List<SingleObjectToLoad>();
-        sceneobj.staticObjects = new List<SingleObjectToLoad>();
-
-        sceneobj.dynamicObjects.Add(apple);
-        sceneobj.dynamicObjects.Add(pear);
-        sceneobj.dynamicObjects.Add(banana);
-        sceneobj.dynamicObjects.Add(orange);
-
-        sceneobj.staticObjects.Add(house);
-        sceneobj.staticObjects.Add(tree);
-        sceneobj.staticObjects.Add(male);
-        sceneobj.staticObjects.Add(maleBasket);
-        sceneobj.staticObjects.Add(female);
-        sceneobj.staticObjects.Add(femaleBasket);
-        sceneobj.staticObjects.Add(va);
-
-
-        settings.scenes.Add(sceneobj);
-    }
-
 }
 
 

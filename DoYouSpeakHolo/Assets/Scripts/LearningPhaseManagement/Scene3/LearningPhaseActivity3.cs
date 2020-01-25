@@ -13,23 +13,23 @@ public abstract class LearningPhaseActivity3 : LearningPhaseManager
         StartCoroutine(SceneIntroduction());
     }
 
-    public IEnumerator ShowCharacterAndBasket(string object1, string object2) {
+    public IEnumerator ShowCharacterAndBasket(string character, string basket) {
 
         //  Activate the first object
-        GameObject objectToCreate1 = sceneManager.ActivateObject(object1, Positions.Central, Positions.ObjectsRotation);
+        GameObject objectToCreate1 = sceneManager.ActivateObject(character, Positions.Central, Positions.ObjectsRotation);
 
         //  Introduce it without context
         yield return sceneManager.IntroduceObject(objectToCreate1.name);
 
         //  Activate the second object
-        GameObject objectToCreate2 = sceneManager.ActivateObject(object2, Positions.CentralNear, Positions.ObjectsRotation);
+        GameObject objectToCreate2 = sceneManager.ActivateObject(basket, Positions.CentralNear, Positions.ObjectsRotation);
 
         //  Introduce it with context
         yield return sceneManager.IntroduceObject(objectToCreate2.name);
 
         //  Deactivate the objects
-        sceneManager.DeactivateObject(object1);
-        sceneManager.DeactivateObject(object2);
+        sceneManager.DeactivateObject(character);
+        sceneManager.DeactivateObject(basket);
     }
 
     // --------------------------------- ABSTRACT ---------------------------------

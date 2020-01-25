@@ -6,7 +6,7 @@ public class LearningPhaseActivity3Advanced : LearningPhaseActivity3 {
 
     protected override IEnumerator SceneIntroduction() {
         //  Spawn VA_Male and half of the objects
-        Possessives character1Possessive = Possessives.His;
+        Possessives character1Possessive = possessivesManager.PossessivesList[0];
         audioContext.Possessive = character1Possessive;
 
         GameObject male = possessivesManager.ActivateObject(character1Possessive.Value + "Character", Positions.MalePosition, Positions.ObjectsRotation);
@@ -15,7 +15,7 @@ public class LearningPhaseActivity3Advanced : LearningPhaseActivity3 {
         sceneManager.DeactivateObject(male.gameObject.name);
 
         //  Do the same for the female
-        Possessives character2Possessive = Possessives.Her;
+        Possessives character2Possessive = possessivesManager.PossessivesList[1];
         audioContext.Possessive = character2Possessive;
         GameObject female = possessivesManager.ActivateObject(character2Possessive.Value + "Character", Positions.FemalePosition, Positions.ObjectsRotation);
         yield return ShowObjectsWithContext(possessivesManager.PossessivesObjects[Possessives.Her.Value]);

@@ -13,6 +13,8 @@ public class PossessivesManager : AbstractSceneManager
     //  e.g. (his, [pear, apple])
     public Dictionary<string, List<string>> PossessivesObjects { get; set; }
 
+    public List<Possessives> PossessivesList { get; set; }
+
     //  Keeps track of the basket with no more target fruits
     private int basketFull = 0;
 
@@ -23,19 +25,25 @@ public class PossessivesManager : AbstractSceneManager
 
     //Load scene objects
     public override void LoadObjects() {
-        if (settings.scenes.Count > 0) {
-            sceneObjects = settings.scenes[2];
-            PossessivesObjects = new Dictionary<string, List<string>>();
+        sceneObjects = settings.scenes[2];
+        PossessivesObjects = new Dictionary<string, List<string>>();
 
-            Pooler.CreateStaticObjects(sceneObjects.staticObjects);
-            Pooler.CreateDynamicObjects(sceneObjects.dynamicObjects);
+        Pooler.CreateStaticObjects(sceneObjects.staticObjects);
+        Pooler.CreateDynamicObjects(sceneObjects.dynamicObjects);
 
-            List<string> dynamicObjects = Pooler.GetDynamicObjects();
+        List<string> dynamicObjects = Pooler.GetDynamicObjects();
+        PossessivesList = new List<Possessives>();
 
-            PossessivesObjects = SplitObjects(dynamicObjects);
-
-            CreateScene();
+        foreach(string obj in Pooler.GetStaticObjects()) {
+            if (obj.Contains("Character")) {
+                PossessivesList.Add(Possessives.AsPossessive(obj.Replace("Character", "")));
+            }
         }
+
+        PossessivesObjects = SplitObjects(dynamicObjects);
+
+        CreateScene();
+        
     }
 
     //  The Virtual Assitant introduces the Checking Phase of the Activity
@@ -72,8 +80,8 @@ public class PossessivesManager : AbstractSceneManager
         int half = objects.Count / 2;
         var maleObjects = objects.GetRange(0, half);
         var femaleObjects = objects.GetRange(half, half);
-        possessivesObjects.Add(Possessives.His.Value,maleObjects);
-        possessivesObjects.Add(Possessives.Her.Value, femaleObjects);
+        possessivesObjects.Add(global::Possessives.His.Value, maleObjects);
+        possessivesObjects.Add(global::Possessives.Her.Value, femaleObjects);
         return possessivesObjects;
     }
 }

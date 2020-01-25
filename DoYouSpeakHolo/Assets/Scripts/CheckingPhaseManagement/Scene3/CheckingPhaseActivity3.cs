@@ -13,8 +13,8 @@ public abstract class CheckingPhaseActivity3 : CheckingPhaseManager
 
     //  Create and configure the characters with their baskets
     protected void CreatePeopleAndBaskets() {
-        character1Possessive = Possessives.His;
-        character2Possessive = Possessives.Her;
+        character1Possessive = possessivesManager.PossessivesList[0];
+        character2Possessive = possessivesManager.PossessivesList[1];
         sceneManager.ActivateObject(character1Possessive.Value + "Character", Positions.MalePosition, Positions.ObjectsRotation);
         sceneManager.ActivateObject(character2Possessive.Value + "Character", Positions.FemalePosition, Positions.ObjectsRotation);
         CreateAndConfigureBaskets();

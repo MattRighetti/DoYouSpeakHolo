@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 //The class is responsible of getting the right audio to play related to a Game Object
@@ -87,8 +88,18 @@ public class Possessives {
 
     public static Possessives His { get { return new Possessives("his"); } }
     public static Possessives Her { get { return new Possessives("her"); } }
-    public static Possessives Theirs { get { return new Possessives("their"); } }
+    public static Possessives Their { get { return new Possessives("their"); } }
     internal static Possessives FromString(string possessive) {
         return new Possessives(possessive);
+    }
+
+    internal static Possessives AsPossessive(string value) {
+        Debug.Log("TO PARSE " + value);
+        switch(value) {
+            case "his": return His;
+            case "her": return Her;
+            case "their": return Their;
+            default: throw new ArgumentException();
+        }
     }
 }

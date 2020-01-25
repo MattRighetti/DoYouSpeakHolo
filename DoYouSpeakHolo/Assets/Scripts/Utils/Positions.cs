@@ -6,7 +6,7 @@ using System.Collections.Generic;
 //  Class responsible of object placement in the scene with respect to 
 //  the initial position given by the user tap
 public class Positions { 
-                                  // User gaze coordinates after the Spatial processing scan
+    // User gaze coordinates after the Spatial processing scan
     Vector3 gazePosition;
 
     // Used to calculate the offset positions of the objects from the gazePosition

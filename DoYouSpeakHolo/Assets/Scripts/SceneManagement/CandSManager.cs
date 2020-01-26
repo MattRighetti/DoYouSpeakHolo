@@ -5,9 +5,6 @@ using UnityEngine;
 //  Scene Manager of Activity 1
 public class CandSManager : AbstractSceneManager {
 
-    //  Scene objects information
-    private SceneObjectsToLoad sceneObjects;
-
     public List<string> TargetObjects { get; set; }
 
     //  Set the audio context to scene 2
@@ -17,7 +14,6 @@ public class CandSManager : AbstractSceneManager {
 
     //  Create the scene objects
     public override void LoadObjects() {
-        sceneObjects = settings.scenes[1];
 
         Pooler.CreateStaticObjects(sceneObjects.staticObjects);
         Pooler.CreateDynamicObjects(sceneObjects.dynamicObjects);

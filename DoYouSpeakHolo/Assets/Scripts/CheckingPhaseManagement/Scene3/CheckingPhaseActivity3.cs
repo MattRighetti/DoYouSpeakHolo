@@ -15,21 +15,21 @@ public abstract class CheckingPhaseActivity3 : CheckingPhaseManager
     protected void CreatePeopleAndBaskets() {
         character1Possessive = possessivesManager.PossessivesList[0];
         character2Possessive = possessivesManager.PossessivesList[1];
-        sceneManager.ActivateObject(character1Possessive.Value + "Character", Positions.MalePosition, Positions.ObjectsRotation);
-        sceneManager.ActivateObject(character2Possessive.Value + "Character", Positions.FemalePosition, Positions.ObjectsRotation);
+        sceneManager.ActivateObject(character1Possessive.Value + "Character", Positions.Character1Position, Positions.ObjectsRotation);
+        sceneManager.ActivateObject(character2Possessive.Value + "Character", Positions.Character2Position, Positions.ObjectsRotation);
         CreateAndConfigureBaskets();
     }
 
     //  Create baskets and attach the necessary scripts
     protected void CreateAndConfigureBaskets() {
-        GameObject basket1 = sceneManager.ActivateObject(character1Possessive.Value + "Basket", Positions.MaleBasket, Positions.ObjectsRotation);
-        GameObject basket2 = sceneManager.ActivateObject(character2Possessive.Value + "Basket", Positions.FemaleBasket, Positions.ObjectsRotation);
+        GameObject basket1 = sceneManager.ActivateObject(character1Possessive.Value + "Basket", Positions.Character1Basket, Positions.ObjectsRotation);
+        GameObject basket2 = sceneManager.ActivateObject(character2Possessive.Value + "Basket", Positions.Character2Basket, Positions.ObjectsRotation);
 
         ConfigureBaskets(basket1);
         ConfigureBaskets(basket2);
 
-        basket1.GetComponent<BasketLogic>().SetFruitList(possessivesManager.PossessivesObjects[Possessives.His.Value]);
-        basket2.GetComponent<BasketLogic>().SetFruitList(possessivesManager.PossessivesObjects[Possessives.Her.Value]);
+        basket1.GetComponent<BasketLogic>().SetFruitList(possessivesManager.PossessivesObjects[character1Possessive.Value]);
+        basket2.GetComponent<BasketLogic>().SetFruitList(possessivesManager.PossessivesObjects[character2Possessive.Value]);
     }
 
     //  Attach the scripts to the baskets

@@ -31,10 +31,10 @@ public class Positions {
     //Scene 3
     public static readonly Vector3 TreePosition = new Vector3(0, 0, FrontDistance + 1.6f);
     public static readonly Vector3 HousePosition = new Vector3(-0.7f, 0, FrontDistance + 1.7f);
-    public static readonly Vector3 MalePosition = new Vector3(-0.375f, 0, FrontDistance + 1.1f);
-    public static readonly Vector3 MaleBasket = new Vector3(-0.375f, 0, FrontDistance + 0.95f);
-    public static readonly Vector3 FemalePosition = new Vector3(0.375f, 0, FrontDistance + 1.1f);
-    public static readonly Vector3 FemaleBasket = new Vector3(0.375f, 0, FrontDistance + 0.9f);
+    public static readonly Vector3 Character1Position = new Vector3(-0.375f, 0, FrontDistance + 1.1f);
+    public static readonly Vector3 Character1Basket = new Vector3(-0.375f, 0, FrontDistance + 0.95f);
+    public static readonly Vector3 Character2Position = new Vector3(0.375f, 0, FrontDistance + 1.1f);
+    public static readonly Vector3 Character2Basket = new Vector3(0.375f, 0, FrontDistance + 0.9f);
     public static readonly Vector3 VAPosition = new Vector3(-0.4f, 0.3f, FrontDistance + 0.7f);
 
     //  Default position for non active objects

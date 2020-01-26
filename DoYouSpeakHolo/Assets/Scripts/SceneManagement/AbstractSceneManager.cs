@@ -15,6 +15,9 @@ public abstract class AbstractSceneManager : MonoBehaviour {
     //  Pooler instance
     protected ObjectPooler Pooler;
 
+    //  Scene objects information
+    protected SceneObjectsToLoad sceneObjects;
+
     //  Contains the list of objects's name and path to load into the scene
     public SceneObjectsToLoad sceneSettings;
     public VirtualAssistantManager VirtualAssistant;
@@ -33,6 +36,9 @@ public abstract class AbstractSceneManager : MonoBehaviour {
         Pooler = ObjectPooler.GetPooler();
         //  Find the floor position with respect to the user gaze
         Pooler.FindFloor();
+        //Select the objects to load
+        int scene = GameObject.Find("SceneSelected").GetComponent<SceneSelected>().Scene;
+        sceneObjects = settings.scenes[scene];
         //  Instantiate all the scene objects
         LoadObjects();
         //  Set the current AudioContext according to the scene

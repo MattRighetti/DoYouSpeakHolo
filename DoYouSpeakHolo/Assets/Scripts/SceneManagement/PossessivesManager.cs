@@ -6,8 +6,7 @@ using static EventManager;
 //  Scene Manager of Activity 3 
 public class PossessivesManager : AbstractSceneManager
 {
-    //  Scene objects information
-    private SceneObjectsToLoad sceneObjects;
+
 
     //  Keeps track of the mapping between an object and its associated possessive
     //  e.g. (his, [pear, apple])
@@ -25,7 +24,6 @@ public class PossessivesManager : AbstractSceneManager
 
     //Load scene objects
     public override void LoadObjects() {
-        sceneObjects = settings.scenes[2];
         PossessivesObjects = new Dictionary<string, List<string>>();
 
         Pooler.CreateStaticObjects(sceneObjects.staticObjects);
@@ -78,10 +76,10 @@ public class PossessivesManager : AbstractSceneManager
         Dictionary<string, List<string>> possessivesObjects = new Dictionary<string, List<string>>();
         List<string> objects = Shuffle(dynamicObjects);
         int half = objects.Count / 2;
-        var maleObjects = objects.GetRange(0, half);
-        var femaleObjects = objects.GetRange(half, half);
-        possessivesObjects.Add(global::Possessives.His.Value, maleObjects);
-        possessivesObjects.Add(global::Possessives.Her.Value, femaleObjects);
+        var character1Objects = objects.GetRange(0, half);
+        var character2Objects = objects.GetRange(half, half);
+        possessivesObjects.Add(PossessivesList[0].Value, character1Objects);
+        possessivesObjects.Add(PossessivesList[1].Value, character2Objects);
         return possessivesObjects;
     }
 }

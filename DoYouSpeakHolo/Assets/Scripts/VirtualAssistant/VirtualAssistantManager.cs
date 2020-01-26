@@ -69,14 +69,9 @@ public class VirtualAssistantManager : MonoBehaviour {
     }
 
     internal IEnumerator IntroduceObjectWithContext(AudioContext context, string objectName) {
-        List<AudioClip> clips = context.GetContextAudio(objectName);
-
-        foreach (AudioClip clip in clips) {
-            audioSource.clip = clip;
-
-            animator.Play("TalkingShort");
-            yield return PlayAudioSync(audioSource);
-        }
+        audioSource.clip = context.GetContextAudio(objectName);
+        animator.Play("TalkingShort");
+        yield return PlayAudioSync(audioSource);
     }
 
     //Play audio and wait until it finishes

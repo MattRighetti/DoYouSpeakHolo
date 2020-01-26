@@ -32,22 +32,15 @@ public class CandSManager : AbstractSceneManager {
     public override void StopListeningToCustomEvents() {
     }
 
-    public IEnumerator IntroduceObjectWithComparatives(string objectKey) {
-        yield return IntroduceObjectWithContext(objectKey);
+    public IEnumerator IntroduceObjectWithComparatives(string firstAnimal, string secondAnimal) {
+        yield return IntroduceObjectWithContext(firstAnimal + "_" + secondAnimal);
     }
 
     public IEnumerator IntroduceObjectWithSuperlatives(string objectKey, string superlative) {
         yield return IntroduceObject(objectKey + superlative);
     }
 
-    internal void EnableOutline(string objectkKey) {
-        Debug.Log("KEY " + objectkKey);
-        GameObject gameObject = Pooler.GetPooledObject(objectkKey);
-        Debug.Log("GAMEOBJ " + gameObject.name);
-        HighlightEnabler enabler = gameObject.GetComponent<HighlightEnabler>();
-        Debug.Log("ENABLER " + enabler);
-        enabler.EnableOutline();
-    } 
+    internal void EnableOutline(string objectKey) => Pooler.GetPooledObject(objectKey).GetComponent<HighlightEnabler>().EnableOutline();
 
     internal void DisableOutline(string objectkKey) => Pooler.GetPooledObject(objectkKey).GetComponent<HighlightEnabler>().DisableOutline();
 }

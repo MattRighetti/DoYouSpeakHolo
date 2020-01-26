@@ -7,7 +7,7 @@ public abstract class AudioContext {
     protected Scenes Scene;
 
     //Get audio for a specific activity
-    public abstract List<AudioClip> GetContextAudio(string objectName);
+    public abstract AudioClip GetContextAudio(string objectName);
 
     //Get audio describing the object
     //i.e. "This is a Tree"
@@ -25,8 +25,8 @@ public class AudioContext1 : AudioContext {
         Scene = Scenes.Scene1;
     }
 
-    public override List<AudioClip> GetContextAudio(string objectName) {
-        throw new System.NotImplementedException();
+    public override AudioClip GetContextAudio(string objectName) {
+        throw new NotImplementedException();
     }
 }
 
@@ -37,10 +37,17 @@ public class AudioContext2 : AudioContext {
         Scene = Scenes.Scene2;
     }
 
-    public override List<AudioClip> GetContextAudio(string objectName) {
-        string path = "Audio/" + Scene.Value + "/" + "Comparative" + objectName + "/";
+    public override AudioClip GetContextAudio(string objectName) {
+        string[] objects = objectName.Split('_');
+        string path = "Audio/" + Scene.Value + "/" + "Comparative" + objects[0] + "/";
         List<AudioClip> audioFiles = new List<AudioClip>(Resources.LoadAll<AudioClip>(path));
-        return audioFiles;
+        foreach (AudioClip audio in audioFiles) {
+            if (audio.name.Contains(objects[1])) {
+                return audio;
+            }
+        }
+
+        return null;
     }
 }
 
@@ -57,12 +64,10 @@ public class AudioContext3 : AudioContext {
     }
 
     //Get the correct audio based on the current context
-    public override List<AudioClip> GetContextAudio(string objectName) {
+    public override AudioClip GetContextAudio(string objectName) {
         string path = "Audio/" + Scene.Value + "/" + Possessive.Value + objectName;
         Debug.Log("context audio " + path);
-        List<AudioClip> audioList = new List<AudioClip>();
-        audioList.Add(Resources.Load(path) as AudioClip);
-        return audioList;
+        return Resources.Load(path) as AudioClip;
     }
 }
 
@@ -103,3 +108,13 @@ public class Possessives {
         }
     }
 }
+
+public class Superlatives {
+    private Superlatives(string value) { Value = value; }
+
+    public string Value { get; set; }
+
+    public static Superlatives Smallest { get { return new Superlatives("Smallest"); } }
+    public static Superlatives Biggest { get { return new Superlatives("Biggest"); } }
+}
+

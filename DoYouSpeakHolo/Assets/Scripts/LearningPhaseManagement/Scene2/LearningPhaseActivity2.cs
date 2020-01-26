@@ -22,34 +22,53 @@ public class LearningPhaseActivity2 : LearningPhaseManager {
         //1) Show all the animals
         DisplayInlineObjects();
 
-        //2) Introduce animals with audio
+        //2) Introduce animals with audio and outline them
         foreach (string objectkKey in SceneObjects) {
-            yield return IntroduceAndOutlineObject(objectkKey);
+            yield return IntroduceObject(objectkKey);
         }
 
         //3) Introduce the smallest animal
-        yield return candSManager.IntroduceObjectWithSuperlatives(SceneObjects[0], "Smallest");
+        yield return IntroduceWithSuperlative(SceneObjects[0], Superlatives.Smallest);
+
 
         //4) Introduce animals with with comparatives
-        foreach (string objectkKey in SceneObjects) {
-            yield return candSManager.IntroduceObjectWithComparatives(objectkKey);
-        }
+        yield return IntroduceWithComparatives();
 
         //5) Introduce the biggest animal
-        yield return candSManager.IntroduceObjectWithSuperlatives(SceneObjects[SceneObjects.Count - 1], "Biggest");
+        yield return IntroduceWithSuperlative(SceneObjects[SceneObjects.Count - 1], Superlatives.Biggest);
 
-
-
-
-        //  IntroduceObjectsWithComparativesAndSuperlatives();
 
         End();
 	}
 
-    private IEnumerator IntroduceAndOutlineObject(string objectkKey) {
-        candSManager.EnableOutline(objectkKey);
-        yield return candSManager.IntroduceObject(objectkKey);
-        candSManager.DisableOutline(objectkKey);
+    private IEnumerator IntroduceWithComparatives() {
+        for (int firstAnimalIndex = 0; firstAnimalIndex < SceneObjects.Count; firstAnimalIndex++) {
+            for(int secondAnimalIndex = 0; secondAnimalIndex < SceneObjects.Count; secondAnimalIndex++) {
+                if (firstAnimalIndex != secondAnimalIndex) {
+                    string firstAnimal = SceneObjects[firstAnimalIndex];
+                    string secondAnimal = SceneObjects[secondAnimalIndex];
+                    Debug.Log("f and s " + firstAnimal + " " + secondAnimal);
+                    candSManager.EnableOutline(firstAnimal);
+                    candSManager.EnableOutline(secondAnimal);
+                    yield return candSManager.IntroduceObjectWithComparatives(firstAnimal, secondAnimal);
+                    candSManager.DisableOutline(firstAnimal);
+                    candSManager.DisableOutline(secondAnimal);
+                }
+                    
+            }
+        }
+    }
+
+    private IEnumerator IntroduceWithSuperlative(string objectKey, Superlatives superlative) {
+        candSManager.EnableOutline(objectKey);
+        yield return candSManager.IntroduceObjectWithSuperlatives(objectKey, superlative.Value);
+        candSManager.DisableOutline(objectKey);
+    }
+
+    private IEnumerator IntroduceObject(string objectKey) {
+        candSManager.EnableOutline(objectKey);
+        yield return candSManager.IntroduceObject(objectKey);
+        candSManager.DisableOutline(objectKey);
     }
 
     private void DisplayInlineObjects() {

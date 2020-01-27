@@ -38,15 +38,29 @@ public class AudioContext2 : AudioContext {
     }
 
     public override AudioClip GetContextAudio(string objectName) {
-        string[] objects = objectName.Split('_');
-        string path = "Audio/" + Scene.Value + "/" + "Comparative" + objects[0] + "/";
+        List<string> objects = new List<string>(objectName.Split('_'));
+
+        if (objects.Count > 2)
+            return PickIntroductionAudio(objects);
+        else
+            return PickTaskAudio(objects);
+    }
+
+    private AudioClip PickTaskAudio(List<string> objects) {
+        string path = "Audio/" + Scene.Value + "/" + "Comparative" + objects[1] + "/" + objects[0] + "/";
+        List<AudioClip> audioFiles = new List<AudioClip>(Resources.LoadAll<AudioClip>(path));
+        System.Random rnd = new System.Random();
+        return audioFiles[rnd.Next(0, audioFiles.Count)];
+    }
+
+    private AudioClip PickIntroductionAudio(List<string> objects) {
+        string path = "Audio/" + Scene.Value + "/" + "Comparative" + objects[1] + "/" + objects[0] + "/";
         List<AudioClip> audioFiles = new List<AudioClip>(Resources.LoadAll<AudioClip>(path));
         foreach (AudioClip audio in audioFiles) {
-            if (audio.name.Contains(objects[1])) {
+            if (audio.name.Contains(objects[2])) {
                 return audio;
             }
         }
-
         return null;
     }
 }
@@ -94,9 +108,7 @@ public class Possessives {
     public static Possessives His { get { return new Possessives("his"); } }
     public static Possessives Her { get { return new Possessives("her"); } }
     public static Possessives Their { get { return new Possessives("their"); } }
-    internal static Possessives FromString(string possessive) {
-        return new Possessives(possessive);
-    }
+
 
     internal static Possessives AsPossessive(string value) {
         Debug.Log("TO PARSE " + value);

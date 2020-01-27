@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static EventManager;
 //  Scene Manager of Activity 1
 public class CandSManager : AbstractSceneManager {
 
@@ -27,21 +28,38 @@ public class CandSManager : AbstractSceneManager {
     }
 
     public override void StartListeningToCustomEvents() {
+        StartListening(Triggers.PickedAnimal, PickedAnimal);
     }
 
     public override void StopListeningToCustomEvents() {
+        StopListening(Triggers.PickedAnimal, PickedAnimal);
+    }
+
+    private void PickedAnimal() {
+        CheckingPhaseActivity2 checkingManager = (CheckingPhaseActivity2)CheckingPhaseManager;
+        checkingManager.PickedAnimal();
     }
 
     public IEnumerator IntroduceObjectWithComparatives(string firstAnimal, string secondAnimal) {
-        yield return IntroduceObjectWithContext(firstAnimal + "_" + secondAnimal);
+        yield return IntroduceObjectWithContext("Introduction_" + firstAnimal + "_" + secondAnimal);
     }
 
-    public IEnumerator IntroduceObjectWithSuperlatives(string objectKey, string superlative) {
-        yield return IntroduceObject(objectKey + superlative);
+    internal IEnumerator IntroduceTasktWithComparatives(string targetAnimal) {
+        yield return IntroduceObjectWithContext("Task_" + targetAnimal);
+    }
+
+    public IEnumerator IntroduceObjectWithSuperlatives(string animal, string superlative) {
+        yield return IntroduceObjectWithContext("Introduction_" + animal + "_" + superlative);
+    }
+
+    internal IEnumerator IntroduceTaskWithSuperlatives(string targetAnimal, string superlative) {
+        yield return IntroduceObjectWithContext("Task_" + targetAnimal + "_" + superlative);
     }
 
     internal void EnableOutline(string objectKey) => Pooler.GetPooledObject(objectKey).GetComponent<HighlightEnabler>().EnableOutline();
 
     internal void DisableOutline(string objectkKey) => Pooler.GetPooledObject(objectkKey).GetComponent<HighlightEnabler>().DisableOutline();
+
+
 }
 

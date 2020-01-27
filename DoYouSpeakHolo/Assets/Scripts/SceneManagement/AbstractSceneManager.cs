@@ -68,6 +68,11 @@ public abstract class AbstractSceneManager : MonoBehaviour {
         CheckingPhaseManager.StartCheckingPhase();
     }
 
+    //  The Virtual Assitant introduces the Checking Phase of the Activity
+    public IEnumerator IntroduceCheckingPhase() {
+        yield return VirtualAssistant.PlayCheckingPhaseIntroduction(AudioContext);
+    }
+
     //  End of the activity
     protected void EndActivity() {
 

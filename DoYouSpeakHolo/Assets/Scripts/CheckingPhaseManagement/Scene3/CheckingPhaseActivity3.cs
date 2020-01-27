@@ -25,31 +25,15 @@ public abstract class CheckingPhaseActivity3 : CheckingPhaseManager
         GameObject basket1 = sceneManager.ActivateObject(character1Possessive.Value + "Basket", Positions.Character1Basket, Positions.ObjectsRotation);
         GameObject basket2 = sceneManager.ActivateObject(character2Possessive.Value + "Basket", Positions.Character2Basket, Positions.ObjectsRotation);
 
-        ConfigureBaskets(basket1);
-        ConfigureBaskets(basket2);
 
         basket1.GetComponent<BasketLogic>().SetFruitList(possessivesManager.PossessivesObjects[character1Possessive.Value]);
         basket2.GetComponent<BasketLogic>().SetFruitList(possessivesManager.PossessivesObjects[character2Possessive.Value]);
     }
-
-    //  Attach the scripts to the baskets
-    protected void ConfigureBaskets(GameObject basket) {
-        basket.GetComponent<BoxCollider>().isTrigger = true;
-        //  TODO:Delete ManipulationHandler -> the basket can be dragged
-        //basket.AddComponent<ManipulationHandler>();
-        basket.AddComponent<DoNotFall>();
-        basket.AddComponent<BasketLogic>();
-    }
+    
 
     //  Add to the object al the scripts needed for the activity
     protected void SetFruitScripts(GameObject gameObj) {
-        Rigidbody body = gameObj.AddComponent<Rigidbody>();
-        body.useGravity = true;
-        body.constraints = RigidbodyConstraints.FreezeRotation;
-        gameObj.AddComponent<BoxCollider>();
-        gameObj.AddComponent<ManipulationHandler>();
-        gameObj.AddComponent<NearInteractionGrabbable>();
-       // gameObj.AddComponent<DoNotFall>();
+        
     }
 
     //  Executed every time the user puts a fruit into the correct basket

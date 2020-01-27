@@ -20,7 +20,8 @@ public class EventManager : MonoBehaviour
         VAIntroductionEnd,
         BasketEmpty,
         SetTargetObject,
-        GuidedHarvesting
+        GuidedHarvesting,
+        PickedAnimal
     };
 
     Dictionary<Triggers, UnityEvent> eventDictionary;

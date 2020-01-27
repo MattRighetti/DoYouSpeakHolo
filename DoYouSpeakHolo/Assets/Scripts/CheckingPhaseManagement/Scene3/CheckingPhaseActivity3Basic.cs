@@ -39,7 +39,7 @@ public class CheckingPhaseActivity3Basic : CheckingPhaseActivity3
         string possessive = (new List<string>(possessivesManager.PossessivesObjects.Keys))[choice];
         if (possessivesManager.PossessivesObjects[possessive].Count > 0) {
             //Trigger the male objects
-            audioContext.Possessive = Possessives.FromString(possessive);
+            audioContext.Possessive = Possessives.AsPossessive(possessive);
 
             GameObject objectToCreate = sceneManager.ActivateObject(possessivesManager.PossessivesObjects[possessive][0], Positions.Central, Positions.ObjectsRotation);
 

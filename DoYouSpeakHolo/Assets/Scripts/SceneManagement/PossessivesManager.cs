@@ -44,11 +44,6 @@ public class PossessivesManager : AbstractSceneManager
         
     }
 
-    //  The Virtual Assitant introduces the Checking Phase of the Activity
-    internal IEnumerator IntroduceCheckingPhase() { 
-        yield return VirtualAssistant.PlayCheckingPhaseIntroduction(AudioContext);
-    }
-
     //  Activate and put the static elements in the scene
     private void CreateScene() {
         ActivateObject("House", Positions.HousePosition, Positions.ObjectsRotation);

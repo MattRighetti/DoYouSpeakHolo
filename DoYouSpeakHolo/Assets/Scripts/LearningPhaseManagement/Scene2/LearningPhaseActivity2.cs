@@ -30,7 +30,6 @@ public class LearningPhaseActivity2 : LearningPhaseManager {
         //3) Introduce the smallest animal
         yield return IntroduceWithSuperlative(SceneObjects[0], Superlatives.Smallest);
 
-
         //4) Introduce animals with with comparatives
         yield return IntroduceWithComparatives();
 
@@ -47,12 +46,12 @@ public class LearningPhaseActivity2 : LearningPhaseManager {
                 if (firstAnimalIndex != secondAnimalIndex) {
                     string firstAnimal = SceneObjects[firstAnimalIndex];
                     string secondAnimal = SceneObjects[secondAnimalIndex];
-                    Debug.Log("f and s " + firstAnimal + " " + secondAnimal);
                     candSManager.EnableOutline(firstAnimal);
                     candSManager.EnableOutline(secondAnimal);
                     yield return candSManager.IntroduceObjectWithComparatives(firstAnimal, secondAnimal);
                     candSManager.DisableOutline(firstAnimal);
                     candSManager.DisableOutline(secondAnimal);
+                    yield return new WaitForSeconds(0.5f);
                 }
                     
             }

@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using UnityEngine;
 
 //  Class responsible of the Basic Learning Phase version of Activity 3
 public class LearningPhaseActivity3Basic : LearningPhaseActivity3 {
@@ -28,7 +27,6 @@ public class LearningPhaseActivity3Basic : LearningPhaseActivity3 {
         //Introduce the second character without the scene context
         Possessives character2Possessive = possessivesManager.PossessivesList[1];
         audioContext.Possessive = character2Possessive;
-        Debug.Log("SECOND POSSEsSIVE" + character2Possessive.Value);
         yield return ShowCharacterAndBasket(character2Possessive.Value + "Character", character2Possessive.Value + "Basket");
     }
 }

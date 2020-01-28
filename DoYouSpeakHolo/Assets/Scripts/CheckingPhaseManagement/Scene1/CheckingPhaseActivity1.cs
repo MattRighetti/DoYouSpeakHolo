@@ -6,8 +6,6 @@ class CheckingPhaseActivity1 : CheckingPhaseManager {
 
     private CandSManager candsManager;
 
-
-
     //Spawn the objects in random order and ask the user to pick a specific one
     protected override void CheckingPhase() {
         candsManager = (CandSManager)sceneManager;

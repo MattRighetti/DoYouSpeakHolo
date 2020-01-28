@@ -56,10 +56,12 @@ public class CandSManager : AbstractSceneManager {
         yield return IntroduceObjectWithContext("Task_" + targetAnimal + "_" + superlative);
     }
 
+    internal IEnumerator IntroduceLastAnimal() {
+        yield return IntroduceObject("RemainingAnimal");
+    }
+
     internal void EnableOutline(string objectKey) => Pooler.GetPooledObject(objectKey).GetComponent<HighlightEnabler>().EnableOutline();
 
     internal void DisableOutline(string objectkKey) => Pooler.GetPooledObject(objectkKey).GetComponent<HighlightEnabler>().DisableOutline();
-
-
 }
 

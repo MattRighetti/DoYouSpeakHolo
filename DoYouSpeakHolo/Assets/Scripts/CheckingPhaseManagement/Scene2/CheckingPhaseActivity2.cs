@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
 
 public class CheckingPhaseActivity2 : CheckingPhaseManager {
@@ -11,6 +9,7 @@ public class CheckingPhaseActivity2 : CheckingPhaseManager {
     private int targetAnimalIndex;
 
     System.Random rnd;
+
 
     protected override void CheckingPhase() {
         audioContext = (AudioContext2)sceneManager.AudioContext;
@@ -55,8 +54,7 @@ public class CheckingPhaseActivity2 : CheckingPhaseManager {
             yield return AnalyzeRelatioships(targetAnimal);
 
         } else {
-            //Last remaining animal
-            throw new NotImplementedException();
+            yield return TargetLastAnimal();
         }
     }
 
@@ -87,5 +85,9 @@ public class CheckingPhaseActivity2 : CheckingPhaseManager {
 
     private IEnumerator TargetNextSuperlative(string targetAnimal, Superlatives superlative) {
         yield return candSManager.IntroduceTaskWithSuperlatives(targetAnimal, superlative.Value);
+    }
+
+    private IEnumerator TargetLastAnimal() {
+        yield return candSManager.IntroduceLastAnimal();
     }
 }

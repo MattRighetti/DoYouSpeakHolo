@@ -40,17 +40,18 @@ public class AudioContext2 : AudioContext {
     public override AudioClip GetContextAudio(string objectName) {
         List<string> objects = new List<string>(objectName.Split('_'));
 
-        if (objects.Count > 2)
-            return PickIntroductionAudio(objects);
-        else
-            return PickTaskAudio(objects);
+        switch(objects[0]) {
+            case "Task": return PickTaskAudio(objects);
+            case "Introduction": return PickIntroductionAudio(objects);
+            default: throw new Exception("path bad formed");
+        }
     }
 
     private AudioClip PickTaskAudio(List<string> objects) {
         string path = "Audio/" + Scene.Value + "/" + "Comparative" + objects[1] + "/" + objects[0] + "/";
         List<AudioClip> audioFiles = new List<AudioClip>(Resources.LoadAll<AudioClip>(path));
         System.Random rnd = new System.Random();
-        return audioFiles[rnd.Next(0, audioFiles.Count)];
+        return audioFiles[rnd.Next(audioFiles.Count)];
     }
 
     private AudioClip PickIntroductionAudio(List<string> objects) {

@@ -3,26 +3,46 @@
     {
       "staticObjects": [
         {
-          "type": "House",
-          "path": "Prefab/objects/House"
-        },
-        {
-          "type": "Tree",
-          "path": "Prefab/objects/Tree"
-        },
-        {
           "type": "VA",
-          "path": "Prefab/people/VA_MaleCorrect"
+          "path": "Prefab/people/Groot"
         }
       ],
       "dynamicObjects": [
         {
-          "type": "Key",
-          "path": "Prefab/objects/Key"
+          "type": "Book",
+          "path": "Prefab/objects/Book"
         },
         {
-          "type": "Basket",
-          "path": "Prefab/object/Basket"
+          "type": "Lamp",
+          "path": "Prefab/object/Lamp"
+        },
+        {
+          "type": "Laptop",
+          "path": "Prefab/object/Laptop"
+        },
+        {
+          "type": "Mug",
+          "path": "Prefab/object/Mug"
+        },
+        {
+          "type": "Pencil",
+          "path": "Prefab/object/Pencil"
+        },
+        {
+          "type": "PencilHolder",
+          "path": "Prefab/object/PencilHolder"
+        },
+        {
+          "type": "PencilSharpener",
+          "path": "Prefab/object/PencilSharpener"
+        },
+        {
+          "type": "Ruler",
+          "path": "Prefab/object/Ruler"
+        },
+        {
+          "type": "Rubber",
+          "path": "Prefab/object/Rubber"
         }
       ]
     },

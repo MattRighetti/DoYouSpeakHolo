@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections;
 using static EventManager;
-//  Scene Manager of Activity 1
-public class CandSManager : AbstractSceneManager {
 
-    public List<string> TargetObjects { get; set; }
+/// <summary>
+/// Scene Manager of Activity 2 (Save the animals)
+/// </summary>
+public class CandSManager : AbstractSceneManager {
 
     //  Set the audio context to scene 2
     public override void SetAudioContext() {
@@ -18,7 +16,6 @@ public class CandSManager : AbstractSceneManager {
 
         Pooler.CreateStaticObjects(sceneObjects.staticObjects);
         Pooler.CreateDynamicObjects(sceneObjects.dynamicObjects);
-        TargetObjects = Shuffle(Pooler.GetDynamicObjects());
 
         CreateScene();
     }

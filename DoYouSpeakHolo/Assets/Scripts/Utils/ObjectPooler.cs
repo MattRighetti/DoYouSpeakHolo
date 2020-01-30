@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 //  Class responsible of active/deactivate objects
@@ -29,6 +30,10 @@ public class ObjectPooler : MonoBehaviour {
     //  Set the floor position
     internal void FindFloor() {
         Positions.FindFloor();
+    }
+
+    internal void FindTable() {
+        Positions.FindTable();
     }
 
     //Create the objects, deactivate and store them into the data structure

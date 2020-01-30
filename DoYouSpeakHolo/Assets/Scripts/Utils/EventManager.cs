@@ -21,7 +21,9 @@ public class EventManager : MonoBehaviour
         BasketEmpty,
         SetTargetObject,
         GuidedHarvesting,
-        PickedAnimal
+        PickedAnimal,
+        ObjectPositioning,
+        CorrectPositioning
     };
 
     Dictionary<Triggers, UnityEvent> eventDictionary;

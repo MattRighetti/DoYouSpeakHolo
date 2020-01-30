@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -40,6 +39,10 @@ public class LearningPhaseActivity2 : LearningPhaseManager {
         End();
 	}
 
+    /// <summary>
+    /// Select every pair of animals, highlight them and let the VA explains their relation with comparatives
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator IntroduceWithComparatives() {
         for (int firstAnimalIndex = 0; firstAnimalIndex < SceneObjects.Count; firstAnimalIndex++) {
             for(int secondAnimalIndex = 0; secondAnimalIndex < SceneObjects.Count; secondAnimalIndex++) {

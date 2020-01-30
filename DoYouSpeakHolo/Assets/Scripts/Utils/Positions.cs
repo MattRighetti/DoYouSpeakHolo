@@ -17,6 +17,7 @@ public class Positions {
 
     //  Table coordinates
     public Vector3 tablePosition;
+    public SimpleGridGenerator gridGenerator;
 
     public static readonly float FrontDistance = -0.9f;
 
@@ -72,9 +73,8 @@ public class Positions {
         floorPosition = floor.transform.position + (plane.PlaneThickness * plane.SurfaceNormal);
         floorPosition = AdjustPositionWithSpatialMap(floorPosition, plane.SurfaceNormal);
         gazePosition = new Vector3(0f, 0f, 0f);
-        RaycastHit hitInfo;
 
-        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hitInfo, 20f, Physics.DefaultRaycastLayers)) {
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hitInfo, 20f, Physics.DefaultRaycastLayers)) {
             gazePosition = hitInfo.point;
         }
 
@@ -129,6 +129,7 @@ public class Positions {
         rotation.x = 0f;
         rotation.z = 0f;
         ObjectsRotation = rotation;
+        gridGenerator = new SimpleGridGenerator(table, tablePosition.y);
     }
 
     private Bounds GetColliderBounds(Transform transform) {

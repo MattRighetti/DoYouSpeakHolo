@@ -34,11 +34,19 @@ public abstract class AbstractSceneManager : MonoBehaviour {
         //  Read the objects information JSON file
         ParseJson();
         Pooler = ObjectPooler.GetPooler();
-        //  Find the floor position with respect to the user gaze
-        Pooler.FindFloor();
         //Select the objects to load
         int scene = GameObject.Find("SceneSelected").GetComponent<SceneSelected>().Scene;
         sceneObjects = settings.scenes[scene];
+
+        if (scene == 0)
+            Pooler.FindTable();
+        else
+            Pooler.FindFloor();
+
+        
+        //  Find the floor position with respect to the user gaze
+        Pooler.FindFloor();
+
         //  Instantiate all the scene objects
         LoadObjects();
         //  Set the current AudioContext according to the scene
@@ -75,7 +83,6 @@ public abstract class AbstractSceneManager : MonoBehaviour {
 
     //  End of the activity
     protected void EndActivity() {
-
         //  Stop listening to the basic events
         StopListening();
 

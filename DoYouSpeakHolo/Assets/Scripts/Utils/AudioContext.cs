@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//The class is responsible of getting the right audio to play related to a Game Object
+/// <summary>
+/// The class is responsible of getting the right audio to play related to a specific Game Object
+/// </summary>
 public abstract class AudioContext {
     protected Scenes Scene;
 

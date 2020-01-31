@@ -43,10 +43,6 @@ public abstract class AbstractSceneManager : MonoBehaviour {
         else
             Pooler.FindFloor();
 
-        
-        //  Find the floor position with respect to the user gaze
-        Pooler.FindFloor();
-
         //  Instantiate all the scene objects
         LoadObjects();
         //  Set the current AudioContext according to the scene

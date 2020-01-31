@@ -10,39 +10,39 @@
       "dynamicObjects": [
         {
           "type": "Book",
-          "path": "Prefab/objects/Book"
+          "path": "Prefab/Objects/Book"
         },
         {
           "type": "Lamp",
-          "path": "Prefab/object/Lamp"
+          "path": "Prefab/Objects/Lamp"
         },
         {
           "type": "Laptop",
-          "path": "Prefab/object/Laptop"
+          "path": "Prefab/Objects/Laptop"
         },
         {
           "type": "Mug",
-          "path": "Prefab/object/Mug"
+          "path": "Prefab/Objects/Mug"
         },
         {
           "type": "Pencil",
-          "path": "Prefab/object/Pencil"
+          "path": "Prefab/Objects/Pencil"
         },
         {
           "type": "PencilHolder",
-          "path": "Prefab/object/PencilHolder"
+          "path": "Prefab/Objects/PencilHolder"
         },
         {
           "type": "PencilSharpener",
-          "path": "Prefab/object/PencilSharpener"
+          "path": "Prefab/Objects/PencilSharpener"
         },
         {
           "type": "Ruler",
-          "path": "Prefab/object/Ruler"
+          "path": "Prefab/Objects/Ruler"
         },
         {
           "type": "Rubber",
-          "path": "Prefab/object/Rubber"
+          "path": "Prefab/Objects/Rubber"
         }
       ]
     },

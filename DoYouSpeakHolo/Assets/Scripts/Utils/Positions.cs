@@ -1,7 +1,6 @@
 ﻿using HoloToolkit.Unity.SpatialMapping;
 using HoloToolkit.Unity.SpatialMapping.Tests;
 using UnityEngine;
-using System.Collections.Generic;
 
 //  Class responsible of object placement in the scene with respect to 
 //  the initial position given by the user tap
@@ -17,7 +16,6 @@ public class Positions {
 
     //  Table coordinates
     public Vector3 tablePosition;
-    public SimpleGridGenerator gridGenerator;
 
     public static readonly float FrontDistance = -0.9f;
 
@@ -47,24 +45,26 @@ public class Positions {
 
     //Rotation to make the objects be oriented towards the user
     public static Quaternion ObjectsRotation = new Quaternion();
+    private float height;
+
+    public DeskGrid Grid { get; private set; }
+    public Transform TableTransform { get; set; }
+    public bool UseTable { get; private set; }
 
     //  Compute the object position with respect to the gazePosition and the floorPosition
     public Vector3 GetPosition(Vector3 position) {
-        //  This is the correct way to deal with local coordinates
-        position = gazeTransform.TransformPoint(position);
-        position.y = floorPosition.y;
-        return position;
-    }
-
-    //  Compute the object position with respect to the gazePosition and the table
-    public Vector3 GetTablePosition(Vector3 position) {
-        position = gazeTransform.TransformPoint(position);
-        position.y = tablePosition.y;
+        if (!UseTable)
+            //  This is the correct way to deal with local coordinates
+            position = gazeTransform.TransformPoint(position);
+        else
+            position = TableTransform.TransformPoint(position);
+        position.y = height;
         return position;
     }
 
     //  Determine gazePosition and FloorPosition according to the user gaze
     public void FindFloor() {
+        UseTable = false;
         Transform floor = SpatialProcessingTest.Instance.floors[0].transform;
 
         DebugDrawPlanes(floor);
@@ -94,17 +94,19 @@ public class Positions {
         rotation.x = 0f;
         rotation.z = 0f;
         ObjectsRotation = rotation;
+        height = floorPosition.y;
     }
 
     //  Determine gazePostion and TablePosition according to the user gaze
     public void FindTable() {
-        Transform table = SpatialProcessingTest.Instance.tables[0].transform;
+        UseTable = true;
+        TableTransform = SpatialProcessingTest.Instance.tables[0].transform;
 
-        DebugDrawPlanes(table);
+        DebugDrawPlanes(TableTransform);
 
-        SurfacePlane plane = table.GetComponent<SurfacePlane>();
+        SurfacePlane plane = TableTransform.GetComponent<SurfacePlane>();
 
-        tablePosition = table.transform.position + (plane.PlaneThickness * plane.SurfaceNormal);
+        tablePosition = TableTransform.transform.position + (plane.PlaneThickness * plane.SurfaceNormal);
         tablePosition = AdjustPositionWithSpatialMap(tablePosition, plane.SurfaceNormal);
         gazePosition = new Vector3(0f, 0f, 0f);
 
@@ -129,7 +131,8 @@ public class Positions {
         rotation.x = 0f;
         rotation.z = 0f;
         ObjectsRotation = rotation;
-        gridGenerator = new SimpleGridGenerator(table, tablePosition.y);
+        height = tablePosition.y;
+        Grid = (new SimpleGridGenerator(TableTransform, height)).Grid;
     }
 
     private Bounds GetColliderBounds(Transform transform) {

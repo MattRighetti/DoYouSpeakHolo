@@ -36,6 +36,10 @@ public class ObjectPooler : MonoBehaviour {
         Positions.FindTable();
     }
 
+    public DeskGrid GetGrid() {
+        return Positions.Grid;
+    }
+
     //Create the objects, deactivate and store them into the data structure
     public void CreateStaticObjects(List<SingleObjectToLoad> staticObjects) {
         foreach (SingleObjectToLoad objectString in staticObjects) {
@@ -53,6 +57,8 @@ public class ObjectPooler : MonoBehaviour {
             GameObject obj = Instantiate(Resources.Load(objectString.path, typeof(GameObject))) as GameObject;
             obj.transform.position = Positions.hiddenPosition;
             obj.SetActive(false);
+
+            Debug.Log("Creating " + objectString.path);
 
             dynamicObjectsDictionary.Add(objectString.type, obj);
         }
@@ -80,6 +86,7 @@ public class ObjectPooler : MonoBehaviour {
     //  Activate an object in a given position (it will be adjusted according to the Spatial Mapping scans)
     public GameObject ActivateObject(string objKey, Vector3 position, Quaternion rotation) { 
         GameObject objectToCreate = GetPooledObject(objKey);
+        Debug.Log("Object created " + objKey);
         objectToCreate.transform.position = Positions.GetPosition(position);
         objectToCreate.transform.rotation = rotation;
         objectToCreate.name = objKey;

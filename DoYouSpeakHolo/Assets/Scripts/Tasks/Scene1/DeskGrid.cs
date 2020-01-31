@@ -9,18 +9,30 @@ using static EventManager;
 public class DeskGrid {
 
     /// <summary>
+    /// Lenth of a single grid cell
+    /// </summary>
+    private readonly float cellLength;
+    
+    /// <summary>
+    /// Width of a single grid cell
+    /// </summary>        
+    private readonly float cellWidth;
+
+    /// <summary>
     /// The grid positioned on the table
     /// </summary>
-    private readonly Cell[,] grid;
+    public Cell[,] Grid { get; }
 
     /// <summary>
     /// The table transform, used to pick the necessary positions and rotations
     /// </summary>
     private readonly Transform tableTransform;
 
-    public DeskGrid(Transform tableTransform, int rows, int columns) {
+    public DeskGrid(Transform tableTransform, int rows, int columns, float cellLength, float cellWidth) {
+        this.cellLength = cellLength;
+        this.cellWidth = cellWidth;
         this.tableTransform = tableTransform;
-        grid = new Cell[rows, columns];
+        Grid = new Cell[rows, columns];
     }
 
     /// <summary>
@@ -31,11 +43,12 @@ public class DeskGrid {
     /// /// <param name="column">The grid column in which the cell has to be added</param>
     /// /// <param name="unitLength">The bounds offset on X axis</param>
     /// <param name="unitWitdh">The bounds offset on Z axis</param>
-    internal void AddCell(Vector3 cellCenter, int row, int column, float cellLength, float cellWitdh) {
-        grid[row, column] = new Cell(cellCenter, 
-                                     cellLength, 
-                                     cellWitdh, 
-                                     tableTransform.rotation,
+    internal void AddCell(Vector3 cellCenter, int row, int column) {
+        Grid[row, column] = tableTransform.gameObject.AddComponent<Cell>();
+        Grid[row, column].Setup(cellCenter,
+                                     cellLength,
+                                     cellWidth,
+                                     tableTransform.gameObject,
                                      this);
     }
 
@@ -43,7 +56,7 @@ public class DeskGrid {
     /// Single grid cell.
     /// </summary>
     /// <remarks>Contains its buonds with respect to the table transformation and the game object stack</remarks>
-    private class Cell : MonoBehaviour {
+    public class Cell : MonoBehaviour {
 
         /// <summary>
         /// Keeps track of the game objects in the same cell.
@@ -58,7 +71,7 @@ public class DeskGrid {
         /// <summary>
         /// Enumeration representing the prepositions of place
         /// </summary>
-        private enum Prepositions { InFrontOf, Behind, NextTo, On};
+        public enum Prepositions { InFrontOf, Behind, NextTo, On};
 
         /// <summary>
         /// The object in the current cell.
@@ -75,10 +88,12 @@ public class DeskGrid {
         /// </summary>
         private string TargetObject { set; get; }
 
+        public Vector3 Center { get; private set; }
+
         /// <summary>
         /// Grid reference
         /// </summary>
-        private readonly Cell[,] grid;
+        private Cell[,] grid;
 
         /// <summary>
         /// Set up the collider, the grid and creates the vertical stack.
@@ -87,16 +102,16 @@ public class DeskGrid {
         /// <param name="cellLength">Box Collider length</param>
         /// <param name="cellWitdh">Box Collider width</param>
         /// <param name="rotation">Box Collider rotation</param>
-        public Cell(Vector3 cellCenter, float cellLength, float cellWitdh, Quaternion rotation, DeskGrid deskGrid) {
-            boxCollider = new BoxCollider {
-                center = cellCenter + new Vector3(0, 0.02f, 0),
-                size = new Vector3(cellLength, 0.01f, cellWitdh),
-                isTrigger = true
-            };
+        public void Setup(Vector3 cellCenter, float cellLength, float cellWitdh, GameObject table, DeskGrid deskGrid) {
+            boxCollider = table.AddComponent<BoxCollider>();
+            //boxCollider.center = cellCenter + new Vector3(0,0,0.02f);
+            boxCollider.center = cellCenter;
+            boxCollider.size = new Vector3(cellLength, cellWitdh, 0.01f);
+            boxCollider.isTrigger = true;
 
-            grid = deskGrid.grid;
-
-            boxCollider.transform.rotation = rotation;
+            Center = boxCollider.center;
+            
+            grid = deskGrid.Grid;
             
             verticalStack = new List<string>();
         }
@@ -112,11 +127,10 @@ public class DeskGrid {
             float incrementCenterY = otherBoxCollider.size.y / 2;
             float incrementSizeY = otherBoxCollider.size.y / 2;
 
+           
+
             boxCollider.center += new Vector3(0, incrementCenterY, 0);
             boxCollider.size += new Vector3(0, incrementSizeY, 0);
-
-
-            
         }
 
         /// <summary>
@@ -129,6 +143,7 @@ public class DeskGrid {
   
             float decrementCenterY = otherBoxCollider.size.y / 2;
             float decrementSizeY = otherBoxCollider.size.y / 2;
+
 
             boxCollider.center -= new Vector3(0, decrementCenterY, 0);
             boxCollider.size -= new Vector3(0, decrementSizeY, 0);
@@ -180,7 +195,7 @@ public class DeskGrid {
         /// </summary>
         /// <param name="targetPreposition">The prepositionn</param>
         /// <returns>A list of tuple containing the cell's offset to check from the curent cell</returns>
-        private List<Tuple<int, int>> FindCellsToCheck(Prepositions targetPreposition) {
+        public static List<Tuple<int, int>> FindCellsToCheck(Prepositions targetPreposition) {
             List<Tuple<int, int>> offsets = new List<Tuple<int, int>>();
             switch (targetPreposition) {
                 case Prepositions.Behind:

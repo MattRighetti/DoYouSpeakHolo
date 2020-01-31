@@ -2,20 +2,21 @@
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
 using HoloToolkit.Unity.SpatialMapping;
+using System;
 using UnityEngine;
 
 
-public class SimpleGridGenerator : MonoBehaviour {
+public class SimpleGridGenerator {
 
     /// <summary>
     /// Default rows
     /// </summary>
-    private const int DefaultRows = 4;
+    private const int DefaultRows = 3;
 
     /// <summary>
     /// Default columns
     /// </summary>
-    private const int DefaultColumns = 3;
+    private const int DefaultColumns = 4;
 
     /// <summary>
     /// Distance separating two objects on the grid (X axis)
@@ -27,55 +28,82 @@ public class SimpleGridGenerator : MonoBehaviour {
     /// </summary>
     private readonly float cellWitdh;
 
+    /// <summary>
+    /// The table transform, used to pick the necessary positions and rotations
+    /// </summary>
     private readonly Transform tableTransform;
+
+    /// <summary>
+    /// The table height
+    /// </summary>
     private readonly float tableHeight;
+
+    /// <summary>
+    /// Contains the desk grid.
+    /// </summary>
+    public DeskGrid Grid { get; private set; }
+
     [Tooltip("Number of rows in the grid.")]
     public int Rows = DefaultRows;
 
     [Tooltip("Number of columns in the grid.")]
     public int Columns = DefaultColumns;
 
-    [Tooltip("Distance between objects in the grid.")]
-    public float ObjectSpacing = 0.2f;
-
     /// <summary>
     /// Coordinates of the vertice in the upper left corner
     /// </summary>
     private Vector3 upperLeftVertice;
 
-
     public SimpleGridGenerator(Transform tableTransform, float tableHeight) {
         this.tableTransform = tableTransform;
         this.tableHeight = tableHeight;
         SurfacePlane plane = tableTransform.GetComponent<SurfacePlane>();
-        Mesh mesh = plane.gameObject.GetComponent<MeshFilter>().sharedMesh;
-        upperLeftVertice = mesh.vertices[0];
-        Bounds tableBounds = mesh.bounds;
-        cellLength = (tableBounds.max.x - tableBounds.min.x) / Columns;
-        cellWitdh = (tableBounds.max.z - tableBounds.min.z) / Rows;
 
+        //Define the grid center in the table local space
+        Vector3 center = new Vector3(0,0,0);
+
+        //Get the table bounds
+        Mesh mesh = plane.gameObject.GetComponent<MeshFilter>().mesh;
+        Bounds tableBounds = mesh.bounds;
+
+        //Rescale the bounds to 80% for safety reason (avoid object fall down the table)
+        float safetyBoundX = 0.8f * Math.Max(Math.Abs(tableBounds.size.x), Math.Abs(tableBounds.size.z));
+        float safetyBoundZ = 0.8f * Math.Min(Math.Abs(tableBounds.size.x), Math.Abs(tableBounds.size.z));
+
+        //Define width and length of a grid cell
+        cellLength = safetyBoundX / Columns;
+        cellWitdh = safetyBoundZ / Rows;
+
+        //Compute the upper left vertice
+        upperLeftVertice = new Vector3( -(safetyBoundX / 2), tableHeight, (safetyBoundZ / 2));
+        Debug.Log("nw vertice " + upperLeftVertice.ToString());
+
+        //Generate the grid
+        GenerateGrid();
     }
 
-    public DeskGrid GenerateGrid() {
+    /// <summary>
+    /// Generate a grid on the table
+    /// </summary>
+    private void GenerateGrid() {
 
-        DeskGrid grid = new DeskGrid(tableTransform, Rows, Columns);
+        Grid = new DeskGrid(tableTransform, Rows, Columns, cellLength, cellWitdh);
 
+        
         float halfLength = cellLength / 2;
         float halfWidth = cellWitdh / 2;
 
         //Start from the upper left square center
-        float rowStart = upperLeftVertice.x + halfLength;
-        float columnStart = upperLeftVertice.z + halfWidth;
+        float rowStart = upperLeftVertice.z - halfWidth;
+        float columnStart = upperLeftVertice.x + halfLength;
 
 
         for (int row = 0; row < Rows; row++) {
             for (int column = 0; column < Columns; column++) {
+                Vector3 cellCenter = new Vector3(columnStart + column * cellLength, rowStart - row * cellWitdh, tableHeight);
 
-                Vector3 cellCenter = new Vector3(rowStart + row * cellLength, columnStart - column * cellWitdh, tableHeight);
-                grid.AddCell(cellCenter, row, column, cellLength, cellWitdh);
+                Grid.AddCell(cellCenter, row, column);
             }
         }
-
-        return grid;
     }
 }

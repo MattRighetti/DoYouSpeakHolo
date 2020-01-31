@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using static EventManager;
@@ -6,7 +7,8 @@ using static EventManager;
 public class PoPManager : AbstractSceneManager {
 
     public List<string> TargetObjects { get; set; }
-    
+    public DeskGrid Grid { get; private set; }
+
     //  Set the audio context to scene 1
     public override void SetAudioContext() {
         AudioContext = new AudioContext1();
@@ -14,6 +16,10 @@ public class PoPManager : AbstractSceneManager {
 
     //  Create the scene objects
     public override void LoadObjects() {
+
+        Grid = Pooler.GetGrid();
+        Pooler.CreateStaticObjects(sceneObjects.staticObjects);
+        Pooler.CreateDynamicObjects(sceneObjects.dynamicObjects);
 
     }
 

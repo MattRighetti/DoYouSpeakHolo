@@ -77,7 +77,7 @@ public class LearningPhaseActivity2 : LearningPhaseManager {
 
 		foreach (string obj in SceneObjects) {
 			candSManager.ActivateObject(obj, positions.GetPosition(startingPosition), Positions.ObjectsRotation);
-			startingPosition += new Vector3(0.15f, 0, 0);
+			startingPosition += new Vector3(0.2f, 0, 0);
 		}
 	}
 

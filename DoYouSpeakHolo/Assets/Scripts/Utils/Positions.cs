@@ -25,7 +25,7 @@ public class Positions {
 
     //  Scene 2
     public static readonly Vector3 ArkPosition = new Vector3(0.018f, 0, 0.6f);
-    public static readonly Vector3 startPositionInlineThree = new Vector3(-0.076f, 0, 0.2f);
+    public static readonly Vector3 startPositionInlineThree = new Vector3(-0.1f, 0, 0.1f);
 
     //Scene 3
     public static readonly Vector3 TreePosition = new Vector3(0, 0, FrontDistance + 1.6f);

@@ -153,6 +153,10 @@ public abstract class AbstractSceneManager : MonoBehaviour {
         return randomList;
     }
 
+    internal void EnableOutline(string objectKey) => Pooler.GetPooledObject(objectKey).GetComponent<HighlightEnabler>().EnableOutline();
+
+    internal void DisableOutline(string objectkKey) => Pooler.GetPooledObject(objectkKey).GetComponent<HighlightEnabler>().DisableOutline();
+
     // -------------------------- ABSTRACT --------------------------------
 
     //  Load the objects of the current scene

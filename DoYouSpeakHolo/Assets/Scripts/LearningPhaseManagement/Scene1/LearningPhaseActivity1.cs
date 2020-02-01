@@ -17,17 +17,20 @@ public class LearningPhaseActivity1 : LearningPhaseManager {
     }
 
     protected IEnumerator SceneIntroduction() {
-        //1) Introduce desk objects
-        foreach (string objectkKey in SceneObjects) {
-            GameObject gameObject = poPManager.ActivateObject(objectkKey, grid.Grid[1,2].Center,Positions.ObjectsRotation);
-            yield return poPManager.IntroduceObject(objectkKey);
-            poPManager.DeactivateObject(objectkKey);
-        }
 
         // Reference for a 4x3 matrix
         Tuple<int, int> referencePosition = new Tuple<int, int>(1, 2);
+
+        //1) Introduce desk objects
+        foreach (string objectkKey in SceneObjects) {
+            GameObject gameObject = poPManager.ActivateObject(objectkKey, grid.Grid[referencePosition.Item1, referencePosition.Item2].Center,Positions.ObjectsRotation);
+            yield return poPManager.IntroduceObject(objectkKey);
+            poPManager.DeactivateObject(objectkKey);
+        }
         
-        foreach(DeskGrid.Cell.Prepositions preposition in Enum.GetValues(typeof(DeskGrid.Cell.Prepositions))) {
+        GameObject referenceObject = poPManager.ActivateObject("PencilHolder", grid.Grid[referencePosition.Item1, referencePosition.Item2].Center, Positions.ObjectsRotation);
+
+        foreach (DeskGrid.Cell.Prepositions preposition in Enum.GetValues(typeof(DeskGrid.Cell.Prepositions))) {
             List<Tuple<int, int>> offsets =  DeskGrid.Cell.FindCellsToCheck(preposition);
             
             foreach (Tuple<int, int> offset in offsets) {
@@ -38,9 +41,7 @@ public class LearningPhaseActivity1 : LearningPhaseManager {
     
         }
 
-
-
-        //
+        poPManager.DeactivateObject("PencilHolder");
 
         //End the learning phase
         End();

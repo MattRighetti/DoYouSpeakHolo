@@ -86,6 +86,10 @@ public class VirtualAssistantManager : MonoBehaviour {
         yield return new WaitForSeconds(1.5f);
     }
 
+    public void ReplayLatestAudio() {
+        StartCoroutine(PlayAudioSync(audioSource));
+    }
+
     private IEnumerator WaitForAudioEnd() {
         while (audioSource.isPlaying) {
             yield return null;

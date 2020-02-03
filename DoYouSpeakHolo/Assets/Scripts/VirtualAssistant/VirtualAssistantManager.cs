@@ -27,12 +27,7 @@ public class VirtualAssistantManager : MonoBehaviour {
     }
 
     public void PlayKo() {
-        if (activeTrigger != "") {
-            animator.ResetTrigger(activeTrigger);
-        }
-
-        animator.SetTrigger("isWrong");
-        activeTrigger = "isWrong";
+        SetTriggerWrapper("isWrong");
     }
 
     public void PlayIntroduction(AudioContext audioContext) {
@@ -40,12 +35,7 @@ public class VirtualAssistantManager : MonoBehaviour {
     }
 
     public void PlayOk() {
-        if (activeTrigger != "") {
-            animator.ResetTrigger(activeTrigger);
-        }
-
-        animator.SetTrigger("isCorrect");
-        activeTrigger = "isCorrect";
+        SetTriggerWrapper("isCorrect");
     }
 
     private IEnumerator PlayIntroductionRoutine(AudioContext context) {
@@ -54,13 +44,8 @@ public class VirtualAssistantManager : MonoBehaviour {
         audioSource.Play();
 
         //Start the corresponding animation
-        if (activeTrigger != "") {
-            animator.ResetTrigger(activeTrigger);
-        }
+        SetTriggerWrapper("isTalking");
 
-        animator.SetTrigger("isTalking");
-        activeTrigger = "isTalking";
-        
         //Wait until the audio ends
         yield return new WaitForSeconds(audioSource.clip.length + 3);
 
@@ -71,12 +56,7 @@ public class VirtualAssistantManager : MonoBehaviour {
     internal IEnumerator PlayCheckingPhaseIntroduction(AudioContext context) {
         audioSource.clip = context.GetAudio("yourTurn");
 
-        if (activeTrigger != "") {
-            animator.ResetTrigger(activeTrigger);
-        }
-
-        animator.SetTrigger("isTalkingShort");
-        activeTrigger = "isTalkingShort";
+        SetTriggerWrapper("isTalkingShort");
 
         yield return PlayAudioSync(audioSource);
     }
@@ -84,12 +64,7 @@ public class VirtualAssistantManager : MonoBehaviour {
     internal IEnumerator IntroduceObject(AudioContext context, string objectName) {
         audioSource.clip = context.GetAudio(objectName);
 
-        if (activeTrigger != "") {
-            animator.ResetTrigger(activeTrigger);
-        }
-
-        animator.SetTrigger("isTalkingShort");
-        activeTrigger = "isTalkingShort";
+        SetTriggerWrapper("isTalkingShort");
 
         yield return PlayAudioSync(audioSource);
     }
@@ -97,12 +72,7 @@ public class VirtualAssistantManager : MonoBehaviour {
     internal IEnumerator IntroduceObjectWithContext(AudioContext context, string objectName) {
         audioSource.clip = context.GetContextAudio(objectName);
 
-        if (activeTrigger != "") {
-            animator.ResetTrigger(activeTrigger);
-        }
-
-        animator.SetTrigger("isTalkingShort");
-        activeTrigger = "isTalkingShort";
+        SetTriggerWrapper("isTalkingShort");
 
         yield return PlayAudioSync(audioSource);
     }
@@ -128,6 +98,24 @@ public class VirtualAssistantManager : MonoBehaviour {
         while (audioSource.isPlaying) {
             yield return null;
         }
+    }
+
+    private void SetTriggerWrapper(string TriggerName) {
+
+        if (string.Equals("", activeTrigger)) {
+            animator.ResetTrigger(activeTrigger);
+            Debug.Log("Resetting Trigger: " + activeTrigger);
+        }
+
+        if (string.Equals(activeTrigger, TriggerName)) {
+            Debug.Log("No change in state");
+            Debug.Log("Current state is: " + activeTrigger);
+        }
+
+        animator.SetTrigger(TriggerName);
+        Debug.Log("Activated Trigger: " + TriggerName);
+        activeTrigger = TriggerName;
+        Debug.Log("Active Trigger is now: " + activeTrigger);
     }
 
     private void StartListening() {

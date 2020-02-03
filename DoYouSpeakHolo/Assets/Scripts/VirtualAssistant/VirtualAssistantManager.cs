@@ -3,7 +3,7 @@ using UnityEngine;
 using static EventManager;
 
 public class VirtualAssistantManager : MonoBehaviour {
-    public Animator animator;
+    [SerializeField] Animator animator;
     private AudioSource audioSource;
     private string activeTrigger = "";
 
@@ -102,14 +102,9 @@ public class VirtualAssistantManager : MonoBehaviour {
 
     private void SetTriggerWrapper(string TriggerName) {
 
-        if (string.Equals("", activeTrigger)) {
-            animator.ResetTrigger(activeTrigger);
+        if (!string.Equals("isIdle", activeTrigger)) {
+            animator.SetTrigger("isIdle");
             Debug.Log("Resetting Trigger: " + activeTrigger);
-        }
-
-        if (string.Equals(activeTrigger, TriggerName)) {
-            Debug.Log("No change in state");
-            Debug.Log("Current state is: " + activeTrigger);
         }
 
         animator.SetTrigger(TriggerName);

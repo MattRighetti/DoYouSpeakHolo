@@ -92,6 +92,7 @@ public class VirtualAssistantManager : MonoBehaviour {
 
     public void ReplayLatestAudio() {
         StartCoroutine(PlayAudioSync(audioSource));
+        SetTriggerWrapper("isTalkingShort");
     }
 
     private IEnumerator WaitForAudioEnd() {

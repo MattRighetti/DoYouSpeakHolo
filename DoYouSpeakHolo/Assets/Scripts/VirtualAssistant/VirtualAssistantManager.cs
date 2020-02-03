@@ -3,9 +3,9 @@ using UnityEngine;
 using static EventManager;
 
 public class VirtualAssistantManager : MonoBehaviour {
-    [SerializeField] Animator animator;
+    public Animator animator;
     private AudioSource audioSource;
-    private string activeTrigger = "";
+    private string activeTrigger = "isIdle";
 
     public void Update() {
         FollowUsergaze();
@@ -103,10 +103,12 @@ public class VirtualAssistantManager : MonoBehaviour {
     private void SetTriggerWrapper(string TriggerName) {
 
         if (!string.Equals("isIdle", activeTrigger)) {
+            animator.ResetTrigger(activeTrigger);
             animator.SetTrigger("isIdle");
             Debug.Log("Resetting Trigger: " + activeTrigger);
         }
 
+        animator.ResetTrigger("isIdle");
         animator.SetTrigger(TriggerName);
         Debug.Log("Activated Trigger: " + TriggerName);
         activeTrigger = TriggerName;

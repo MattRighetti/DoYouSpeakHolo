@@ -24,13 +24,9 @@ public class CandSManager : AbstractSceneManager {
         ActivateObject("Ark", Positions.ArkPosition, Positions.ObjectsRotation);
     }
 
-    public override void StartListeningToCustomEvents() {
-        StartListening(Triggers.PickedAnimal, PickedAnimal);
-    }
+    public override void StartListeningToCustomEvents() => StartListening(Triggers.PickedAnimal, PickedAnimal);
 
-    public override void StopListeningToCustomEvents() {
-        StopListening(Triggers.PickedAnimal, PickedAnimal);
-    }
+    public override void StopListeningToCustomEvents() => StopListening(Triggers.PickedAnimal, PickedAnimal);
 
     private void PickedAnimal() {
         CheckingPhaseActivity2 checkingManager = (CheckingPhaseActivity2)CheckingPhaseManager;

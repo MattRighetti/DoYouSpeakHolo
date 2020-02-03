@@ -88,7 +88,8 @@ public class ObjectPooler : MonoBehaviour {
         GameObject objectToCreate = GetPooledObject(objKey);
         Debug.Log("Object created " + objKey);
         objectToCreate.transform.position = Positions.GetPosition(position);
-        objectToCreate.transform.rotation = rotation;
+        Vector3 originalRotation = objectToCreate.transform.rotation.eulerAngles;
+        objectToCreate.transform.rotation = Quaternion.Euler(new Vector3(originalRotation.x,rotation.eulerAngles.y , originalRotation.z ));
         objectToCreate.name = objKey;
         objectToCreate.SetActive(true);
         return objectToCreate;

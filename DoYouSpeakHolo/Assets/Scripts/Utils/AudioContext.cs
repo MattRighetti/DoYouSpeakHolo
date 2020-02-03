@@ -28,7 +28,17 @@ public class AudioContext1 : AudioContext {
     }
 
     public override AudioClip GetContextAudio(string objectName) {
-        throw new NotImplementedException();
+        List<string> objects = new List<string>(objectName.Split('_'));
+
+        string path = "Audio/" + Scene.Value + "/" + "Prepositions" + objects[2] + "/";
+        Debug.Log("audio path: " + path);
+        List<AudioClip> audioFiles = new List<AudioClip>(Resources.LoadAll<AudioClip>(path));
+        foreach (AudioClip audio in audioFiles) {
+            if (audio.name.Contains(objects[0]) && audio.name.Contains(objects[1])) {
+                return audio;
+            }
+        }
+        return null;
     }
 }
 

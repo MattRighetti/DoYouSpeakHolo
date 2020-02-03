@@ -13,32 +13,16 @@
           "path": "Prefab/Objects/Book"
         },
         {
-          "type": "Lamp",
-          "path": "Prefab/Objects/Lamp"
-        },
-        {
-          "type": "Laptop",
-          "path": "Prefab/Objects/Laptop"
-        },
-        {
-          "type": "Mug",
-          "path": "Prefab/Objects/Mug"
-        },
-        {
-          "type": "Pencil",
-          "path": "Prefab/Objects/Pencil"
-        },
-        {
           "type": "PencilHolder",
           "path": "Prefab/Objects/PencilHolder"
         },
         {
-          "type": "PencilSharpener",
-          "path": "Prefab/Objects/PencilSharpener"
+          "type": "Lamp",
+          "path": "Prefab/Objects/Lamp"
         },
         {
-          "type": "Ruler",
-          "path": "Prefab/Objects/Ruler"
+          "type": "PencilSharpener",
+          "path": "Prefab/Objects/PencilSharpener"
         },
         {
           "type": "Rubber",

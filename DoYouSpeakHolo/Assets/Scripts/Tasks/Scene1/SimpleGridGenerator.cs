@@ -37,6 +37,7 @@ public class SimpleGridGenerator {
     /// The table height
     /// </summary>
     private readonly float tableHeight;
+    private readonly Bounds tableBounds;
 
     /// <summary>
     /// Contains the desk grid.
@@ -52,7 +53,11 @@ public class SimpleGridGenerator {
     /// <summary>
     /// Coordinates of the vertice in the upper left corner
     /// </summary>
-    private Vector3 upperLeftVertice;
+    private Vector3 NWVertice;
+
+    public Vector3 NEVertice { get; }
+    public Vector3 SWVertice { get; }
+    public Vector3 SEVertice { get; }
 
     public SimpleGridGenerator(Transform tableTransform, float tableHeight) {
         this.tableTransform = tableTransform;
@@ -60,11 +65,10 @@ public class SimpleGridGenerator {
         SurfacePlane plane = tableTransform.GetComponent<SurfacePlane>();
 
         //Define the grid center in the table local space
-        Vector3 center = new Vector3(0,0,0);
+        Vector3 center = tableTransform.position;
 
         //Get the table bounds
-        Mesh mesh = plane.gameObject.GetComponent<MeshFilter>().mesh;
-        Bounds tableBounds = mesh.bounds;
+        tableBounds = plane.gameObject.GetComponent<MeshFilter>().mesh.bounds;
 
         //Rescale the bounds to 80% for safety reason (avoid object fall down the table)
         float safetyBoundX = 0.8f * Math.Max(Math.Abs(tableBounds.size.x), Math.Abs(tableBounds.size.z));
@@ -74,9 +78,22 @@ public class SimpleGridGenerator {
         cellLength = safetyBoundX / Columns;
         cellWitdh = safetyBoundZ / Rows;
 
-        //Compute the upper left vertice
-        upperLeftVertice = new Vector3( -(safetyBoundX / 2), tableHeight, (safetyBoundZ / 2));
-        Debug.Log("nw vertice " + upperLeftVertice.ToString());
+        //Compute the upper left vertice in the local space
+        NWVertice = tableTransform.TransformPoint(new Vector3((-safetyBoundX / 2), safetyBoundZ / 2, tableHeight));
+        NEVertice = tableTransform.TransformPoint(new Vector3(safetyBoundX / 2, (safetyBoundZ / 2), tableHeight));
+        SWVertice = tableTransform.TransformPoint(new Vector3((-safetyBoundX / 2), -(safetyBoundZ / 2), tableHeight));
+        SEVertice = tableTransform.TransformPoint(new Vector3(safetyBoundX / 2, -(safetyBoundZ / 2), tableHeight));
+
+        //NWVertice = new Vector3((-safetyBoundX / 2), safetyBoundZ / 2, tableHeight);
+        //NEVertice = new Vector3(safetyBoundX / 2, (safetyBoundZ / 2), tableHeight);
+        //SWVertice = new Vector3((-safetyBoundX / 2), -(safetyBoundZ / 2), tableHeight);
+        //SEVertice = new Vector3(safetyBoundX / 2, -(safetyBoundZ / 2), tableHeight);
+
+
+        Debug.Log("nw" + NWVertice.ToString());
+        Debug.Log("sw" + SWVertice.ToString());
+        Debug.Log("ne" + NEVertice.ToString());
+        Debug.Log("SE" + SEVertice.ToString());
 
         //Generate the grid
         GenerateGrid();
@@ -89,19 +106,23 @@ public class SimpleGridGenerator {
 
         Grid = new DeskGrid(tableTransform, Rows, Columns, cellLength, cellWitdh);
 
-        
         float halfLength = cellLength / 2;
         float halfWidth = cellWitdh / 2;
 
         //Start from the upper left square center
-        float rowStart = upperLeftVertice.z - halfWidth;
-        float columnStart = upperLeftVertice.x + halfLength;
+        float rowStart = NWVertice.z - halfWidth;
+        float columnStart = NWVertice.x + halfLength;
 
 
         for (int row = 0; row < Rows; row++) {
             for (int column = 0; column < Columns; column++) {
-                Vector3 cellCenter = new Vector3(columnStart + column * cellLength, rowStart - row * cellWitdh, tableHeight);
-
+                float row_k = (float)column / (Columns - 1);
+                float col_k = (float)row / (Rows - 1);
+                float row_Pos = Vector3.Lerp(NWVertice, NEVertice, row_k).x;
+                float col_pos = Vector3.Lerp(NWVertice, SWVertice, col_k).z;
+                //Compute the new cell center in the local space
+                Vector3 cellCenter = new Vector3(row_Pos, tableHeight, col_pos);
+                Debug.Log("cell center " + cellCenter.ToString());
                 Grid.AddCell(cellCenter, row, column);
             }
         }

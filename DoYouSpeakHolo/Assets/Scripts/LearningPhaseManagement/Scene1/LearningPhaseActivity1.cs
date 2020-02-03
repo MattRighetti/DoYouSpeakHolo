@@ -23,25 +23,28 @@ public class LearningPhaseActivity1 : LearningPhaseManager {
 
         //1) Introduce desk objects
         foreach (string objectkKey in SceneObjects) {
-            GameObject gameObject = poPManager.ActivateObject(objectkKey, grid.Grid[referencePosition.Item1, referencePosition.Item2].Center,Positions.ObjectsRotation);
+            GameObject gameObject = poPManager.ActivateObject(objectkKey, grid.Grid[referencePosition.Item1, referencePosition.Item2].CenterCoordinates,Positions.ObjectsRotation);
             yield return poPManager.IntroduceObject(objectkKey);
             poPManager.DeactivateObject(objectkKey);
         }
         
-        GameObject referenceObject = poPManager.ActivateObject("PencilHolder", grid.Grid[referencePosition.Item1, referencePosition.Item2].Center, Positions.ObjectsRotation);
+        GameObject referenceObject = poPManager.ActivateObject("Book", grid.Grid[referencePosition.Item1, referencePosition.Item2].CenterCoordinates, Positions.ObjectsRotation);
 
         foreach (DeskGrid.Cell.Prepositions preposition in Enum.GetValues(typeof(DeskGrid.Cell.Prepositions))) {
             List<Tuple<int, int>> offsets =  DeskGrid.Cell.FindCellsToCheck(preposition);
             
             foreach (Tuple<int, int> offset in offsets) {
-                GameObject gameObject = poPManager.ActivateObject("Pencil", grid.Grid[1 + offset.Item1, 2 + offset.Item2].Center, Positions.ObjectsRotation);
+                GameObject gameObject = poPManager.ActivateObject("Rubber", grid.Grid[1 + offset.Item1, 2 + offset.Item2].CenterCoordinates, Positions.ObjectsRotation);
+                poPManager.EnableOutline("Rubber");
                 yield return new WaitForSeconds(2);
-                poPManager.DeactivateObject("Pencil");
+                poPManager.DisableOutline("Rubber");
+                poPManager.DeactivateObject("Rubber");
+
             }
     
         }
 
-        poPManager.DeactivateObject("PencilHolder");
+        poPManager.DeactivateObject("Book");
 
         //End the learning phase
         End();

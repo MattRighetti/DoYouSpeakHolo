@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using static EventManager;
 
 public class FindObjectTask : MonoBehaviour {

@@ -1,37 +1,76 @@
-﻿using Microsoft.MixedReality.Toolkit.UI;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using static EventManager;
 
 class CheckingPhaseActivity1 : CheckingPhaseManager {
 
     private PoPManager poPManager;
+    private AudioContext1 audioContext;
+    private DeskGrid deskGrid;
+    private System.Random rnd;
+    private List<Tuple<string, DeskGrid.Cell.Prepositions, string>> moves;
+
 
     //Spawn the objects in random order and ask the user to pick a specific one
     protected override void CheckingPhase() {
         poPManager = (PoPManager)sceneManager;
+        audioContext = (AudioContext1)poPManager.AudioContext;
+        moves = new List<Tuple<string, DeskGrid.Cell.Prepositions, string>>();
+        rnd = new System.Random();
+        deskGrid = poPManager.Grid;
+        PutObjectsInInitialPosition();
+        SetTargetPositions();
 
-        CreateAllObjectsAndDisplayInRandomOrder();
-        //Shuffle the collection again
-        SceneObjects = AbstractSceneManager.Shuffle(SceneObjects);
-
-        //TODO call it in another method
-        TriggerEvent(Triggers.SetTargetObject);
+        StartCoroutine(TidyUpTheDesk());
     }
 
+    private void PutObjectsInInitialPosition() {
 
-    protected void CreateAllObjectsAndDisplayInRandomOrder() {
-        //Shuffle the collection
-        SceneObjects = AbstractSceneManager.Shuffle(SceneObjects);
-        GameObject gameObj;
-        //Define initial spawning position
-        Vector3 startPosition = Positions.startPositionInlineFour;
-        foreach (string obj in SceneObjects) {
-            //Activate the object and attach to it the script for the task
-            gameObj = poPManager.ActivateObject(obj, startPosition, Positions.ObjectsRotation);
-            FindObjectTask task = gameObj.AddComponent<FindObjectTask>();
-            gameObj.AddComponent<Interactable>().AddReceiver<InteractableOnPressReceiver>().OnPress.AddListener(() => task.Check());
-            startPosition += new Vector3(0.5f, 0, 0);
-        }
+        deskGrid.ActivateCells();
+
+        poPManager.ActivateObject(SceneObjects[0], deskGrid.Grid[1,2].CenterCoordinates, Positions.ObjectsRotation).GetComponent<Rigidbody>().useGravity = true;
+        poPManager.ActivateObject(SceneObjects[1], deskGrid.Grid[0,1].CenterCoordinates, Positions.ObjectsRotation).GetComponent<Rigidbody>().useGravity = true;
+        poPManager.ActivateObject(SceneObjects[2], deskGrid.Grid[1,0].CenterCoordinates, Positions.ObjectsRotation).GetComponent<Rigidbody>().useGravity = true;
+        poPManager.ActivateObject(SceneObjects[3], deskGrid.Grid[2,0].CenterCoordinates, Positions.ObjectsRotation).GetComponent<Rigidbody>().useGravity = true;
+        poPManager.ActivateObject(SceneObjects[4], deskGrid.Grid[2,1].CenterCoordinates, Positions.ObjectsRotation).GetComponent<Rigidbody>().useGravity = true;
+        
+
+
+    }
+
+    private void SetTargetPositions() {
+        string reference = "Book";
+        moves.Add(new Tuple<string, DeskGrid.Cell.Prepositions, string>(reference,DeskGrid.Cell.Prepositions.Behind, "Lamp"));
+        moves.Add(new Tuple<string, DeskGrid.Cell.Prepositions, string>(reference, DeskGrid.Cell.Prepositions.NextTo, "Ruler"));
+        moves.Add(new Tuple<string, DeskGrid.Cell.Prepositions, string>(reference, DeskGrid.Cell.Prepositions.InFrontOf, "Rubber"));
+        moves.Add(new Tuple<string, DeskGrid.Cell.Prepositions, string>(reference, DeskGrid.Cell.Prepositions.NextTo, "Pencil"));
+    }
+
+    internal void FoundObject() {
+        throw new NotImplementedException();
+    }
+
+    private IEnumerator TidyUpTheDesk() {
+        yield return poPManager.IntroduceCheckingPhase();
+        yield return TidyUpTheDeskIteration();
+    }
+
+    private IEnumerator TidyUpTheDeskIteration() {
+        if (moves.Count == 0)
+            End();
+        else
+            yield return TargetNextMove();
+    }
+
+    private IEnumerator TargetNextMove() {
+        Tuple<string, DeskGrid.Cell.Prepositions, string> move = moves[rnd.Next(moves.Count)];
+        yield return poPManager.IntroduceMove(move);
+
+        DeskGrid.Cell referenceCell = deskGrid.FindCellOf(move.Item1);
+        
+        referenceCell.SetMove(move.Item1, move.Item2, move.Item3);
+        referenceCell.ListenForPositioning();
     }
 }
 

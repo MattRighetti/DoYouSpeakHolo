@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static EventManager;
@@ -44,13 +45,22 @@ public class PoPManager : AbstractSceneManager {
     //}
 
     public override void StartListeningToCustomEvents() {
-    //    StartListening(Triggers.FoundObject, FoundObject);
+        StartListening(Triggers.CorrectPositioning, FoundObject);
     //    StartListening(Triggers.SetTargetObject, SetTargetObject);
+    }
+
+    private void FoundObject() {
+        CheckingPhaseActivity1 checkingManager = (CheckingPhaseActivity1)CheckingPhaseManager;
+        checkingManager.FoundObject();
     }
 
     public override void StopListeningToCustomEvents() {
         //StopListening(Triggers.FoundObject, FoundObject);
         //StopListening(Triggers.SetTargetObject, SetTargetObject);
+    }
+
+    internal IEnumerator IntroduceMove(Tuple<string, DeskGrid.Cell.Prepositions, string> move) {
+        yield return VirtualAssistant.IntroduceObjectWithContext(AudioContext, move.Item1 + "_" + DeskGrid.Cell.PrepositionAsString(move.Item2) + "_" + move.Item3);
     }
 }
 

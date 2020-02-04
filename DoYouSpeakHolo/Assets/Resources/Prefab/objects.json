@@ -17,8 +17,8 @@
           "path": "Prefab/Objects/Basic_Low_Poly_Mug (Faces 304)"
         },
         {
-          "type": "Pencil",
-          "path": "Prefab/Objects/Basic_Low_Poly_Pencil (Faces 150)"
+          "type": "Lamp",
+          "path": "Prefab/Objects/Basic_Low_Poly_Lamp (Faces 498)"
         },
         {
           "type": "PencilSharpener",

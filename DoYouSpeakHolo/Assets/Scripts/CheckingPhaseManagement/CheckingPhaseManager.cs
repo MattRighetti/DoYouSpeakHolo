@@ -42,6 +42,10 @@ public abstract class CheckingPhaseManager : MonoBehaviour {
     protected void End() {
         StopListening(Triggers.CheckingPhaseStart, StartCheckingPhase);
         TriggerEvent(Triggers.CheckingPhaseEnd);
+
+        Destroy(GameObject.Find("SceneSelected"));
+        Destroy(GameObject.Find("SpatialMapping"));
+        Destroy(GameObject.Find("SpatialProcessing"));
     }
 
 

@@ -309,39 +309,44 @@ public class DeskGrid {
         /// <summary>
         /// Listen to object's movement to a new grid cell
         /// </summary>
-        public void ListenForPositioning() => StartListening(Triggers.ObjectPositioning, CheckObjectPosition);
+        public void ListenForPositioning() => StartListening(Triggers.ObjectPositioning, CheckObjectPositionCoroutine);
 
         /// <summary>
         /// Stop listen to object's movement
         /// </summary>
-        public void StopListenForPositioning() => StopListening(Triggers.ObjectPositioning, CheckObjectPosition);
+        public void StopListenForPositioning() => StopListening(Triggers.ObjectPositioning, CheckObjectPositionCoroutine);
 
         /// <summary>
         /// Check if in the cells suggested by the preposition there is the target object and triggers the VA resposne.
         /// </summary>
-        private void CheckObjectPosition() {
+        private void CheckObjectPositionCoroutine() {
+            StartCoroutine(CheckObjectPosition());
+        }
+
+        private IEnumerator CheckObjectPosition() {
+            bool found = false;
 
             //Compute the cells' offset to check
             List<Tuple<int, int>> cellsToCheck = FindCellsToCheck(TargetPreposition);
 
             //For each possible offset
-            cellsToCheck.ForEach(cellOffset => {
+            foreach (Tuple<int, int> cellOffset in cellsToCheck) {
                 //If the corresponding cell contains the target object
                 if (grid[cellRow + cellOffset.Item1, cellColumn + cellOffset.Item2].Contains(TargetObject)) {
+                    found = true;
                     //Trigger the VA position
                     TriggerEvent(Triggers.VAOk);
+                    yield return new WaitForSeconds(3);
                     //Trigger the handler for the next iteration
                     TriggerEvent(Triggers.CorrectPositioning);
                     //Stop listen for object positioning event
                     StopListenForPositioning();
-
-                    return;
                 }
-            });
+            }
 
-            //Trigger the VA negative reaction: the object has not been found
-            TriggerEvent(Triggers.VAKo);
-
+            if (!found)
+                //Trigger the VA negative reaction: the object has not been found
+                TriggerEvent(Triggers.VAKo);
         }
 
         /// <summary>

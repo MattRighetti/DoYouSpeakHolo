@@ -42,8 +42,8 @@ class CheckingPhaseActivity1 : CheckingPhaseManager {
 
     private void SetTargetPositions() {
         string reference = "Book";
-        moves.Add(new Tuple<string, DeskGrid.Cell.Prepositions, string>(reference,DeskGrid.Cell.Prepositions.Behind, "Mug"));
-        moves.Add(new Tuple<string, DeskGrid.Cell.Prepositions, string>(reference, DeskGrid.Cell.Prepositions.NextTo, "Pencil"));
+        moves.Add(new Tuple<string, DeskGrid.Cell.Prepositions, string>(reference,DeskGrid.Cell.Prepositions.Behind, "Lamp"));
+        moves.Add(new Tuple<string, DeskGrid.Cell.Prepositions, string>(reference, DeskGrid.Cell.Prepositions.NextTo, "Mug"));
         moves.Add(new Tuple<string, DeskGrid.Cell.Prepositions, string>(reference, DeskGrid.Cell.Prepositions.InFrontOf, "Rubber"));
         moves.Add(new Tuple<string, DeskGrid.Cell.Prepositions, string>(reference, DeskGrid.Cell.Prepositions.NextTo, "PencilSharpener"));
     }

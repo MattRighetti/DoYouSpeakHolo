@@ -22,7 +22,7 @@ public class SimpleGridGenerator {
     /// Distance separating two objects on the grid (X axis)
     /// </summary>
     private readonly float cellLength;
-    
+
     /// <summary>
     /// Distance separating two objects on the grid (Z axis)
     /// </summary>
@@ -37,6 +37,10 @@ public class SimpleGridGenerator {
     /// The table height
     /// </summary>
     private readonly float tableHeight;
+
+    /// <summary>
+    /// The table bounds
+    /// </summary>
     private readonly Bounds tableBounds;
 
     /// <summary>
@@ -55,10 +59,6 @@ public class SimpleGridGenerator {
     /// </summary>
     private Vector3 NWVertice;
 
-    public Vector3 NEVertice { get; }
-    public Vector3 SWVertice { get; }
-    public Vector3 SEVertice { get; }
-
     public SimpleGridGenerator(Transform tableTransform, float tableHeight) {
         this.tableTransform = tableTransform;
         this.tableHeight = tableHeight;
@@ -70,7 +70,7 @@ public class SimpleGridGenerator {
         //Get the table bounds
         tableBounds = plane.gameObject.GetComponent<MeshFilter>().mesh.bounds;
 
-        //Rescale the bounds to 80% for safety reason (avoid object fall down the table)
+        //Rescale the bounds to 80% (avoid object fall down the table)
         float safetyBoundX = 0.8f * Math.Max(Math.Abs(tableBounds.size.x), Math.Abs(tableBounds.size.z));
         float safetyBoundZ = 0.8f * Math.Min(Math.Abs(tableBounds.size.x), Math.Abs(tableBounds.size.z));
 
@@ -78,22 +78,7 @@ public class SimpleGridGenerator {
         cellLength = safetyBoundX / Columns;
         cellWitdh = safetyBoundZ / Rows;
 
-        //Compute the upper left vertice in the local space
-        NWVertice = tableTransform.TransformPoint(new Vector3((-safetyBoundX / 2), safetyBoundZ / 2, tableHeight));
-        NEVertice = tableTransform.TransformPoint(new Vector3(safetyBoundX / 2, (safetyBoundZ / 2), tableHeight));
-        SWVertice = tableTransform.TransformPoint(new Vector3((-safetyBoundX / 2), -(safetyBoundZ / 2), tableHeight));
-        SEVertice = tableTransform.TransformPoint(new Vector3(safetyBoundX / 2, -(safetyBoundZ / 2), tableHeight));
-
-        //NWVertice = new Vector3((-safetyBoundX / 2), safetyBoundZ / 2, tableHeight);
-        //NEVertice = new Vector3(safetyBoundX / 2, (safetyBoundZ / 2), tableHeight);
-        //SWVertice = new Vector3((-safetyBoundX / 2), -(safetyBoundZ / 2), tableHeight);
-        //SEVertice = new Vector3(safetyBoundX / 2, -(safetyBoundZ / 2), tableHeight);
-
-
-        Debug.Log("nw" + NWVertice.ToString());
-        Debug.Log("sw" + SWVertice.ToString());
-        Debug.Log("ne" + NEVertice.ToString());
-        Debug.Log("SE" + SEVertice.ToString());
+        NWVertice = new Vector3((-safetyBoundX / 2), 0, safetyBoundZ / 2);
 
         //Generate the grid
         GenerateGrid();
@@ -113,16 +98,10 @@ public class SimpleGridGenerator {
         float rowStart = NWVertice.z - halfWidth;
         float columnStart = NWVertice.x + halfLength;
 
-
         for (int row = 0; row < Rows; row++) {
             for (int column = 0; column < Columns; column++) {
-                float row_k = (float)column / (Columns - 1);
-                float col_k = (float)row / (Rows - 1);
-                float row_Pos = Vector3.Lerp(NWVertice, NEVertice, row_k).x;
-                float col_pos = Vector3.Lerp(NWVertice, SWVertice, col_k).z;
-                //Compute the new cell center in the local space
-                Vector3 cellCenter = new Vector3(row_Pos, tableHeight, col_pos);
-                Debug.Log("cell center " + cellCenter.ToString());
+                Vector3 cellCenter = tableTransform.TransformPoint(new Vector3(columnStart + column * cellLength, rowStart - row * cellWitdh, tableHeight));
+
                 Grid.AddCell(cellCenter, row, column);
             }
         }

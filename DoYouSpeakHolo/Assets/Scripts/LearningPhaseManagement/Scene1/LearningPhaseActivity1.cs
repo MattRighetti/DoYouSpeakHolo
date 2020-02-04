@@ -34,7 +34,7 @@ public class LearningPhaseActivity1 : LearningPhaseManager {
             List<Tuple<int, int>> offsets =  DeskGrid.Cell.FindCellsToCheck(preposition);
             
             foreach (Tuple<int, int> offset in offsets) {
-                GameObject gameObject = poPManager.ActivateObject("Rubber", grid.Grid[1 + offset.Item1, 2 + offset.Item2].CenterCoordinates, Positions.ObjectsRotation);
+                GameObject gameObject = poPManager.ActivateObject("Rubber", grid.Grid[1 + offset.Item1, 2 + offset.Item2].CenterCoordinates + new Vector3(0,0.1f,0), Positions.ObjectsRotation);
                 poPManager.EnableOutline("Rubber");
                 yield return new WaitForSeconds(2);
                 poPManager.DisableOutline("Rubber");

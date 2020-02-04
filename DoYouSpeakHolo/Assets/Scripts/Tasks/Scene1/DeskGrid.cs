@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.MixedReality.Toolkit.Input;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static EventManager;
@@ -12,7 +14,7 @@ public class DeskGrid {
     /// Lenth of a single grid cell
     /// </summary>
     private readonly float cellLength;
-    
+
     /// <summary>
     /// Width of a single grid cell
     /// </summary>        
@@ -41,6 +43,9 @@ public class DeskGrid {
         Grid = new Cell[rows, columns];
     }
 
+    /// <summary>
+    /// Activate all the cells's colliders and add the focus handler to every cell
+    /// </summary>
     internal void ActivateCells() {
         for (int row = 0; row < rows; row++) {
             for (int column = 0; column < columns; column++) {
@@ -65,10 +70,17 @@ public class DeskGrid {
         Grid[row, column].Setup(cellCenter,
                                      cellLength,
                                      cellWidth,
+                                     row,
+                                     column,
                                      tableTransform,
                                      this);
     }
 
+    /// <summary>
+    /// Find the cell in which the object is contained
+    /// </summary>
+    /// <param name="deskObject"></param>
+    /// <returns></returns>
     internal Cell FindCellOf(string deskObject) {
         Debug.Log("Finding cell of " + deskObject);
         for (int row = 0; row < rows; row++) {
@@ -90,7 +102,7 @@ public class DeskGrid {
         /// Keeps track of the game objects in the same cell.
         /// </summary>
         private List<string> verticalStack;
-        //private GameObject cellObject;
+
 
         /// <summary>
         /// Box Collider associated to a single cell, used to detect when an object enters/leaves the cell
@@ -98,14 +110,14 @@ public class DeskGrid {
         private BoxCollider boxCollider;
 
         /// <summary>
-        /// Enumeration representing the prepositions of place
+        /// Detect whether the user is looking at the cell.
         /// </summary>
-        public enum Prepositions { InFrontOf, Behind, NextTo, /*On*/};
+        private FocusHandler focusHandler;
 
         /// <summary>
-        /// The object in the current cell.
+        /// Enumeration representing the prepositions of place
         /// </summary>
-        private string ReferenceObject { set; get; }
+        public enum Prepositions { InFrontOf, Behind, NextTo, /*On*/ };
 
         /// <summary>
         /// The preposition of the task
@@ -122,15 +134,16 @@ public class DeskGrid {
         /// </summary>
         public Vector3 CenterCoordinates {
             get => gameObject.transform.position;
-            private set => gameObject.transform.position = value; }
+            private set => gameObject.transform.position = value;
+        }
 
+        /// <summary>
+        /// Cell collider dimension.
+        /// </summary>
         public Vector3 StackSize {
             get => boxCollider.size;
             private set => boxCollider.size = value;
         }
-
-        public Transform TableTransform { get; private set; }
-
 
         /// <summary>
         /// Grid reference
@@ -138,85 +151,157 @@ public class DeskGrid {
         private Cell[,] grid;
 
         /// <summary>
+        /// Cell row index
+        /// </summary>
+        private int cellRow;
+
+        /// <summary>
+        /// Cell column index
+        /// </summary>
+        private int cellColumn;
+
+        private bool finishedFocusEnter = true;
+
+        /// <summary>
         /// Set up the new Game Object, creates the collider and the vertical stack.
         /// </summary>
-        /// <param name="cellCenter">Cell grid center in local coordinates</param>
+        /// <param name="cellCenter">Cell grid center in world coordinates</param>
         /// <param name="cellLength">Cell and Box Collider length</param>
         /// <param name="cellWitdh">Cell and Box Collider width</param>
+        /// <param name="cellRow">Cell row index</param>
+        /// <param name="cellColumn">Cell column index</param>
         /// <param name="tableTransform"></param>
-        /// <param name="deskGrid"></param>
-        public void Setup(Vector3 cellCenter, float cellLength, float cellWitdh, Transform tableTransform, DeskGrid deskGrid) {
+        /// <param name="deskGrid"></param>        
+        public void Setup(Vector3 cellCenter, float cellLength, float cellWitdh, int cellRow, int cellColumn, Transform tableTransform, DeskGrid deskGrid) {
 
-            TableTransform = tableTransform;
-            
+            //Set the row and the column index
+            this.cellRow = cellRow;
+            this.cellColumn = cellColumn;
+
+            //Set the cell rotation
             gameObject.transform.rotation = Quaternion.Euler(0f, tableTransform.rotation.eulerAngles.y, 0f);
-            gameObject.transform.localScale = new Vector3(tableTransform.localScale.x, tableTransform.localScale.y,1);
+
+            //Set the cell scale
+            gameObject.transform.localScale = new Vector3(tableTransform.localScale.x, tableTransform.localScale.y, 1);
+
             //Add the Box Collider to the Game Object
             boxCollider = gameObject.AddComponent<BoxCollider>();
-            
+
+            //Add the FocusHandler to detect whether the user is looking at the cell
+            focusHandler = gameObject.AddComponent<FocusHandler>();
 
             //Compute the cell center in local coordinates starting from the global ones
             CenterCoordinates = cellCenter + new Vector3(0, 0.005f, 0);
 
-            //Resize the collider in order to keep each cell grid separate from the others
-            StackSize = 0.8f * (new Vector3(cellLength, 0.02f, cellWitdh));
+            //Resize the game object and the collider in order to keep each cell grid separate from the others
+            StackSize = 0.9f * new Vector3(cellLength, 0.02f, 1.5f * cellWitdh);
 
+            //Make the collider detect collision in order to trigger the methods OnTriggerEnter and OnTriggerExit
             boxCollider.isTrigger = true;
+
+            //Disable the collider by default
             boxCollider.enabled = false;
-            
+
             grid = deskGrid.Grid;
-            
+
             verticalStack = new List<string>();
         }
 
-        public void SetMove(string referenceObject, Prepositions preposition, string targetObject) {
-            ReferenceObject = referenceObject;
+        /// <summary>
+        /// Set the current move to the cell
+        /// </summary>
+        /// <param name="preposition">The preposition representing the offset from the cell</param>
+        /// <param name="targetObject">The object to place</param>
+        public void SetMove(Prepositions preposition, string targetObject) {
             TargetPreposition = preposition;
             TargetObject = targetObject;
         }
 
+        /// <summary>
+        /// Start to listen for collisions.
+        /// </summary>
         internal void ActivateCell() {
+            //Activate the collider
             boxCollider.enabled = true;
+            //Add the listener to the OnFocusEvent in order to allow the user to pick the objects
+            focusHandler.OnFocusEnterEvent.AddListener(() => StartCoroutine(MoveDownCollider()));
+        }
+
+        /// <summary>
+        /// Reduce the collider position in order to pick the last object on the stack.
+        /// </summary>
+        /// <returns></returns>
+        private IEnumerator MoveDownCollider() {
+            //If the user is not already looking at the cell and the stack contains some object
+            if (finishedFocusEnter && verticalStack.Count > 0) {
+                //Prevent that the code is executed by other concurrent events
+                finishedFocusEnter = false;
+                //Compute the new game object position (half of its height)
+                float decrementCenterY = ObjectPooler.GetPooler().GetPooledObject(verticalStack[verticalStack.Count - 1]).GetComponent<Renderer>().bounds.size.y / 2;
+                //Set the new coordinates
+                CenterCoordinates -= new Vector3(0, decrementCenterY, 0);
+                //Allow the user to pick up the object before restoring the collider position
+                yield return new WaitForSeconds(2);
+                //Restore the initial cell position
+                CenterCoordinates += new Vector3(0, decrementCenterY, 0);
+                //Allow other code executions
+                finishedFocusEnter = true;
+            }
         }
 
         /// <summary>
         /// Add the collider's game object to the stack and move the collider on top of it.
         /// </summary>
-        /// <param name="other">the game object collider</param>
+        /// <param name="other">the entering game object collider</param>
         private void OnTriggerEnter(Collider other) {
+            //If the object is not already contained into the stack and it is not the table ("Cube")
             if (!verticalStack.Contains(other.gameObject.name) && !Equals(other.gameObject.name, "Cube")) {
                 Debug.Log(other.gameObject.name + " Entered the cell");
-               
+
+                //Add the object to the stack
                 verticalStack.Add(other.gameObject.name);
 
-                Bounds objectBounds = other.gameObject.GetComponent<Renderer>().bounds;
+                //Compute the new game object position (add its height)
+                float incrementCenterY = other.gameObject.GetComponent<Renderer>().bounds.size.y;
 
-                float incrementCenterY = objectBounds.size.y;
-                //float incrementSizeY = objectBounds.size.y / 2;
-
+                //Set the new coordinates
                 CenterCoordinates += new Vector3(0, incrementCenterY, 0);
-                //boxCollider.size += new Vector3(0, incrementSizeY, 0);
 
+                //Trigger the event to check if the object is in the right cell
                 TriggerEvent(Triggers.ObjectPositioning);
+
+
+                //This code is left for future work purposes: modify also the collider size 
+                //in order to allow the user only to pick up the latest object on the stack.
+
+                //float incrementSizeY = objectBounds.size.y / 2;
+                //boxCollider.size += new Vector3(0, incrementSizeY, 0);
             }
-            
+
         }
 
         /// <summary>
         /// Remove the collider's game object from the stack and adjust the collider position
         /// </summary>
-        /// <param name="other"></param>
+        /// <param name="other">the exiting game object collider</param>
         private void OnTriggerExit(Collider other) {
+            //If the object is not already contained into the stack and it is not the table ("Cube")
             if (verticalStack.Contains(other.gameObject.name) && !Equals(other.gameObject.name, "Cube")) {
                 Debug.Log(other.gameObject.name + " Exited the cell");
+
+                //Remove the object from the stack
                 verticalStack.Remove(other.gameObject.name);
 
-                Bounds objectBounds = other.gameObject.GetComponent<Renderer>().bounds;
+                //Compute the new game object position (subtract its height)
+                float decrementCenterY = other.gameObject.GetComponent<Renderer>().bounds.size.y;
 
-                float decrementCenterY = objectBounds.size.y;
-                //float decrementSizeY = objectBounds.size.y / 2;
-
+                //Set the new coordinates
                 CenterCoordinates -= new Vector3(0, decrementCenterY, 0);
+
+                //This code is left for future work purposes: modify also the collider size 
+                //in order to allow the user only to pick up the latest object on the stack.
+
+                //float decrementSizeY = objectBounds.size.y / 2;
                 //boxCollider.size -= new Vector3(0, decrementSizeY, 0);
             }
         }
@@ -235,22 +320,28 @@ public class DeskGrid {
         /// Check if in the cells suggested by the preposition there is the target object and triggers the VA resposne.
         /// </summary>
         private void CheckObjectPosition() {
+
+            //Compute the cells' offset to check
             List<Tuple<int, int>> cellsToCheck = FindCellsToCheck(TargetPreposition);
 
             //For each possible offset
             cellsToCheck.ForEach(cellOffset => {
                 //If the corresponding cell contains the target object
-                if (grid[cellOffset.Item1,cellOffset.Item2].Contains(TargetObject)) {
+                if (grid[cellRow + cellOffset.Item1, cellColumn + cellOffset.Item2].Contains(TargetObject)) {
                     //Trigger the VA position
                     TriggerEvent(Triggers.VAOk);
                     //Trigger the handler for the next iteration
                     TriggerEvent(Triggers.CorrectPositioning);
+                    //Stop listen for object positioning event
+                    StopListenForPositioning();
+
                     return;
                 }
             });
 
             //Trigger the VA negative reaction: the object has not been found
             TriggerEvent(Triggers.VAKo);
+
         }
 
         /// <summary>
@@ -258,9 +349,7 @@ public class DeskGrid {
         /// </summary>
         /// <param name="targetObject"></param>
         /// <returns>True if it is in the cell, otherwise false</returns>
-        public bool Contains(string targetObject) {
-            return verticalStack.Contains(targetObject);
-        }
+        public bool Contains(string targetObject) => verticalStack.Contains(targetObject);
 
         /// <summary>
         /// Finds the adjacent cell suggested by the preposition
@@ -280,15 +369,19 @@ public class DeskGrid {
                     offsets.Add(new Tuple<int, int>(0, +1));
                     offsets.Add(new Tuple<int, int>(0, -1));
                     break;
-                /*case Prepositions.On:
-                    offsets.Add(new Tuple<int, int>(-1, 0));
-                    break;*/
+                //case Prepositions.On:
+                //    offsets.Add(new Tuple<int, int>(0, 0));
+                //    break;
                 default: throw new NotImplementedException();
             }
-
             return offsets;
         }
 
+        /// <summary>
+        /// Returns the string associated to a prepositon
+        /// </summary>
+        /// <param name="targetPreposition"></param>
+        /// <returns></returns>
         public static string PrepositionAsString(Prepositions targetPreposition) {
             switch (targetPreposition) {
                 case Prepositions.Behind:
@@ -297,12 +390,10 @@ public class DeskGrid {
                     return "InFrontOf";
                 case Prepositions.NextTo:
                     return "NextTo";
-                /*case Prepositions.On:
-                    offsets.Add(new Tuple<int, int>(-1, 0));
-                    break;*/
+                //case Prepositions.On:
+                //    return "On";
                 default: throw new NotImplementedException();
             }
-
         }
     }
 }

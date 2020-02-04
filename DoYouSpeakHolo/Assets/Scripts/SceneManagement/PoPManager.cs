@@ -21,42 +21,15 @@ public class PoPManager : AbstractSceneManager {
         Grid = Pooler.GetGrid();
         Pooler.CreateStaticObjects(sceneObjects.staticObjects);
         Pooler.CreateDynamicObjects(sceneObjects.dynamicObjects);
-
     }
 
-    //private void FoundObject() {
-    //    //increase the counter
-    //    findObjectCounter++;
-    //    if (findObjectCounter == TargetObjects.Count - 1) {
-    //        //Objects are finished
-    //    }
-    //    else {
-    //        SetTargetObject();
-    //    }
-    //}
+    public override void StartListeningToCustomEvents() => StartListening(Triggers.CorrectPositioning, FoundObject);
 
-    ////Set the object that the user has to find
-    //private void SetTargetObject() {
-    //    //VA tells the User which object he needs to find to complete the task
-    //    Debug.Log("Object to find " + TargetObjects[findObjectCounter]);
-
-    //    //Set the current target
-    //    GetPooledObject(TargetObjects[findObjectCounter]).GetComponent<FindObjectTask>().IsTarget = true;
-    //}
-
-    public override void StartListeningToCustomEvents() {
-        StartListening(Triggers.CorrectPositioning, FoundObject);
-    //    StartListening(Triggers.SetTargetObject, SetTargetObject);
-    }
+    public override void StopListeningToCustomEvents() => StopListening(Triggers.FoundObject, FoundObject);
 
     private void FoundObject() {
         CheckingPhaseActivity1 checkingManager = (CheckingPhaseActivity1)CheckingPhaseManager;
         checkingManager.FoundObject();
-    }
-
-    public override void StopListeningToCustomEvents() {
-        //StopListening(Triggers.FoundObject, FoundObject);
-        //StopListening(Triggers.SetTargetObject, SetTargetObject);
     }
 
     internal IEnumerator IntroduceMove(Tuple<string, DeskGrid.Cell.Prepositions, string> move) {

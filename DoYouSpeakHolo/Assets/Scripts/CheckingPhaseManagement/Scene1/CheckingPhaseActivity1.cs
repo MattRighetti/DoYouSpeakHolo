@@ -10,6 +10,7 @@ class CheckingPhaseActivity1 : CheckingPhaseManager {
     private DeskGrid deskGrid;
     private System.Random rnd;
     private List<Tuple<string, DeskGrid.Cell.Prepositions, string>> moves;
+    private Tuple<string, DeskGrid.Cell.Prepositions, string> move;
 
 
     //Spawn the objects in random order and ask the user to pick a specific one
@@ -41,14 +42,15 @@ class CheckingPhaseActivity1 : CheckingPhaseManager {
 
     private void SetTargetPositions() {
         string reference = "Book";
-        moves.Add(new Tuple<string, DeskGrid.Cell.Prepositions, string>(reference,DeskGrid.Cell.Prepositions.Behind, "Lamp"));
-        moves.Add(new Tuple<string, DeskGrid.Cell.Prepositions, string>(reference, DeskGrid.Cell.Prepositions.NextTo, "Ruler"));
-        moves.Add(new Tuple<string, DeskGrid.Cell.Prepositions, string>(reference, DeskGrid.Cell.Prepositions.InFrontOf, "Rubber"));
+        moves.Add(new Tuple<string, DeskGrid.Cell.Prepositions, string>(reference,DeskGrid.Cell.Prepositions.Behind, "Mug"));
         moves.Add(new Tuple<string, DeskGrid.Cell.Prepositions, string>(reference, DeskGrid.Cell.Prepositions.NextTo, "Pencil"));
+        moves.Add(new Tuple<string, DeskGrid.Cell.Prepositions, string>(reference, DeskGrid.Cell.Prepositions.InFrontOf, "Rubber"));
+        moves.Add(new Tuple<string, DeskGrid.Cell.Prepositions, string>(reference, DeskGrid.Cell.Prepositions.NextTo, "PencilSharpener"));
     }
 
     internal void FoundObject() {
-        throw new NotImplementedException();
+        moves.Remove(move);
+        StartCoroutine(TidyUpTheDeskIteration());
     }
 
     private IEnumerator TidyUpTheDesk() {
@@ -64,12 +66,13 @@ class CheckingPhaseActivity1 : CheckingPhaseManager {
     }
 
     private IEnumerator TargetNextMove() {
-        Tuple<string, DeskGrid.Cell.Prepositions, string> move = moves[rnd.Next(moves.Count)];
+        move = moves[rnd.Next(moves.Count)];
         yield return poPManager.IntroduceMove(move);
+        Debug.Log("move " + move.ToString());
 
         DeskGrid.Cell referenceCell = deskGrid.FindCellOf(move.Item1);
         
-        referenceCell.SetMove(move.Item1, move.Item2, move.Item3);
+        referenceCell.SetMove(move.Item2, move.Item3);
         referenceCell.ListenForPositioning();
     }
 }

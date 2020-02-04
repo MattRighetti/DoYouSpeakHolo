@@ -10,23 +10,23 @@
       "dynamicObjects": [
         {
           "type": "Book",
-          "path": "Prefab/Objects/Book"
+          "path": "Prefab/Objects/Basic_Low_Poly_Book (Faces 552)"
         },
         {
-          "type": "PencilHolder",
-          "path": "Prefab/Objects/PencilHolder"
+          "type": "Mug",
+          "path": "Prefab/Objects/Basic_Low_Poly_Mug (Faces 304)"
         },
         {
-          "type": "Lamp",
-          "path": "Prefab/Objects/Lamp"
+          "type": "Pencil",
+          "path": "Prefab/Objects/Basic_Low_Poly_Pencil (Faces 150)"
         },
         {
           "type": "PencilSharpener",
-          "path": "Prefab/Objects/PencilSharpener"
+          "path": "Prefab/Objects/Basic_Low_Poly_Sharpner (Faces 657)"
         },
         {
           "type": "Rubber",
-          "path": "Prefab/Objects/Rubber"
+          "path": "Prefab/Objects/Basic_Low_Poly_Rubber (Faces 208)"
         }
       ]
     },

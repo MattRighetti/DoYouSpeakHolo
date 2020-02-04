@@ -1,4 +1,5 @@
-﻿using HoloToolkit.Unity.SpatialMapping;
+﻿using System;
+using HoloToolkit.Unity.SpatialMapping;
 using HoloToolkit.Unity.SpatialMapping.Tests;
 using UnityEngine;
 
@@ -46,6 +47,7 @@ public class Positions {
     //Rotation to make the objects be oriented towards the user
     public static Quaternion ObjectsRotation = new Quaternion();
     private float height;
+    private Vector3 VAPositionOnTable;
 
     public DeskGrid Grid { get; private set; }
     public Transform TableTransform { get; set; }
@@ -53,24 +55,24 @@ public class Positions {
 
     //  Compute the object position with respect to the gazePosition and the floorPosition
     public Vector3 GetPosition(Vector3 position) {
-        if (!UseTable) { 
+        if (!UseTable)
             //  This is the correct way to deal with local coordinates
             position = gazeTransform.TransformPoint(position);
-            position.y = height;
-        }
-        else {
-            
-            position.y = height + 0.02f;
-        }
+        
+        position.y = height;
         return position;
+    }
+
+    internal Vector3 GetVaPositionOnTable() {
+        Vector3 VaPosition = TableTransform.TransformPoint(VAPositionOnTable);
+        VaPosition.y = height;
+        return VaPosition;
     }
 
     //  Determine gazePosition and FloorPosition according to the user gaze
     public void FindFloor() {
         UseTable = false;
         Transform floor = SpatialProcessingTest.Instance.floors[0].transform;
-
-        DebugDrawPlanes(floor);
 
         SurfacePlane plane = floor.GetComponent<SurfacePlane>();
         floorPosition = floor.transform.position + (plane.PlaneThickness * plane.SurfaceNormal);
@@ -105,8 +107,6 @@ public class Positions {
         UseTable = true;
         TableTransform = SpatialProcessingTest.Instance.tables[0].transform;
 
-        DebugDrawPlanes(TableTransform);
-
         SurfacePlane plane = TableTransform.GetComponent<SurfacePlane>();
 
         tablePosition = TableTransform.transform.position + (plane.PlaneThickness * plane.SurfaceNormal);
@@ -136,26 +136,12 @@ public class Positions {
         ObjectsRotation = rotation;
         height = tablePosition.y;
         Grid = (new SimpleGridGenerator(TableTransform, height)).Grid;
+        VAPositionOnTable = Grid.Grid[2,1].CenterCoordinates + new Vector3(0, -0.55f, 0);
     }
 
     private Bounds GetColliderBounds(Transform transform) {
         return transform.GetComponent<Collider>().bounds;
     }
-
-    private void DebugDrawPlanes(Transform transformObject) {
-        Bounds tableColliderBounds = GetColliderBounds(transformObject);
-
-        Vector3 tableEdge1 = transformObject.TransformPoint(0.4f, 0f, 0f);
-        Vector3 tableEdge2 = transformObject.TransformPoint(-0.4f, 0f, 0f);
-        Vector3 tableEdge3 = transformObject.TransformPoint(0f, 0.4f, 0f);
-        Vector3 tableEdge4 = transformObject.TransformPoint(0f, -0.4f, 0f);
-
-        Debug.DrawLine(tableEdge1, tableColliderBounds.center, Color.black, 30f);
-        Debug.DrawLine(tableEdge2, tableColliderBounds.center, Color.black, 30f);
-        Debug.DrawLine(tableEdge3, tableColliderBounds.center, Color.black, 30f);
-        Debug.DrawLine(tableEdge4, tableColliderBounds.center, Color.black, 30f);
-    }
-
     protected virtual Vector3 AdjustPositionWithSpatialMap(Vector3 position, Vector3 surfaceNormal) {
         Vector3 newPosition = position;
         RaycastHit hitInfo;

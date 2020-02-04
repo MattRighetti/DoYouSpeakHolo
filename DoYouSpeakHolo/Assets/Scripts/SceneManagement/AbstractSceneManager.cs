@@ -51,7 +51,11 @@ public abstract class AbstractSceneManager : MonoBehaviour {
         StartListening();
 
         //  Activate the Virtual Assistant and set it up
-        VirtualAssistant = ActivateObject("VA", Positions.VAPosition, Positions.ObjectsRotation).GetComponent<VirtualAssistantManager>();
+        if (scene == 0)
+            VirtualAssistant = ActivateObject("VA", Pooler.Positions.GetVaPositionOnTable(), Positions.ObjectsRotation).GetComponent<VirtualAssistantManager>();
+        else
+            VirtualAssistant = ActivateObject("VA", Positions.VAPosition, Positions.ObjectsRotation).GetComponent<VirtualAssistantManager>();
+
         VirtualAssistant.Setup();
     }
 

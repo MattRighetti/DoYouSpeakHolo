@@ -162,6 +162,7 @@ public class DeskGrid {
         private int cellColumn;
 
         private bool finishedFocusEnter = true;
+        private bool isExecuting = false;
 
         /// <summary>
         /// Set up the new Game Object, creates the collider and the vertical stack.
@@ -195,7 +196,7 @@ public class DeskGrid {
             CenterCoordinates = cellCenter + new Vector3(0, 0.005f, 0);
 
             //Resize the game object and the collider in order to keep each cell grid separate from the others
-            StackSize = 0.9f * new Vector3(cellLength, 0.02f, 1.5f * cellWitdh);
+            StackSize = 0.9f * new Vector3(cellLength, 0.005f, 1.5f * cellWitdh);
 
             //Make the collider detect collision in order to trigger the methods OnTriggerEnter and OnTriggerExit
             boxCollider.isTrigger = true;
@@ -325,32 +326,38 @@ public class DeskGrid {
         }
 
         private IEnumerator CheckObjectPosition() {
-            bool found = false;
+            if (!isExecuting) {
+                isExecuting = true;
+                bool found = false;
 
-            //Compute the cells' offset to check
-            List<Tuple<int, int>> cellsToCheck = FindCellsToCheck(TargetPreposition);
+                //Compute the cells' offset to check
+                List<Tuple<int, int>> cellsToCheck = FindCellsToCheck(TargetPreposition);
 
-            //For each possible offset
-            foreach (Tuple<int, int> cellOffset in cellsToCheck) {
-                //If the corresponding cell contains the target object
-                if (grid[cellRow + cellOffset.Item1, cellColumn + cellOffset.Item2].Contains(TargetObject)) {
-                    ObjectPooler.GetPooler().GetPooledObject(TargetObject).GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-                    Destroy(ObjectPooler.GetPooler().GetPooledObject(TargetObject).GetComponent<ManipulationHandler>());
-                    Destroy(ObjectPooler.GetPooler().GetPooledObject(TargetObject).GetComponent<NearInteractionGrabbable>());
-                    found = true;
-                    //Trigger the VA position
-                    TriggerEvent(Triggers.VAOk);
-                    yield return new WaitForSeconds(3);
-                    //Trigger the handler for the next iteration
-                    TriggerEvent(Triggers.CorrectPositioning);
-                    //Stop listen for object positioning event
-                    StopListenForPositioning();
+                //For each possible offset
+                foreach (Tuple<int, int> cellOffset in cellsToCheck) {
+                    //If the corresponding cell contains the target object
+                    if (!found && grid[cellRow + cellOffset.Item1, cellColumn + cellOffset.Item2].Contains(TargetObject)) {
+                        //Stop listen for object positioning event
+                        StopListenForPositioning();
+
+                        ObjectPooler.GetPooler().GetPooledObject(TargetObject).GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                        Destroy(ObjectPooler.GetPooler().GetPooledObject(TargetObject).GetComponent<ManipulationHandler>());
+                        Destroy(ObjectPooler.GetPooler().GetPooledObject(TargetObject).GetComponent<NearInteractionGrabbable>());
+
+                        found = true;
+                        //Trigger the VA position
+                        TriggerEvent(Triggers.VAOk);
+                        yield return new WaitForSeconds(3);
+                        //Trigger the handler for the next iteration
+                        TriggerEvent(Triggers.CorrectPositioning);
+                    }
                 }
-            }
 
-            if (!found)
-                //Trigger the VA negative reaction: the object has not been found
-                TriggerEvent(Triggers.VAKo);
+                if (!found)
+                    //Trigger the VA negative reaction: the object has not been found
+                    TriggerEvent(Triggers.VAKo);
+                isExecuting = false;
+            }
         }
 
         /// <summary>

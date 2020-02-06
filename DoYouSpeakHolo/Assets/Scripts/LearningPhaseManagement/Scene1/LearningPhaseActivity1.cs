@@ -32,10 +32,11 @@ public class LearningPhaseActivity1 : LearningPhaseManager {
 
         foreach (DeskGrid.Cell.Prepositions preposition in Enum.GetValues(typeof(DeskGrid.Cell.Prepositions))) {
             List<Tuple<int, int>> offsets =  DeskGrid.Cell.FindCellsToCheck(preposition);
-            
+            Tuple<string, DeskGrid.Cell.Prepositions, string> move = new Tuple<string, DeskGrid.Cell.Prepositions, string>(referenceObject.name,preposition, "Rubber");
             foreach (Tuple<int, int> offset in offsets) {
                 GameObject gameObject = poPManager.ActivateObject("Rubber", grid.Grid[1 + offset.Item1, 2 + offset.Item2].CenterCoordinates + new Vector3(0,0.1f,0), Positions.ObjectsRotation);
                 poPManager.EnableOutline("Rubber");
+                yield return poPManager.IntroducePreposition(move);
                 yield return new WaitForSeconds(2);
                 poPManager.DisableOutline("Rubber");
                 poPManager.DeactivateObject("Rubber");

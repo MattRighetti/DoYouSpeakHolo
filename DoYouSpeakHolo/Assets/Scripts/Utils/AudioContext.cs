@@ -30,11 +30,11 @@ public class AudioContext1 : AudioContext {
     public override AudioClip GetContextAudio(string objectName) {
         List<string> objects = new List<string>(objectName.Split('_'));
 
-        string path = "Audio/" + Scene.Value + "/" + "Prepositions" + objects[2] + "/";
+        string path = "Audio/" + Scene.Value + "/" + "Prepositions" + objects[3] + "/";
         Debug.Log("audio path: " + path);
         List<AudioClip> audioFiles = new List<AudioClip>(Resources.LoadAll<AudioClip>(path));
         foreach (AudioClip audio in audioFiles) {
-            if (audio.name.Contains(objects[0]) && audio.name.Contains(objects[1])) {
+            if (audio.name.Contains(objects[0]) && audio.name.Contains(objects[2]) && audio.name.Contains(objects[2])) {
                 return audio;
             }
         }
@@ -52,7 +52,7 @@ public class AudioContext2 : AudioContext {
     public override AudioClip GetContextAudio(string objectName) {
         List<string> objects = new List<string>(objectName.Split('_'));
 
-        switch(objects[0]) {
+        switch (objects[0]) {
             case "Task": return PickTaskAudio(objects);
             case "Introduction": return PickIntroductionAudio(objects);
             default: throw new Exception("path bad formed");
@@ -125,7 +125,7 @@ public class Possessives {
 
     internal static Possessives AsPossessive(string value) {
         Debug.Log("TO PARSE " + value);
-        switch(value) {
+        switch (value) {
             case "his": return His;
             case "her": return Her;
             case "their": return Their;

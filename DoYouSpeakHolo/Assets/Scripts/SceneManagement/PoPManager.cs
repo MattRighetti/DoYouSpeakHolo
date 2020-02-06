@@ -33,7 +33,11 @@ public class PoPManager : AbstractSceneManager {
     }
 
     internal IEnumerator IntroduceMove(Tuple<string, DeskGrid.Cell.Prepositions, string> move) {
-        yield return VirtualAssistant.IntroduceObjectWithContext(AudioContext, move.Item1 + "_" + DeskGrid.Cell.PrepositionAsString(move.Item2) + "_" + move.Item3);
+        yield return VirtualAssistant.IntroduceObjectWithContext(AudioContext, "Put_" + move.Item1 + "_" + DeskGrid.Cell.PrepositionAsString(move.Item2) + "_" + move.Item3);
+    }
+
+    internal IEnumerator IntroducePreposition(Tuple<string, DeskGrid.Cell.Prepositions, string> move) {
+        yield return VirtualAssistant.IntroduceObjectWithContext(AudioContext, "Learn_" + move.Item1 + "_" + DeskGrid.Cell.PrepositionAsString(move.Item2) + "_" + move.Item3);
     }
 }
 

@@ -5,7 +5,6 @@ using HoloToolkit.Unity.SpatialMapping;
 using System;
 using UnityEngine;
 
-
 public class SimpleGridGenerator {
 
     /// <summary>

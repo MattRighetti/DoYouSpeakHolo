@@ -100,9 +100,12 @@ public class SimpleGridGenerator {
         for (int row = 0; row < Rows; row++) {
             for (int column = 0; column < Columns; column++) {
                 Vector3 cellCenter = tableTransform.TransformPoint(new Vector3(columnStart + column * cellLength, rowStart - row * cellWitdh, tableHeight));
-
                 Grid.AddCell(cellCenter, row, column);
             }
         }
+    }
+
+    internal Vector3 GetVAPosition() {
+        return new Vector3(Grid.Grid[Rows - 1, Columns - 1].CenterCoordinates.x, Grid.Grid[Rows - 1, Columns - 1].CenterCoordinates.y, Grid.Grid[Rows - 1, Columns - 1].CenterCoordinates.z - 0.3f * Math.Min(Math.Abs(tableBounds.size.x), Math.Abs(tableBounds.size.z)));
     }
 }

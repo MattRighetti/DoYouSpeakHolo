@@ -64,7 +64,7 @@ public class Positions {
     }
 
     internal Vector3 GetVaPositionOnTable() {
-        Vector3 VaPosition = TableTransform.TransformPoint(VAPositionOnTable);
+        Vector3 VaPosition = VAPositionOnTable;
         VaPosition.y = height;
         return VaPosition;
     }
@@ -135,8 +135,9 @@ public class Positions {
         rotation.z = 0f;
         ObjectsRotation = rotation;
         height = tablePosition.y;
-        Grid = (new SimpleGridGenerator(TableTransform, height)).Grid;
-        VAPositionOnTable = Grid.Grid[2,1].CenterCoordinates + new Vector3(0, -0.55f, 0);
+        SimpleGridGenerator gridGenerator = new SimpleGridGenerator(TableTransform, height);
+        Grid = gridGenerator.Grid;
+        VAPositionOnTable = gridGenerator.GetVAPosition();
     }
 
     private Bounds GetColliderBounds(Transform transform) {

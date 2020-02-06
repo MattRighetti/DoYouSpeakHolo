@@ -1,4 +1,5 @@
 ﻿using Microsoft.MixedReality.Toolkit.Input;
+using Microsoft.MixedReality.Toolkit.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -333,6 +334,9 @@ public class DeskGrid {
             foreach (Tuple<int, int> cellOffset in cellsToCheck) {
                 //If the corresponding cell contains the target object
                 if (grid[cellRow + cellOffset.Item1, cellColumn + cellOffset.Item2].Contains(TargetObject)) {
+                    ObjectPooler.GetPooler().GetPooledObject(TargetObject).GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                    Destroy(ObjectPooler.GetPooler().GetPooledObject(TargetObject).GetComponent<ManipulationHandler>());
+                    Destroy(ObjectPooler.GetPooler().GetPooledObject(TargetObject).GetComponent<NearInteractionGrabbable>());
                     found = true;
                     //Trigger the VA position
                     TriggerEvent(Triggers.VAOk);

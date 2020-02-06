@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using Microsoft.MixedReality.Toolkit.Input;
+using Microsoft.MixedReality.Toolkit.UI;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,6 +26,10 @@ public class ArkLogic : MonoBehaviour
         if (Equals(collider.gameObject.name, targetAnimal)) {
             //Remove it from the list of target animals
             AnimalList.Remove(collider.gameObject.name);
+
+            collider.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+            Destroy(collider.gameObject.GetComponent<ManipulationHandler>());
+            Destroy(collider.gameObject.GetComponent<NearInteractionGrabbable>());
             //Trigger the positive reaction of the Virtual assistant
             EventManager.TriggerEvent(EventManager.Triggers.VAOk);
             Wait(3);

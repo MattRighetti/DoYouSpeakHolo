@@ -7,8 +7,8 @@ public class HighlightEnabler : MonoBehaviour
     private void OnEnable() {
         outline = gameObject.GetComponent<Outline>();
         outline.OutlineColor = Color.cyan;
-        outline.OutlineMode = Outline.Mode.OutlineVisible;
-        outline.OutlineWidth = 5f;
+        outline.OutlineMode = Outline.Mode.SilhouetteOnly;
+        outline.OutlineWidth = 3f;
         outline.enabled = false;
     }
 

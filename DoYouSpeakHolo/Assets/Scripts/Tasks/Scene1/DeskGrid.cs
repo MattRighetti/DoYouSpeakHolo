@@ -196,7 +196,7 @@ public class DeskGrid {
             CenterCoordinates = cellCenter + new Vector3(0, 0.005f, 0);
 
             //Resize the game object and the collider in order to keep each cell grid separate from the others
-            StackSize = 0.9f * new Vector3(cellLength, 0.005f, 1.5f * cellWitdh);
+            StackSize = 0.9f * new Vector3(cellLength, 0.02f, 1.5f * cellWitdh);
 
             //Make the collider detect collision in order to trigger the methods OnTriggerEnter and OnTriggerExit
             boxCollider.isTrigger = true;
@@ -356,6 +356,7 @@ public class DeskGrid {
                 if (!found)
                     //Trigger the VA negative reaction: the object has not been found
                     TriggerEvent(Triggers.VAKo);
+
                 isExecuting = false;
             }
         }

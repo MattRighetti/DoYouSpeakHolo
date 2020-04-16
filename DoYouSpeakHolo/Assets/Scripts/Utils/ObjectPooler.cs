@@ -1,16 +1,25 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
+//  Class responsible of active/deactivate objects
 public class ObjectPooler : MonoBehaviour {
     public static ObjectPooler SharedInstance;
 
+    //  Static objects (e.g. scene background)
     private Dictionary<string, GameObject> staticObjectsDictionary;
+
+    //  Dynamic objects (everything interacting with the user)
     private Dictionary<string, GameObject> dynamicObjectsDictionary;
+
+    //  Determines the position of the objects
+    public Positions Positions;
 
     void Awake() {
         SharedInstance = this;
         staticObjectsDictionary = new Dictionary<string, GameObject>();
         dynamicObjectsDictionary = new Dictionary<string, GameObject>();
+        Positions = new Positions();
     }
 
     public static ObjectPooler GetPooler() {
@@ -18,38 +27,40 @@ public class ObjectPooler : MonoBehaviour {
         return obj.GetComponent<ObjectPooler>();
     }
 
+    //  Set the floor position
+    internal void FindFloor() {
+        Positions.FindFloor();
+    }
+
+    internal void FindTable() {
+        Positions.FindTable();
+    }
+
+    public DeskGrid GetGrid() {
+        return Positions.Grid;
+    }
+
     //Create the objects, deactivate and store them into the data structure
-    public void CreateStaticObjects(Dictionary<string, string> objectsDict) {
-        if (staticObjectsDictionary == null) {
-            staticObjectsDictionary = new Dictionary<string, GameObject>();
-        }
-        foreach (KeyValuePair<string, string> keyValuePair in objectsDict) {
-        
-            Debug.Log(keyValuePair);
-            GameObject obj = Instantiate(Resources.Load(keyValuePair.Value, typeof(GameObject))) as GameObject;
+    public void CreateStaticObjects(List<SingleObjectToLoad> staticObjects) {
+        foreach (SingleObjectToLoad objectString in staticObjects) {
+            GameObject obj = Instantiate(Resources.Load(objectString.path, typeof(GameObject))) as GameObject;
             obj.transform.position = Positions.hiddenPosition;
             obj.SetActive(false);
 
-            staticObjectsDictionary.Add(keyValuePair.Key, obj);
-
-           
+            staticObjectsDictionary.Add(objectString.type, obj);
         }
     }
 
     //Create the objects, deactivate and store them into the data structure
-    public void CreateDynamicObjects(Dictionary<string, string> objectsDict) {
-        if (dynamicObjectsDictionary == null) {
-            dynamicObjectsDictionary = new Dictionary<string, GameObject>();
-        }
-        foreach (KeyValuePair<string, string> keyValuePair in objectsDict) {
-            Debug.Log(keyValuePair);
-            GameObject obj = Instantiate(Resources.Load(keyValuePair.Value, typeof(GameObject))) as GameObject;
+    public void CreateDynamicObjects(List<SingleObjectToLoad> dynamicObjects) {
+        foreach (SingleObjectToLoad objectString in dynamicObjects) {
+            GameObject obj = Instantiate(Resources.Load(objectString.path, typeof(GameObject))) as GameObject;
             obj.transform.position = Positions.hiddenPosition;
             obj.SetActive(false);
 
+            Debug.Log("Creating " + objectString.path);
 
-            dynamicObjectsDictionary.Add(keyValuePair.Key, obj);
-            
+            dynamicObjectsDictionary.Add(objectString.type, obj);
         }
     }
 
@@ -72,14 +83,19 @@ public class ObjectPooler : MonoBehaviour {
         return null;
     }
 
-    public GameObject ActivateObject(string objKey, Vector3 position) {
+    //  Activate an object in a given position (it will be adjusted according to the Spatial Mapping scans)
+    public GameObject ActivateObject(string objKey, Vector3 position, Quaternion rotation) { 
         GameObject objectToCreate = GetPooledObject(objKey);
-        objectToCreate.transform.position = position;
+        Debug.Log("Object created " + objKey);
+        objectToCreate.transform.position = Positions.GetPosition(position);
+        Vector3 originalRotation = objectToCreate.transform.rotation.eulerAngles;
+        objectToCreate.transform.rotation = Quaternion.Euler(new Vector3(originalRotation.x,rotation.eulerAngles.y , originalRotation.z ));
         objectToCreate.name = objKey;
         objectToCreate.SetActive(true);
         return objectToCreate;
     }
 
+    //  Deactivate an object
     public void DeactivateObject(string objKey) {
         GameObject objectToCreate = GetPooledObject(objKey);
         objectToCreate.transform.position = Positions.hiddenPosition;

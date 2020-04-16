@@ -1,26 +1,106 @@
 {
-    "scenes": [
+  "scenes": [
+    {
+      "staticObjects": [
         {
-            "staticObjects": [
-                {
-                    "type": "House",
-                    "path": "Prefab/objects/House"
-                },
-                {
-                    "type": "Tree",
-                    "path": "Prefab/objects/Tree"
-                }
-            ],
-            "dynamicObjects": [
-                {
-                    "type": "Apple",
-                    "path": "Prefab/Fruits/Apple"
-                },
-                {
-                    "type": "Orange",
-                    "path": "Prefab/Fruits/Orange"
-                }
-            ]
+          "type": "House",
+          "path": "Prefab/objects/House"
+        },
+        {
+          "type": "Tree",
+          "path": "Prefab/objects/Tree"
+        },
+        {
+          "type": "VA",
+          "path": "Prefab/people/VA_MaleCorrect"
         }
-    ]
+      ],
+      "dynamicObjects": [
+        {
+          "type": "Key",
+          "path": "Prefab/objects/Key"
+        },
+        {
+          "type": "Basket",
+          "path": "Prefab/object/Basket"
+        }
+      ]
+    },
+    {
+      "staticObjects": [
+        {
+          "type": "House",
+          "path": "Prefab/objects/House"
+        },
+        {
+          "type": "Tree",
+          "path": "Prefab/objects/Tree"
+        },
+        {
+          "type": "VA",
+          "path": "Prefab/people/VA_MaleCorrect"
+        }
+      ],
+      "dynamicObjects": [
+        {
+          "type": "Key",
+          "path": "Prefab/objects/Key"
+        },
+        {
+          "type": "Basket",
+          "path": "Prefab/object/Basket"
+        }
+      ]
+    },
+    {
+      "staticObjects": [
+        {
+          "type": "House",
+          "path": "Prefab/objects/House_right"
+        },
+        {
+          "type": "Tree",
+          "path": "Prefab/objects/Tree_right"
+        },
+        {
+          "type": "VA",
+          "path": "Prefab/people/VA_MaleCorrect"
+        },
+        {
+          "type": "MaleBasket",
+          "path": "Prefab/objects/Basket"
+        },
+        {
+          "type": "FemaleBasket",
+          "path": "Prefab/objects/Basket"
+        },
+        {
+          "type": "Male",
+          "path": "Prefab/people/VA_MaleCorrect"
+        },
+        {
+          "type": "Female",
+          "path": "Prefab/people/VA_FemaleCorrect"
+        }
+      ],
+      "dynamicObjects": [
+        {
+          "type": "Apple",
+          "path": "Prefab/Fruits/Apple"
+        },
+        {
+          "type": "Banana",
+          "path": "Prefab/Fruits/Banana"
+        },
+        {
+          "type": "Orange",
+          "path": "Prefab/Fruits/Orange"
+        },
+        {
+          "type": "Pear",
+          "path": "Prefab/Fruits/Pear"
+        }
+      ]
+    }
+  ]
 }

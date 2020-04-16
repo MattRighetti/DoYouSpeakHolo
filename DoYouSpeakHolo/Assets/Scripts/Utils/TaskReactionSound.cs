@@ -1,18 +1,17 @@
 ﻿using UnityEngine;
 
+//  Wrapper for the Virtual Assitant audio contained into the animations:
+//  - OK
+//  - KO
 public class TaskReactionSound : MonoBehaviour
 {
-
     private AudioSource audioSource;
-    private AudioClip introduction;
     private AudioClip ok;
     private AudioClip ko;
 
-    // Start is called before the first frame update
     void Start()
     {
         audioSource = gameObject.AddComponent<AudioSource>();
-        introduction = Resources.Load("Audio/VAIntroduce") as AudioClip;
         ok = Resources.Load("Audio/VAOk") as AudioClip;
         ko = Resources.Load("Audio/VAKo") as AudioClip;
     }
@@ -25,12 +24,5 @@ public class TaskReactionSound : MonoBehaviour
     //PLay ko sound triggered by the animation event
     void KoSound() {
         audioSource.PlayOneShot(ko);
-    }
-
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
